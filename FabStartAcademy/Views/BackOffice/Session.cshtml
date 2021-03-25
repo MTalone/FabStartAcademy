@@ -1,0 +1,49 @@
+﻿@model FabStartAcademy.Models.SessionItem
+
+@{
+    ViewData["Title"] = "Session";
+}
+
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
+@{
+    Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProcessID, Action = Actions.Session,SessionID=Model.ID,Session=Model.Title });
+}
+<div style="margin-top:50px;"></div>
+<hr />
+
+<div class="row form">
+    <div class=""></div>
+    <div class="col-md-12">
+        <form asp-action="Session">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(x => x.ProcessID)
+            @Html.HiddenFor(x => x.ID)
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="10" id="txtAreaDescription"></textarea>
+                <script>
+                        // Replace the <textarea id="editor1"> with a CKEditor 4
+                        // instance, using default configuration.
+                        $(document).ready(function () {
+                            CKEDITOR.replace('txtAreaDescription');
+                        })
+
+                </script>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+

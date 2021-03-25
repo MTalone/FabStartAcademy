@@ -1,0 +1,19 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ProgramItem
+
+<a asp-action="@Actions.Program.Name" asp-route-id="@Model.ID">
+
+    <div class="col-4 float-left card">
+        <div class=" card-body">
+            <div class="col-4 float-left"><img src="@Model.Image" width="70" /></div>
+            <div class="col-8 float-left">
+                @Model.Title<br />
+                @Model.Process
+            </div>
+        </div>
+
+    </div>
+</a>

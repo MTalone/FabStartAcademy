@@ -1,0 +1,108 @@
+﻿@model FabStartAcademy.Models.TasksModel
+
+@{
+    ViewData["Title"] = "Task";
+}
+
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramName</h1>
+@{
+    Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProcessID, SessionID = Model.SessionID, Action = Actions.Tasks, Session = Model.SessionName });
+}
+<hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Task" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(x => x.Task.ID)
+                @Html.HiddenFor(x => x.Task.SessionID)
+
+                <div class="form-group col-lg-8">
+                    <label asp-for="Task.Name" class="control-label"></label>
+                    <input asp-for="Task.Name" class="form-control" />
+                    <span asp-validation-for="Task.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label asp-for="Task.AvailableOn" class="control-label"></label>
+                    <input type="date" name="Task.AvailableOn" id="Task_AvailableOn" class="form-control" />
+                    <span asp-validation-for="Task.AvailableOn" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label asp-for="Task.Description" class="control-label"></label>
+                    <textarea asp-for="Task.Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Task.Description" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group ">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Task.IsEvaluated" />&nbsp;&nbsp;&nbsp;&nbsp; @Html.DisplayNameFor(model => model.Task.IsEvaluated)
+                    </label>
+                </div>
+                <div class="form-group col-lg-12">
+                    <div style="width:48%; float:left;">
+                        <label asp-for="Task.TaskType" class="control-label"></label>
+                        @Html.DropDownListFor(x => x.Task.TaskType, Model.TaskTypes, "", new { @class = "form-control" })
+                        <span asp-validation-for="Task.TaskType" class="text-danger"></span>
+                    </div>
+                    <div class=" col-lg-6" id="document" style="float:left; @(Model.Task.TaskType==(int)FBAData.Task.TaskTypes.Template?"":"display:none; ")">
+                        @Html.HiddenFor(x => x.Task.DocumentID)
+                        @if (Model.Task.DocumentID.HasValue)
+                        {
+                            <div style="margin-top:35px;margin-right:10px;float:left;">
+                                <a asp-action="Download" asp-controller="File" asp-route-documentID="@(Model.Task.DocumentID)">Template</a>
+                            </div>
+                        }
+
+                        <input type="file" name="template" id="template" style="display:none" />
+                        <a class="btn btn-primary browse" style="width:200px;margin-top:23px;" onclick="$('#template').click();">Browse</a>
+
+                    </div>
+                    <div class=" col-lg-6" id="tool" style="float:left; @(Model.Task.TaskType==(int)FBAData.Task.TaskTypes.Tool?"":"display:none; ") ">
+                        <label asp-for="Task.ToolID" class="control-label"></label>
+                        @Html.DropDownListFor(x => x.Task.ToolID, Model.Tools, "", new { @class = "form-control" })
+                        <span asp-validation-for="Task.ToolID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Task.Instructions" class="control-label"></label>
+                    <textarea asp-for="Task.Instructions" class="form-control" rows="10" id="txtAreaInstructions"></textarea>
+
+                    <span asp-validation-for="Task.Instructions" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+    $(document).ready(function () {
+        CKEDITOR.replace('txtAreaInstructions');
+        $("#Task_TaskType").change(function (x) {
+            debugger;
+            var taskTool ='@((int)FBAData.Task.TaskTypes.Tool)'
+            var taskTemplate ='@((int)FBAData.Task.TaskTypes.Template)'
+            if (this.value == taskTool) {
+                $("#tool").show();
+                $("#document").hide();
+            }
+            else if (this.value == taskTemplate) {
+                $("#tool").hide();
+                $("#document").show();
+            }
+            else
+            {
+                $("#tool").hide();
+                $("#document").hide();
+            }
+
+        })
+    })
+
+    </script>
+
+

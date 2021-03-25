@@ -1,0 +1,19 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model DashBoardItem
+
+<div class="col-3 float-left">
+    <div class=" card">
+        <div class="card-header">
+            @Model.Title
+        </div>
+        <div class="card-body">
+            <div class="col-6 float-left"><h1>@Model.Count</h1></div>
+            <div class="col-6 float-left">
+                <i class="h1 @Model.Class"></i>
+            </div>
+        </div>
+    </div>
+</div>

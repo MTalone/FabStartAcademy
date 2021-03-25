@@ -1,0 +1,17 @@
+﻿@model FabStartAcademy.Models.ProgramsModel
+
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<h1>Groups</h1>
+
+<p>
+    <a asp-action="Group">@Resources.FabStartAcademy.CreateNew</a>
+</p>
+<div class="col-12">
+    @foreach (var item in Model.Programs)
+    {
+        Html.RenderPartial("ProgramItem", item);
+    }
+</div>

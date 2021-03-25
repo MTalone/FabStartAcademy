@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "DashBoard";
+}
+
+@model DashBoardModel
+    <h1>Dashboard</h1>
+    <div class="col-12">
+        @foreach (var item in Model.ItemList)
+        {
+            Html.RenderPartial("DashBoardItem", item);
+        }
+    </div>
+<div style="margin-top:180px"></div>
+    <div class="col-12">
+
+        <h2>
+
+            Groups
+        </h2>
+
+        @foreach (var item in Model.groups)
+        {
+            Html.RenderPartial("ProgramItem", item);
+        }
+    </div>
+    <div></div>

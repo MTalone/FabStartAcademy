@@ -1,0 +1,32 @@
+﻿@model SessionModel
+
+@{
+    ViewData["Title"] = "Sessions";
+    bool first = true;
+}
+
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
+ @{
+     Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProgramID, Action = Actions.Sessions }); 
+     }
+
+<div class="col-12" style="margin-top:65px">
+    <a asp-action="@Actions.Session.Name" asp-route-programId="@Model.ProgramID">@Resources.FabStartAcademy.CreateNew</a>
+</div>
+
+@foreach (var item in Model.Sessions)
+{
+
+    <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
+        <a asp-action="@Actions.Session.Name" asp-route-id="@item.ID" asp-route-programId="@item.ProcessID">
+            <div class="col-10" style="float:left"><h2>@item.Title</h2></div>
+            <div class="col-2" style="float:right; margin-top:20px">
+                <span class="badge badge-pill badge-secondary"> @item.NumberSubtopics</span> Subtopics 
+            </div> 
+        </a>
+    </div>
+
+    first = false;
+
+}
+
