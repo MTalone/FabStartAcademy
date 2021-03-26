@@ -181,12 +181,5 @@ namespace FBAData
     }
 
 
-    public class TaskContext : FBADataContext
-    {
-        public DbSet<Session> Session { get; set; }
 
-        public DbSet<Process> Program { get; set; }
-
-        public DbSet<Task> Task { get; set; }
-    }
 }
