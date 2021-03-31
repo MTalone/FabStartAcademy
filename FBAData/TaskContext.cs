@@ -13,6 +13,6 @@ namespace FBAData
 
         public DbSet<Task> Task { get; set; }
 
-        public DbSet<TaskDocument> Task { get; set; }
+        public DbSet<TaskDocument> TaskDocument { get; set; }
     }
 }
