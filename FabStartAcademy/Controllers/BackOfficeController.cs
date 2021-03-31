@@ -213,14 +213,13 @@ namespace FabStartAcademy.Controllers
         }
 
 
-        public IActionResult Task(int ID, int sessionID,bool isReadOnly=true)
+        public IActionResult Task(int ID, int sessionID,bool read=true)
         {
-            isReadOnly = false; //ID == 0 ? false : isReadOnly;
+            read = ID == 0 ? false : read;
 
             FBAData.Session session = FBAData.Session.GetSession(sessionID, true);
 
-            var taskTypes = FBAData.Task.GetTaskTypes();
-            var tools = FBAData.Tool.GetTools();
+          
 
 
             TasksModel model = new TasksModel
@@ -229,9 +228,7 @@ namespace FabStartAcademy.Controllers
                 ProcessID = session.ProcessID,
                 SessionName = session.Name,
                 ProgramName = session.Process.Name,
-                TaskTypes = taskTypes.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString() }).ToList(),
-                Tools = tools.Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList(),
-                ReadOnly=isReadOnly
+                ReadOnly= read
             };
             if (ID == 0)
             {
@@ -239,12 +236,33 @@ namespace FabStartAcademy.Controllers
             }
             else { model.Task = FBAData.Task.GetTask(ID); }
 
+            if (!read)
+            {
+                var taskTypes = FBAData.Task.GetTaskTypes();
+                var tools = FBAData.Tool.GetTools();
+                model.TaskTypes = taskTypes.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString() }).ToList();
+                model.Tools = tools.Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
+
+            }
 
 
-            return View(model);
+            if (!read)
+            {
+                return View(model);
+            }
+            else 
+            { 
+                return View("TaskDetail",model);
+            }
+            
         }
 
-        [HttpPost]
+        public IActionResult TaskDetail(int ID, int sessionID, bool read = true)
+        {
+            return View();
+        }
+
+            [HttpPost]
         public IActionResult Task(TasksModel item, IFormFile template, bool isNext = false)
         {
             int? documentID = item.Task.DocumentID;

@@ -1,0 +1,55 @@
+﻿@model TasksModel
+
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramName</h1>
+@{
+    Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProcessID, SessionID = Model.SessionID, Action = Actions.Tasks, Session = Model.SessionName });
+}
+
+<h2>@Model.SessionName</h2>
+
+<div class="card">
+    <div class="card-header">
+        <div class="col-md-8" style="float:left;font-weight:bold">@Model.Task.Name</div>
+        <div class="col-md-4" style="float:right;text-align:right"> @Model.Task.AvailableOn.HasValue? @Resources.FabStartAcademy.AvailableOn @Html.DisplayFor(m => m.Task.AvailableOn): @Resources.FabStartAcademy.Available </div>
+    </div>
+    <div class="card-body">
+        <div class="col-md-8" style="float:left">
+            @Model.Task.Description
+            @if (Model.Task.TaskType != 0)
+            {@Html.Raw("(")
+            switch ((FBAData.Task.TaskTypes)Model.Task.TaskType)
+            {
+                case FBAData.Task.TaskTypes.Template:
+                    @Html.Raw(Resources.FabStartAcademy.TaskType_Template);
+                    break;
+                case FBAData.Task.TaskTypes.Tool:
+                    @Html.Raw(Resources.FabStartAcademy.TaskType_Tool);
+                    break;
+                case FBAData.Task.TaskTypes.URL:
+                    @Html.Raw(Resources.FabStartAcademy.TaskType_URL);
+                    break;
+                default:
+                    break;
+            }
+            @Html.Raw(")")
+        }
+        </div>
+        <div class="col-md-4" style="float:left;text-align:right">@if(@Model.Task.IsEvaluated)
+        {
+            <b> @Resources.FabStartAcademy.ForEvaluation</b>
+        }</div>
+        <hr />
+        <div class="col-md-12">
+
+            @Html.Raw(Model.Task.Instructions)
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink( Resources.FabStartAcademy.Edit, Actions.Task.Name, new { id=Model.Task.ID,read=false,sessionID=Model.Task.SessionID},new {@class="btn btn-primary col-md-2",style="margin-top:10px;" }) 
+</div>
+
+<div class="card">@Resources.FabStartAcademy.Documents</div>

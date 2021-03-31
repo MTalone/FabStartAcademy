@@ -31,11 +31,14 @@ namespace FBAData
         public int Order { get; set; }
         [Display(Name = "IsEvaluated", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsEvaluated { get; set; }
-
+        [Display(Name = "TaskType", ResourceType = typeof(Resources.FabStartAcademy))]
         public int TaskType { get; set; }
 
         public int? DocumentID { get; set; }
-
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "AvailableOn", ResourceType = typeof(Resources.FabStartAcademy))]
         public DateTime? AvailableOn { get; set; }
 
         public int? ToolID { get; set; }

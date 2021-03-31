@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available.
+        /// </summary>
+        public static string Available {
+            get {
+                return ResourceManager.GetString("Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available on.
+        /// </summary>
+        public static string AvailableOn {
+            get {
+                return ResourceManager.GetString("AvailableOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create new.
         /// </summary>
         public static string CreateNew {
@@ -88,11 +106,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documents.
+        /// </summary>
+        public static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For evaluation.
+        /// </summary>
+        public static string ForEvaluation {
+            get {
+                return ResourceManager.GetString("ForEvaluation", resourceCulture);
             }
         }
         
@@ -246,6 +282,15 @@ namespace Resources {
         public static string Tasks {
             get {
                 return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task type.
+        /// </summary>
+        public static string TaskType {
+            get {
+                return ResourceManager.GetString("TaskType", resourceCulture);
             }
         }
         

@@ -12,5 +12,7 @@ namespace FBAData
         public DbSet<Process> Program { get; set; }
 
         public DbSet<Task> Task { get; set; }
+
+        public DbSet<TaskDocument> Task { get; set; }
     }
 }

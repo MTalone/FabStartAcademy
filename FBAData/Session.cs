@@ -105,7 +105,7 @@ namespace FBAData
     {
         public DbSet<Session> Session { get; set; }
 
-        public DbSet<Process> Program { get; set; }
+        public DbSet<Process> Process { get; set; }
 
         public DbSet<Task> Task { get; set; }
     }

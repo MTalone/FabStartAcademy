@@ -120,14 +120,26 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="AvailableOn" xml:space="preserve">
+    <value>Available on</value>
+  </data>
   <data name="CreateNew" xml:space="preserve">
     <value>Create new</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="ForEvaluation" xml:space="preserve">
+    <value>For evaluation</value>
   </data>
   <data name="IsEvaluated" xml:space="preserve">
     <value>Will this task be evaluated?</value>
@@ -179,6 +191,9 @@
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
+  </data>
+  <data name="TaskType" xml:space="preserve">
+    <value>Task type</value>
   </data>
   <data name="TaskType_Template" xml:space="preserve">
     <value>Upload a Template</value>
