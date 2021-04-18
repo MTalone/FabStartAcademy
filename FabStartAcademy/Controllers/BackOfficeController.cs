@@ -1,4 +1,5 @@
 ﻿using FabStartAcademy.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,14 @@ namespace FabStartAcademy.Controllers
 {
     public class BackOfficeController : Controller
     {
+
+        private IWebHostEnvironment Environment;
+
+        public BackOfficeController(IWebHostEnvironment _environment)
+        {
+            Environment = _environment;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -29,15 +38,23 @@ namespace FabStartAcademy.Controllers
         {
             ProgramsModel model = new ProgramsModel();
 
-            model.Programs = FBAData.Program.GetPrograms(0).Select(x => new ProgramItem
-            {
-                Title = x.Name,
-                Image = "/imgs/thumb_351_image_big.png",
-                Process = x.Process != null ? x.Process.Name : string.Empty,
-                ID = x.ID
-            }).ToList();
+            //var ps = FBAData.Program.GetPrograms(0).Select(x => new ProgramItem
+            //{
+            //    Title = x.Name,
+            //    Image = "/imgs/thumb_351_image_big.png",
+            //    Process = x.Process != null ? x.Process.Name : string.Empty,
+            //    ID = x.ID
+            //}).ToList();
+
+            var ps = FBAData.Program.GetPrograms(0);
+
+            string programDefaultPath = "/imgs/placeholder-group.png";
+            model.Programs = new List<ProgramItem>();
+            model.GetProgramItems( ps, programDefaultPath,Environment.WebRootPath);
 
             return View(model);
+
+            
         }
 
         public IActionResult Program(int ID = 0, bool read = true)
@@ -48,7 +65,12 @@ namespace FabStartAcademy.Controllers
             if (ID > 0)
             {
                 var group = FBAData.Program.GetProgram(ID);
-                groupItem = new ProgramItem { Title = group.Name, Process = group.Process != null ? group.Process.Name : string.Empty, ID = group.ID, Code = group.Code,Description=group.Description };
+                groupItem = new ProgramItem { Title = group.Name, 
+                    Process = group.Process != null ? group.Process.Name : string.Empty, ID = group.ID, 
+                    Code = group.Code, 
+                    Description = group.Description,
+                    ProcessID=group.ProcessID
+                };
 
             }
             groupItem.IsRead = read;
@@ -61,20 +83,91 @@ namespace FabStartAcademy.Controllers
         }
 
         [HttpPost]
-        public IActionResult Program(ProgramsModel item)
+        public IActionResult Program(ProgramsModel item, IFormFile Logo, bool isNext = false)
         {
-            FBAData.Program.Save(new FBAData.Program
+
+            int? documentID = item.Program.LogoID;
+            FBAData.Document document = new FBAData.Document();
+            string firstPath = string.Empty;
+
+            if (Logo != null)
+            {
+                if (Logo.Length > 0)
+                {
+                    document = new FBAData.Document
+                    {
+                        ID = item.Program.LogoID.HasValue ? item.Program.LogoID.Value : 0,
+                        FileName = Logo.FileName,
+                        FileType = Logo.ContentType
+                    };
+
+                    string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                    uploads = Path.Combine(uploads, "Programs");
+                    if (item.Program.ID > 0)
+                    {
+                        uploads = Path.Combine(uploads, item.Program.ID.ToString());
+                    }
+                    else
+                    {
+                        uploads = Path.Combine(uploads, Guid.NewGuid().ToString());
+                        firstPath = uploads;
+                    }
+
+                    string filePath = Path.Combine(uploads, Logo.FileName);
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+                    document.Path = filePath;
+                    using (Stream fileStream = new FileStream(document.Path, FileMode.Create))
+                    {
+                        Logo.CopyTo(fileStream);
+                    }
+
+
+
+                    documentID = FBAData.Document.Upload(document);
+                    document.ID = documentID.Value;
+                }
+
+            }
+
+            int id = FBAData.Program.Save(new FBAData.Program
             {
                 ID = item.Program.ID,
                 Name = item.Program.Title,
                 Description = item.Program.Description,
                 ProcessID = item.Program.ProcessID,
-                Code = item.Program.Code
+                Code = item.Program.Code,
+                LogoID=documentID
             });
 
-            return RedirectToActionPermanent(Actions.Programs.Name);
+            if (item.Program.ID == 0 && Logo != null && Logo.Length > 0)
+            {
+                string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                uploads = Path.Combine(uploads, "Programs");
+                uploads = Path.Combine(uploads, id.ToString());
+                string filePath = Path.Combine(uploads, Logo.FileName);
+                Directory.CreateDirectory(uploads);
+
+                System.IO.File.Move(document.Path, filePath);
+
+                System.IO.Directory.Delete(firstPath);
+                document.Path = filePath;
+                FBAData.Document.Upload(document);
+            }
+
+            if (isNext)
+                return RedirectToActionPermanent(Actions.Teams.Name, new { ProgramID = id });
+            else
+                return RedirectToActionPermanent(Actions.Programs.Name);
 
 
+        }
+
+        public IActionResult Teams(int programID) 
+        {
+            
         }
 
         public IActionResult Methods()
@@ -92,7 +185,10 @@ namespace FabStartAcademy.Controllers
             if (ID > 0)
             {
                 var i = FBAData.Process.GetProcess(ID);
-                item = new ProcessItem { ID = i.ID, Description = i.Description, Title = i.Name, LogoID = i.LogoID, Logo = i.Logo == null ? new byte[0] : i.Logo.Content };
+
+                
+
+                item = new ProcessItem { ID = i.ID, Description = i.Description, Title = i.Name, LogoID = i.LogoID, Logo = i.Logo == null ? new byte[0] : System.IO.File.ReadAllBytes(i.Logo.Path) };
                 item.IsReadOnly = read;
             }
 
@@ -103,33 +199,67 @@ namespace FabStartAcademy.Controllers
         public IActionResult Method(ProcessItem item, IFormFile Logo, bool isNext = false)
         {
             int? documentID = item.LogoID;
-
+            FBAData.Document document = new FBAData.Document();
+            string firstPath = string.Empty;
             if (Logo != null)
             {
                 if (Logo.Length > 0)
                 {
-                    FBAData.Document document = new FBAData.Document
+                     document = new FBAData.Document
                     {
                         ID = item.LogoID.HasValue ? item.LogoID.Value : 0,
                         FileName = Logo.FileName,
                         FileType = Logo.ContentType
                     };
 
-                    using (var memoryStream = new MemoryStream())
+                    string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                    uploads = Path.Combine(uploads, "Methods");
+                    if (item.ID > 0)
                     {
-                        Logo.CopyTo(memoryStream);
-
-                        document.Content = memoryStream.ToArray();
-
+                        uploads = Path.Combine(uploads, item.ID.ToString());
+                    }
+                    else
+                    {
+                        uploads = Path.Combine(uploads, Guid.NewGuid().ToString());
+                        firstPath = uploads;
                     }
 
+                    string filePath = Path.Combine(uploads, Logo.FileName);
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+                    document.Path = filePath;
+                    using (Stream fileStream = new FileStream(document.Path, FileMode.Create))
+                    {
+                        Logo.CopyTo(fileStream);
+                    }
+
+                  
+
                     documentID = FBAData.Document.Upload(document);
+                    document.ID = documentID.Value;
                 }
 
             }
 
 
             int id = FBAData.Process.Save(new FBAData.Process { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID });
+
+            if (item.ID == 0 && Logo!=null&&Logo.Length>0) 
+            {
+                string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                uploads = Path.Combine(uploads, "Methods");
+                uploads = Path.Combine(uploads, id.ToString());
+                string filePath = Path.Combine(uploads, Logo.FileName);
+                Directory.CreateDirectory(uploads);
+
+                System.IO.File.Move(document.Path, filePath);
+
+                System.IO.Directory.Delete(firstPath);
+                document.Path = filePath;
+                FBAData.Document.Upload(document);
+            }
 
             if (isNext)
                 return RedirectToActionPermanent(Actions.Sessions.Name, new { ProgramID = id });
@@ -213,13 +343,13 @@ namespace FabStartAcademy.Controllers
         }
 
 
-        public IActionResult Task(int ID, int sessionID,bool read=true)
+        public IActionResult Task(int ID, int sessionID, bool read = true)
         {
             read = ID == 0 ? false : read;
 
             FBAData.Session session = FBAData.Session.GetSession(sessionID, true);
 
-          
+
 
 
             TasksModel model = new TasksModel
@@ -228,13 +358,19 @@ namespace FabStartAcademy.Controllers
                 ProcessID = session.ProcessID,
                 SessionName = session.Name,
                 ProgramName = session.Process.Name,
-                ReadOnly= read
+                ReadOnly = read
             };
             if (ID == 0)
             {
                 model.Task = new FBAData.Task { SessionID = sessionID };
             }
-            else { model.Task = FBAData.Task.GetTask(ID); }
+            else { 
+                model.Task = FBAData.Task.GetTask(ID);
+                if (read) 
+                {
+                    model.TaskDocuments = FBAData.Task.GetDocuments(ID);
+                }
+            }
 
             if (!read)
             {
@@ -250,19 +386,16 @@ namespace FabStartAcademy.Controllers
             {
                 return View(model);
             }
-            else 
-            { 
-                return View("TaskDetail",model);
+            else
+            {
+                return View("TaskDetail", model);
             }
-            
+
         }
 
-        public IActionResult TaskDetail(int ID, int sessionID, bool read = true)
-        {
-            return View();
-        }
+    
 
-            [HttpPost]
+        [HttpPost]
         public IActionResult Task(TasksModel item, IFormFile template, bool isNext = false)
         {
             int? documentID = item.Task.DocumentID;
@@ -297,6 +430,46 @@ namespace FabStartAcademy.Controllers
 
         }
 
-        
+        [HttpPost]
+        public IActionResult TaskDocument(int taskID, int sessionID, IFormFile template)
+        {
+
+            FBAData.Document document = new FBAData.Document
+            {
+
+                FileName = template.FileName,
+                FileType = template.ContentType,
+                Path = string.Format("/docs/tasks/{0}/{1}", taskID, template.FileName)
+            };
+
+            if (template.Length > 0)
+            {
+
+                string uploads = Path.Combine(Environment.WebRootPath, "docs");
+                uploads = Path.Combine(uploads, "tasks");
+                uploads = Path.Combine(uploads, taskID.ToString());
+                    
+                string filePath = Path.Combine(uploads, template.FileName);
+                if (!Directory.Exists(uploads)) 
+                {
+                    Directory.CreateDirectory(uploads);
+                }
+                document.Path = filePath;
+                using (Stream fileStream = new FileStream(document.Path, FileMode.Create))
+                {
+                     template.CopyTo(fileStream);
+                }
+
+               int docID= FBAData.Document.Upload(document);
+                FBAData.TaskDocument taskDocument = new FBAData.TaskDocument { DocumentID = docID, TaskID = taskID };
+                FBAData.TaskDocument.Save(taskDocument);
+
+
+            }
+
+           
+
+            return RedirectToActionPermanent(Actions.Task.Name, new {ID=taskID, SessionID = sessionID });
+        }
     }
 }

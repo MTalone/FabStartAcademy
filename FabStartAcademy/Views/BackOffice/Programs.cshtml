@@ -7,9 +7,9 @@
 <h1>Groups</h1>
 
 <p>
-    <a asp-action="Group">@Resources.FabStartAcademy.CreateNew</a>
+    <a asp-action="@Actions.Program.Name">@Resources.FabStartAcademy.CreateNew</a>
 </p>
-<div class="col-12">
+<div >
     @foreach (var item in Model.Programs)
     {
         Html.RenderPartial("ProgramItem", item);

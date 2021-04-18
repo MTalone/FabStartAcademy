@@ -6,7 +6,7 @@
 
 <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramName</h1>
 @{
-    Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProcessID, SessionID = Model.SessionID, Action = Actions.Tasks, Session = Model.SessionName });
+    Html.RenderPartial("MethodBreadCrumbs", new ProcessBreadCrumb { ProcessID = Model.ProcessID, SessionID = Model.SessionID, Action = Actions.Tasks, Session = Model.SessionName });
 }
 <hr />
 
@@ -45,19 +45,6 @@
                         @Html.DropDownListFor(x => x.Task.TaskType, Model.TaskTypes, "", new { @class = "form-control" })
                         <span asp-validation-for="Task.TaskType" class="text-danger"></span>
                     </div>
-                    <div class=" col-lg-6" id="document" style="float:left; @(Model.Task.TaskType==(int)FBAData.Task.TaskTypes.Template?"":"display:none; ")">
-                        @Html.HiddenFor(x => x.Task.DocumentID)
-                        @if (Model.Task.DocumentID.HasValue)
-                        {
-                            <div style="margin-top:35px;margin-right:10px;float:left;">
-                                <a asp-action="Download" asp-controller="File" asp-route-documentID="@(Model.Task.DocumentID)">Template</a>
-                            </div>
-                        }
-
-                        <input type="file" name="template" id="template" style="display:none" />
-                        <a class="btn btn-primary browse" style="width:200px;margin-top:23px;" onclick="$('#template').click();">Browse</a>
-
-                    </div>
                     <div class=" col-lg-6" id="tool" style="float:left; @(Model.Task.TaskType==(int)FBAData.Task.TaskTypes.Tool?"":"display:none; ") ">
                         <label asp-for="Task.ToolID" class="control-label"></label>
                         @Html.DropDownListFor(x => x.Task.ToolID, Model.Tools, "", new { @class = "form-control" })
@@ -88,16 +75,12 @@
             var taskTemplate ='@((int)FBAData.Task.TaskTypes.Template)'
             if (this.value == taskTool) {
                 $("#tool").show();
-                $("#document").hide();
-            }
-            else if (this.value == taskTemplate) {
-                $("#tool").hide();
-                $("#document").show();
+                
             }
             else
             {
                 $("#tool").hide();
-                $("#document").hide();
+              
             }
 
         })

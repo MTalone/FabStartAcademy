@@ -24,5 +24,7 @@ namespace FabStartAcademy.Models
         public List<SelectListItem> Tools { get; set; }
 
         public bool ReadOnly { get; set; }
+
+        public List<FBAData.TaskDocumentView> TaskDocuments { get; set; }
     }
 }

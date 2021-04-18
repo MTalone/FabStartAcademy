@@ -9,8 +9,10 @@ namespace FBAData
     {
        public DbSet<Program> Program { get; set; }
         public DbSet<Process> Process { get; set; }
+        public DbSet<Document> Document { get; set; }
 
-        
+        public DbSet<Team> Team { get; set; }
+
     }
 
     public class Program
@@ -27,20 +29,23 @@ namespace FBAData
         public int? LogoID { get; set; }
 
         public Process Process { get;set;}
+
+        public Document Logo { get; set; }
         public static List<Program> GetPrograms(int max) 
         {
             using(var a = new ProgramContext())
             {
                 try
                 {
+                    var query = a.Program.Include(x => x.Process).Include(x => x.Logo);
                     if (max > 0)
                     {
-                        var progs = a.Program.Include(x => x.Process).Take(max).ToList();
+                        var progs = query.Take(max).ToList();
                         return progs;
                     }
                     else
                     {
-                        var groups = a.Program.Include(x => x.Process).ToList();
+                        var groups = query.ToList();
                         return groups;
                     }
                 }

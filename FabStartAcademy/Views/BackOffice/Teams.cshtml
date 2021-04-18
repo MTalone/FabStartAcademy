@@ -7,7 +7,7 @@
 
 <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
  @{
-     Html.RenderPartial("MethodBreadCrumbs", new ProcessBreadCrumb { ProcessID = Model.ProcessID, Action = Actions.Sessions }); 
+     Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProcessID, Action = Actions.Teams });
      }
 
 <div class="col-12" style="margin-top:65px">

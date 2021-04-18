@@ -13,7 +13,15 @@ namespace FabStartAcademy.Controllers
 
             var d = FBAData.Document.Download(documentID);
 
-            return File(d.Content,d.FileType,d.FileName);
+            if (!(d.Path is  null)&& d.Path!=string.Empty ) 
+            {
+                d.Content = System.IO.File.ReadAllBytes(d.Path);
+
+            }
+            
+
+            return File(d.Content, d.FileType, d.FileName);
+
         }
     }
 }

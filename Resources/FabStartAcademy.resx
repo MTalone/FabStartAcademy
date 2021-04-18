@@ -135,6 +135,9 @@
   <data name="Documents" xml:space="preserve">
     <value>Documents</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -204,7 +207,16 @@
   <data name="TaskType_URL" xml:space="preserve">
     <value>Go to a URL</value>
   </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Teams</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
   </data>
 </root>

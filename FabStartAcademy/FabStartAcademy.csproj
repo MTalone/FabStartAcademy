@@ -6,9 +6,17 @@
 
   <ItemGroup>
     <Compile Remove="imgs\**" />
+    <Compile Remove="wwwroot\docs\tasks\1\**" />
+    <Compile Remove="wwwroot\imgs\Methods\**" />
     <Content Remove="imgs\**" />
+    <Content Remove="wwwroot\docs\tasks\1\**" />
+    <Content Remove="wwwroot\imgs\Methods\**" />
     <EmbeddedResource Remove="imgs\**" />
+    <EmbeddedResource Remove="wwwroot\docs\tasks\1\**" />
+    <EmbeddedResource Remove="wwwroot\imgs\Methods\**" />
     <None Remove="imgs\**" />
+    <None Remove="wwwroot\docs\tasks\1\**" />
+    <None Remove="wwwroot\imgs\Methods\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\docs\tasks\" />
+    <Folder Include="wwwroot\imgs\Programs\" />
   </ItemGroup>
 
 </Project>

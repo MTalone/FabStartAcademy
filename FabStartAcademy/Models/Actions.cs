@@ -20,7 +20,11 @@ namespace FabStartAcademy.Models
         public static Action Task { get { return new Action { ID = 8, Controller = "BackOffice", Name = "Task" }; } }
 
         public static Action TaskDelete { get { return new Action { ID = 9, Controller = "BackOffice", Name = "TaskDelete" }; } }
-        public static Action TaskOrder { get { return new Action { ID = 10, Controller = "BackOffice", Name = "TaskOrder" }; } }
+        public static Action TaskOrder { get { return new Action { ID = 11, Controller = "BackOffice", Name = "TaskOrder" }; } }
+
+        public static Action Download { get { return new Action { ID = 12, Controller = "File", Name = "Download" }; } }
+        public static Action Teams { get { return new Action { ID = 13, Controller = "BackOffice", Name = "Teams" }; } }
+
     }
 
     public class Action

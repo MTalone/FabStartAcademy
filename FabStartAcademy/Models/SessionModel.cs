@@ -25,12 +25,12 @@ namespace FabStartAcademy.Models
         public string ProgramTitle { get; set; }
         public List<SessionItem> Sessions{ get; set; }
 
-        public int ProgramID { get; set; }
+        public int ProcessID { get; set; }
         public SessionModel(int programID) 
         {
             ProgramTitle = FBAData.Process.GetProcess(programID).Name;
             Sessions = Session.GetSessions(programID).Select(x=>new SessionItem {Title=x.Name,NumberSubtopics=x.NumberTasks,ID=x.ID,ProcessID=x.ProcessID }).ToList() ;
-            ProgramID = programID;
+            ProcessID = programID;
         }
     }
 }
