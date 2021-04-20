@@ -28,6 +28,13 @@ namespace FabStartAcademy.Models
         public int? ProcessID { get; set; }
     }
 
+    public class ProgramItemRow
+    {
+        public List<ProgramItem> List { get; set; }
+        public int Start { get; set; }
+
+        public int End { get; set; }
+    }
     public class ProgramBreadCrumb
     {
         public Action Action { get; set; }

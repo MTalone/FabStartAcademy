@@ -10,7 +10,7 @@
      Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, Action = Actions.Teams });
      }
 
-<div class="col-12" style="margin-top:65px">
+<div class="col-12" style="margin-top:25px">
     <a asp-action="@Actions.Team.Name" asp-route-programId="@Model.ProgramID">@Resources.FabStartAcademy.CreateNew</a>
 </div>
 
