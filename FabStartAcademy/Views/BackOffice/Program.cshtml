@@ -6,15 +6,15 @@
 @if (Model.Program.ID == 0)
 {
 
-    <h1> @Resources.FabStartAcademy.NewMethod</h1>
+    <h1> @Resources.FabStartAcademy.NewProgram</h1>
 
-    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Method });
+    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Program });
 }
 else
 {
-    <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.Program.Title</h1>
+    <h1>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name) /  @Model.Program.Title</h1>
 
-    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Method });
+    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Program });
 
 }
 

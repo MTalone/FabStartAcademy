@@ -1,67 +1,76 @@
 ﻿@model FabStartAcademy.Models.ProgramBreadCrumb
-@{ 
+@{
     int space = 6;
 
-    //if ( Model.Action.ID == Actions.Session.ID || Model.Action.ID == Actions.Tasks.ID)
-    //    space = 2;
+    if (Model.Action.ID == Actions.Team.ID || Model.Action.ID == Actions.Members.ID)
+        space = 2;
 
 
 }
-    <div class="row" style="border:solid 1px #ddd">
-        <div style="float:left" class="col-2 FBAbreadcrumb @(Model.Action.ID==Actions.Method.ID? "active":"")">
-            @if (Model.Action.ID != Actions.Method.ID)
-            {
-                <a asp-action="@Actions.Method.Name" asp-route-id="@Model.ProgramID">
-                    <span class="badge badge-pill badge-secondary">1</span>  @Resources.FabStartAcademy.Description
-                </a>
-            }
-            else
-            {
-                <span class="badge badge-pill badge-primary">1</span> @Resources.FabStartAcademy.Description
-            }
-
-        </div>
-        <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Sessions.ID? "active":"")">
-            @if (Model.ProgramID > 0)
-            {
-
-                <a asp-action="@Actions.Teams.Name" asp-controller="@Actions.Teams.Controller" asp-route-programid="@Model.ProgramID">
-                    <span class="badge badge-pill badge-@(Model.Action.ID == Actions.Teams.ID ? "primary" : "secondary") ">2</span>  @Resources.FabStartAcademy.Teams
-                </a>
-            }
-            else
-            {
-                <span class="badge badge-pill badge-@(Model.Action.ID == Actions.Teams.ID ? "primary" : "secondary") ">2</span> @Resources.FabStartAcademy.Teams
-
-
-            }
-
-        </div>
-        @*@if (Model.Action.ID == Actions.Session.ID || Model.Action.ID==Actions.Tasks.ID)
+<div class="row" style="border:solid 1px #ddd">
+    <div style="float:left" class="col-2 FBAbreadcrumb @(Model.Action.ID==Actions.Program.ID? "active":"")">
+        @if (Model.Action.ID != Actions.Program.ID)
         {
-            <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Session.ID? "active":"")">
+            <a asp-action="@Actions.Method.Name" asp-route-id="@Model.ProgramID">
+                <span class="badge badge-pill badge-secondary">1</span>  @Resources.FabStartAcademy.Description
+            </a>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-primary">1</span> @Resources.FabStartAcademy.Description
+        }
 
-                <a asp-action="Session" asp-route-programid="@Model.ProgramID" asp-route-id="@Model.SessionID">
-                    <span class="badge badge-pill @(Model.Action.ID==Actions.Session.ID? "badge-primary":"badge-secondary")">3</span>  @( Model.SessionID==0?Resources.FabStartAcademy.NewTopic:Model.Session)
+    </div>
+    <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Teams.ID? "active":"")">
+        @if (Model.ProgramID > 0)
+        {
+
+            <a asp-action="@Actions.Teams.Name" asp-controller="@Actions.Teams.Controller" asp-route-programid="@Model.ProgramID">
+                <span class="badge badge-pill badge-@(Model.Action.ID == Actions.Teams.ID ? "primary" : "secondary") ">2</span>  @Resources.FabStartAcademy.Teams
+            </a>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-@(Model.Action.ID == Actions.Teams.ID ? "primary" : "secondary") ">2</span> @Resources.FabStartAcademy.Teams
+
+
+        }
+
+    </div>
+    @if (Model.Action.ID == Actions.Team.ID || Model.Action.ID == Actions.Members.ID)
+    {
+
+<div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Team.ID? "active":"")">
+    @if (Model.Action.ID == Actions.Team.ID)
+    {
+        <span class="badge badge-pill @(Model.Action.ID==Actions.Session.ID? "badge-primary":"badge-secondary")">3</span> @( Model.TeamID==0?Resources.FabStartAcademy.NewTeam:Model.Team)
+
+    }
+    else
+    {
+        <a asp-action="@Actions.Team.Name" asp-route-programid="@Model.ProgramID" asp-route-id="@Model.TeamID">
+            <span class="badge badge-pill @(Model.Action.ID==Actions.Session.ID? "badge-primary":"badge-secondary")">3</span>  @( Model.TeamID==0?Resources.FabStartAcademy.NewTeam:Model.Team)
+        </a>
+
+    }
+
+</div>
+
+
+        if (Model.TeamID > 0)
+        {
+            <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Members.ID? "active":"")">
+
+                <a asp-action="@Actions.Members.Name" asp-route-teamID="@Model.TeamID">
+                    <span class="badge badge-pill @(Model.Action.ID==Actions.Members.ID? "badge-primary":"badge-secondary")">4</span> @Resources.FabStartAcademy.Members
                 </a>
 
 
 
             </div>
-            if (Model.SessionID > 0)
-            {
-                <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Tasks.ID? "active":"")">
+        }
+    }
 
-                    <a asp-action="Tasks" asp-route-sessionID="@Model.SessionID">
-                        <span class="badge badge-pill @(Model.Action.ID==Actions.Tasks.ID? "badge-primary":"badge-secondary")">4</span> @Resources.FabStartAcademy.Tasks
-                    </a>
-
-
-
-                </div>
-            }
-        }*@
-
-        <div style="float:left" class="col-@(space)">	&nbsp;</div>
-        <div style="  float: left" class="col-2 FBAbreadcrumb">Knowledge Hub </div>
-    </div>
+    <div style="float:left" class="col-@(space)">	&nbsp;</div>
+    <div style="  float: left" class="col-2 FBAbreadcrumb">Knowledge Hub </div>
+</div>

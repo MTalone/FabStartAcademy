@@ -1,11 +1,11 @@
 ﻿@model TeamModel
 
 @{
-    ViewData["Title"] = "Sessions";
+    ViewData["Title"] = Resources.FabStartAcademy.Teams;
     bool first = true;
 }
 
-<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name) /  @Model.ProgramTitle</h1>
  @{
      Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, Action = Actions.Teams });
      }
@@ -18,19 +18,22 @@
 {
 
     <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
-        <a asp-action="@Actions.Team.Name" asp-route-id="@item.ID">
+            <a asp-action="@Actions.Team.Name" asp-route-id="@item.ID">
 
-            <div class="col-4 float-left card">
-                <div class=" card-body">
-                    <div class="col-4 float-left"><img src="@item.Image" width="70" /></div>
-                    <div class="col-8 float-left">
-                        @item.Title<br />
-                        
-                    </div>
+
+
+                <div class="col-2 float-left"><img src="@item.Image" width="70" /></div>
+                <div class="col-10 float-left" style="margin-top:22px;">
+                    @item.Title
+
                 </div>
 
-            </div>
-        </a>
+
+                
+            </a>
+            <div class="col-lg-2 float-left" style="margin-top:22px;">@Html.ActionLink(Resources.FabStartAcademy.AddMembers,Actions.Members.Name,new {TeamID=item.ID},new {@class="btn btn-primary" })</div>
+       
+       
     </div>
 
     first = false;

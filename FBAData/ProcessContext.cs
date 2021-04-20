@@ -12,7 +12,7 @@ namespace FBAData
         public DbSet<Session> Session { get; set; }
         public DbSet<Task> Task { get; set; }
 
-        public DbSet<Program> Group { get; set; }
+        public DbSet<Program> Program { get; set; }
         public DbSet<Document> Document { get; set; }
     }
     public class Process
@@ -118,11 +118,11 @@ namespace FBAData
                         a.Document.Remove(a.Document.Where(x => x.ID == p.LogoID).FirstOrDefault());
                     }
 
-                    var g = a.Group.Where(x => x.ProcessID == id);
+                    var g = a.Program.Where(x => x.ProcessID == id);
 
                     foreach (var i in g) { i.ProcessID = null; }
 
-                    a.Group.UpdateRange(g);
+                    a.Program.UpdateRange(g);
 
                     a.Process.Remove(a.Process.Where(x => x.ID == id).First());
                     a.SaveChanges();

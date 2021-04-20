@@ -72,7 +72,9 @@ namespace FabStartAcademy.Controllers
                     ID = group.ID,
                     Code = group.Code,
                     Description = group.Description,
-                    ProcessID = group.ProcessID
+                    ProcessID = group.ProcessID,
+                    Image=group.Logo!=null?group.Logo.Path.Replace(Environment.WebRootPath,""):""
+                    
                 };
 
             }
@@ -168,6 +170,14 @@ namespace FabStartAcademy.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult ProgramDelete(int id)
+        {
+
+            FBAData.Program.Delete(id);
+
+            return RedirectToActionPermanent(Actions.Methods.Name);
+        }
         public IActionResult Teams(int programID)
         {
             TeamModel model = new TeamModel(programID,Environment.WebRootPath, "/imgs/placeholder-team.png");
@@ -175,6 +185,100 @@ namespace FabStartAcademy.Controllers
 
             return View(model);
         }
+
+
+        public IActionResult Team(int ID, int programID, bool read = true)
+        {
+
+
+            TeamItem item = new TeamItem { ProgramID = programID };
+
+            read = ID == 0 ? false : read;
+
+            if (ID > 0)
+            {
+                var i = FBAData.Team.GetTeam(ID, true);
+                item = new TeamItem { ID = i.ID, Description = i.Description, Title = i.Name, ProgramID = i.ProgramID, ProgramTitle = i.Program.Name ,LogoID=i.LogoID, 
+                    Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : ""
+                };
+                item.IsReadOnly = read;
+            }
+
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Team(TeamItem item, IFormFile Logo, bool isNext = false)
+        {
+            int? documentID = item.LogoID;
+            FBAData.Document document = new FBAData.Document();
+            string firstPath = string.Empty;
+            if (Logo != null)
+            {
+                if (Logo.Length > 0)
+                {
+                    document = new FBAData.Document
+                    {
+                        ID = item.LogoID.HasValue ? item.LogoID.Value : 0,
+                        FileName = Logo.FileName,
+                        FileType = Logo.ContentType
+                    };
+
+                    string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                    uploads = Path.Combine(uploads, "Teams");
+                    if (item.ID > 0)
+                    {
+                        uploads = Path.Combine(uploads, item.ID.ToString());
+                    }
+                    else
+                    {
+                        uploads = Path.Combine(uploads, Guid.NewGuid().ToString());
+                        firstPath = uploads;
+                    }
+
+                    string filePath = Path.Combine(uploads, Logo.FileName);
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+                    document.Path = filePath;
+                    using (Stream fileStream = new FileStream(document.Path, FileMode.Create))
+                    {
+                        Logo.CopyTo(fileStream);
+                    }
+
+
+
+                    documentID = FBAData.Document.Upload(document);
+                    document.ID = documentID.Value;
+                }
+
+            }
+
+
+            int id = FBAData.Team.Save(new FBAData.Team { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID,ProgramID=item.ProgramID });
+
+            if (item.ID == 0 && Logo != null && Logo.Length > 0)
+            {
+                string uploads = Path.Combine(Environment.WebRootPath, "imgs");
+                uploads = Path.Combine(uploads, "Teams");
+                uploads = Path.Combine(uploads, id.ToString());
+                string filePath = Path.Combine(uploads, Logo.FileName);
+                Directory.CreateDirectory(uploads);
+
+                System.IO.File.Move(document.Path, filePath);
+
+                System.IO.Directory.Delete(firstPath);
+                document.Path = filePath;
+                FBAData.Document.Upload(document);
+            }
+
+            if (isNext)
+                return RedirectToActionPermanent(Actions.Members.Name, new { TeamID = id });
+            else
+                return RedirectToActionPermanent(Actions.Teams.Name, new { programID = item.ProgramID });
+        }
+
 
         public IActionResult Methods()
         {
@@ -274,7 +378,7 @@ namespace FabStartAcademy.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProgramDelete(int id)
+        public IActionResult MethodDelete(int id)
         {
 
             FBAData.Process.Delete(id);

@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add members.
+        /// </summary>
+        public static string AddMembers {
+            get {
+                return ResourceManager.GetString("AddMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Available.
         /// </summary>
         public static string Available {
@@ -228,6 +237,15 @@ namespace Resources {
         public static string NewProgram {
             get {
                 return ResourceManager.GetString("NewProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New team.
+        /// </summary>
+        public static string NewTeam {
+            get {
+                return ResourceManager.GetString("NewTeam", resourceCulture);
             }
         }
         

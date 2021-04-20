@@ -20,6 +20,8 @@ namespace FabStartAcademy.Models
 
         public string Image { get; set; }
 
+        public int? LogoID { get; set; }
+
     }
     public class TeamModel
     {

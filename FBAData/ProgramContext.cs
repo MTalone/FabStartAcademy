@@ -66,7 +66,7 @@ namespace FBAData
                 {
                     if (ID > 0)
                     {
-                        return a.Program.Include(x=>x.Process).Where(i => i.ID == ID).ToList().First();
+                        return a.Program.Include(x=>x.Process).Include(x=>x.Logo).Where(i => i.ID == ID).ToList().First();
                     }
                     else
                     {
@@ -112,6 +112,15 @@ namespace FBAData
                     return program.ID;
 
                 }
+            }
+        }
+
+        public static void Delete(int ID)
+        {
+            var p = Program.GetProgram(ID);
+            using (var a = new ProgramContext())
+            {
+                a.Program.Remove(p);
             }
         }
     }
