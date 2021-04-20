@@ -12,16 +12,16 @@ namespace FBAData
 
         public static List<LearningCategory> GetLearningCategories()
         {
-            using (var a = new KnowledgeBaseContext() )
+            using (var i = new KnowledgeBaseContext() )
             {
                 try
                 {
 
-                    var query = a.LearningCategory.Where(i => i.SessionID == sessionID).OrderBy(i => i.Order).ToList();
+                    //var query = i.LearningCategory.Where(i => i.SessionID == sessionID).OrderBy(i => i.Order).ToList();
 
 
 
-                    return query.ToList();
+                    return null; //query.ToList();
 
                 }
                 catch (Exception ex)
