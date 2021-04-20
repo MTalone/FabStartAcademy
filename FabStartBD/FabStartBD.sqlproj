@@ -69,5 +69,6 @@
     <Build Include="dbo\Tables\LearningCategory.sql" />
     <Build Include="dbo\Tables\LearningUnit.sql" />
     <Build Include="dbo\Tables\TaskDocument.sql" />
+    <Build Include="dbo\Tables\Team.sql" />
   </ItemGroup>
 </Project>

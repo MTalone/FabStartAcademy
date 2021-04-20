@@ -1,19 +1,22 @@
 ﻿@model FabStartAcademy.Models.ProgramsModel
 
 @{
-    ViewData["Title"] = "Group";
+    ViewData["Title"] = "Program";
 }
 @if (Model.Program.ID == 0)
 {
 
-    <h1> @Resources.FabStartAcademy.NewProgram</h1>
+    <h1> @Resources.FabStartAcademy.NewMethod</h1>
+
+    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Method });
 }
 else
 {
-    <h1>@Model.Program.Title</h1>
+    <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.Program.Title</h1>
+
+    Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.Program.ID, Action = Actions.Method });
 
 }
-<h1>Group</h1>
 
 @if (Model.Program.IsRead)
 {
@@ -40,21 +43,21 @@ else
                 @Html.Raw(Model.Program.Description)
             </dd>
             @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>*@
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Image)
+                </dd>*@
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Program.MembersConfirmed)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Program.MembersConfirmed )
+                @Html.DisplayFor(model => model.Program.MembersConfirmed)
             </dd>
         </dl>
     </div>
     <div>
-        @Html.ActionLink("Edit", Actions.Program.Name, new { ID=Model.Program.ID,read=false }) |
+        @Html.ActionLink("Edit", Actions.Program.Name, new { ID = Model.Program.ID, read = false }) |
         <a asp-action="Index">Back to List</a>
     </div>
 
@@ -62,19 +65,38 @@ else
 }
 else
 {
-    <div class="row">
-        <div class="col-md-6">
-            <form asp-action="@Actions.Program.Name">
+    <div class="row form">
+        <div class="col-lg-12 " style="border-bottom:1px solid #eee">
+
+            @if (Model.Program.ID > 0)
+            {<h1>
+                    @Resources.FabStartAcademy.Edit  @Model.Program.Title
+                </h1>
+            }
+            else
+            {
+                <h1>  @Resources.FabStartAcademy.Add @Resources.FabStartAcademy.NewMethod.ToLower()</h1>
+            }
+
+        </div>
+    </div>
+    <div class="row form">
+
+        <form enctype="multipart/form-data" asp-action="@Actions.Program.Name">
+            <div class="col-lg-7">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(model => model.Program.ID)
+                @Html.HiddenFor(model => model.Program.LogoID)
                 <div class="form-group">
                     <label asp-for="Program.Title" class="control-label"></label>
                     <input asp-for="Program.Title" class="form-control" />
+
+
                     <span asp-validation-for="Program.Title" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label asp-for="Program.Description" class="control-label"></label>
-                    <textarea asp-for="Program.Description" class="form-control" rows="9" id="txtAreaDescription"></textarea>
+                    <textarea asp-for="Program.Description" class="form-control" rows="10" id="txtAreaDescription"></textarea>
                     <script>
                         // Replace the <textarea id="editor1"> with a CKEditor 4
                         // instance, using default configuration.
@@ -85,20 +107,44 @@ else
                     </script>
                     <span asp-validation-for="Program.Description" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label asp-for="Program.ProcessID" class="control-label"></label>
-                    @Html.DropDownListFor(x => x.Program.ProcessID, Model.Processes,"",new {@class="form-control" })
+                    @Html.DropDownListFor(x => x.Program.ProcessID, Model.Processes, "", new { @class = "form-control" })
                     <span asp-validation-for="Program.ProcessID" class="text-danger"></span>
                 </div>
 
+            </div>
 
-                @Html.HiddenFor(x => x.Program.ID)
-                @Html.HiddenFor(x=>x.Program.Code)
+            <div class="col-lg-5" style="text-align:center">
+                @if (!(Model.Program.Image is null) && Model.Program.Image!=string.Empty)
+                {
+                    <img src="@Model.Program.Image" width="200">
+                }
+                else
+                {
+                    <img src="~/imgs/placeholder-group.png" width="150">
+
+                }
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="file" name="Logo" id="Logo" style="display:none" />
+                    <a class="btn btn-primary browse" style="width:200px" onclick="$('#Logo').click();">Browse</a>
+                    <script>
+                        function clickLogo() { }
+
+                    </script>
                 </div>
-            </form>
-        </div>
+
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <input type="submit" value="@Resources.FabStartAcademy.Save" class="btn btn-primary" />
+                    <input type="submit" value="@Resources.FabStartAcademy.SaveAndNext" class="btn btn-primary" asp-route-isNext="true" />
+                </div>
+            </div>
+
+        </form>
+
     </div>
+
+
 }

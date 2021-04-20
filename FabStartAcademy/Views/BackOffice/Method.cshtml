@@ -1,7 +1,7 @@
 ﻿@model FabStartAcademy.Models.ProcessItem
 
 @{
-    ViewData["Title"] = "Program";
+    ViewData["Title"] = "Process";
 }
 
 @if (Model.ID == 0)
@@ -9,13 +9,13 @@
 
     <h1> @Resources.FabStartAcademy.NewMethod</h1>
 
-    Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ID, Action = Actions.Method });
+    Html.RenderPartial("MethodBreadCrumbs", new ProcessBreadCrumb { ProcessID = Model.ID, Action = Actions.Method });
 }
 else
 {
     <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.Title</h1>
 
-    Html.RenderPartial("ProgramBreadCrumbs",new ProcessBreadCrumbAction { ProgramID=Model.ID,Action=Actions.Method });
+    Html.RenderPartial("MethodBreadCrumbs",new ProcessBreadCrumb { ProcessID = Model.ID,Action=Actions.Method });
 
 }
 
@@ -94,7 +94,7 @@ else
                 </div>
               
                 <div class="col-lg-5" style="text-align:center">
-                    @if (!(Model.Logo is null))
+                    @if (!(Model.Logo is null)&&Model.Logo.Length>0)
                     {
                         <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Logo))" width="200">
                     }

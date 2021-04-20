@@ -7,11 +7,21 @@
 <h1>Groups</h1>
 
 <p>
-    <a asp-action="Group">@Resources.FabStartAcademy.CreateNew</a>
+    <a asp-action="@Actions.Program.Name">@Resources.FabStartAcademy.CreateNew</a>
 </p>
-<div class="col-12">
-    @foreach (var item in Model.Programs)
+<div >
+
+    @for (int i = 0; i < Model.Programs.Count; i++)
     {
-        Html.RenderPartial("ProgramItem", item);
+        if (i % 3 == 0)
+        {
+            Html.RenderPartial("ProgramItemRow", new ProgramItemRow {Start=i,End=(i+2> Model.Programs.Count-1? Model.Programs.Count-1:i+2),List=Model.Programs });
+        }
     }
+
+    @*@foreach (var item in Model.Programs)
+    {
+        
+        Html.RenderPartial("ProgramItem", item);
+    }*@
 </div>

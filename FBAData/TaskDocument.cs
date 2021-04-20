@@ -12,5 +12,20 @@ namespace FBAData
         public int DocumentID { get; set; }
 
         public Document Document{ get; set; }
+
+        public static int Save(TaskDocument taskDocument)
+        {
+            using (var a = new TaskContext())
+            {
+                
+                    
+                    var newgroup = a.TaskDocument.Add(taskDocument);
+
+                    a.SaveChanges();
+                    return newgroup.Entity.ID;
+               
+
+            }
+        }
     }
 }

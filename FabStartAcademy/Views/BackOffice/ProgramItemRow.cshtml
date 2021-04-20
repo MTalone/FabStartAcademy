@@ -1,0 +1,10 @@
+﻿
+@model ProgramItemRow
+
+
+<div class="row" style="margin-top:@(Model.Start==0?0:5)px;">
+   @for (int i = Model.Start; i <= Model.End; i++)
+   {
+       Html.RenderPartial("ProgramItem", Model.List[i]);
+   }
+</div>

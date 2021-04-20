@@ -22,6 +22,8 @@ namespace FBAData
 
         public byte[] Content { get; set; }
 
+        public string Path { get; set; }
+
 
         public static int Upload(Document document) 
         {

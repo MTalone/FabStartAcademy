@@ -180,6 +180,17 @@ namespace FBAData
 
             return toRet;
         }
+
+        public static List<TaskDocumentView> GetDocuments(int iD)
+        {
+            using (var a = new TaskContext())
+            {
+                return a.TaskDocument.Include(x => x.Document).Select(x => new TaskDocumentView { FileName = x.Document.FileName, DocumentID = x.DocumentID, TaskID = x.TaskID }).ToList();
+            }
+
+
+               
+        }
     }
 
 

@@ -5,13 +5,13 @@
     bool first = true;
 }
 
-<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProcessTitle</h1>
  @{
-     Html.RenderPartial("ProgramBreadCrumbs", new ProcessBreadCrumbAction { ProgramID = Model.ProgramID, Action = Actions.Sessions }); 
+     Html.RenderPartial("MethodBreadCrumbs", new ProcessBreadCrumb { ProcessID = Model.ProcessID, Action = Actions.Sessions }); 
      }
 
-<div class="col-12" style="margin-top:65px">
-    <a asp-action="@Actions.Session.Name" asp-route-programId="@Model.ProgramID">@Resources.FabStartAcademy.CreateNew</a>
+<div class="col-12" style="margin-top:25px">
+    <a asp-action="@Actions.Session.Name" asp-route-programId="@Model.ProcessID">@Resources.FabStartAcademy.CreateNew</a>
 </div>
 
 @foreach (var item in Model.Sessions)

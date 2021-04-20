@@ -1,0 +1,39 @@
+﻿@model TeamModel
+
+@{
+    ViewData["Title"] = "Sessions";
+    bool first = true;
+}
+
+<h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProgramTitle</h1>
+ @{
+     Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, Action = Actions.Teams });
+     }
+
+<div class="col-12" style="margin-top:25px">
+    <a asp-action="@Actions.Team.Name" asp-route-programId="@Model.ProgramID">@Resources.FabStartAcademy.CreateNew</a>
+</div>
+
+@foreach (var item in Model.Teams)
+{
+
+    <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
+        <a asp-action="@Actions.Team.Name" asp-route-id="@item.ID">
+
+            <div class="col-4 float-left card">
+                <div class=" card-body">
+                    <div class="col-4 float-left"><img src="@item.Image" width="70" /></div>
+                    <div class="col-8 float-left">
+                        @item.Title<br />
+                        
+                    </div>
+                </div>
+
+            </div>
+        </a>
+    </div>
+
+    first = false;
+
+}
+

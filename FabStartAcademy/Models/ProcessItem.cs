@@ -38,10 +38,10 @@ namespace FabStartAcademy.Models
         
     }
 
-    public class ProcessBreadCrumbAction 
+    public class ProcessBreadCrumb
     {
         public Action Action { get; set; }
-        public int ProgramID { get; set; }
+        public int ProcessID { get; set; }
 
         public int SessionID { get; set; }
 

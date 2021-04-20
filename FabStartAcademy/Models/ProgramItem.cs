@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FabStartAcademy.Models
 {
-    public class ProgramItem:ProcessRelated
+    public class ProgramItem: Item
     {  
         [Display(Name = "Method", ResourceType = typeof(Resources.FabStartAcademy))]
         public string Process { get; set; }
@@ -24,9 +24,26 @@ namespace FabStartAcademy.Models
 
         public string Code { get; set; }
 
+        public int? LogoID { get; set; }
+        public int? ProcessID { get; set; }
+    }
 
+    public class ProgramItemRow
+    {
+        public List<ProgramItem> List { get; set; }
+        public int Start { get; set; }
+
+        public int End { get; set; }
+    }
+    public class ProgramBreadCrumb
+    {
+        public Action Action { get; set; }
+        public int ProgramID { get; set; }
+
+        public int TeamID { get; set; }
+
+        public string Team { get; set; }
 
     }
 
-   
 }
