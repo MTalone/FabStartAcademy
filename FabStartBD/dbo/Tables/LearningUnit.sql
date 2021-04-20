@@ -5,6 +5,8 @@ CREATE TABLE [dbo].[LearningUnit] (
     [Teaser]    VARCHAR (225),
     [Content]   VARCHAR (4000),
     [CategoryID] INT NULL, 
+    [LogoID] INT NULL, 
     PRIMARY KEY CLUSTERED ([Id] ASC), 
-    CONSTRAINT [FK_LearningUnit_LearningCategory] FOREIGN KEY ([CategoryID]) REFERENCES [LearningCategory]([ID])
+    CONSTRAINT [FK_LearningUnit_LearningCategory] FOREIGN KEY ([CategoryID]) REFERENCES [LearningCategory]([ID]), 
+    CONSTRAINT [FK_LearningUnit_Document] FOREIGN KEY ([LogoID]) REFERENCES [Document]([Id]) 
     );
