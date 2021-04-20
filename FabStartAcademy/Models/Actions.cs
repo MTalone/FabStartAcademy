@@ -25,6 +25,8 @@ namespace FabStartAcademy.Models
         public static Action Download { get { return new Action { ID = 12, Controller = "File", Name = "Download" }; } }
         public static Action Teams { get { return new Action { ID = 13, Controller = "BackOffice", Name = "Teams" }; } }
 
+        public static Action Team { get { return new Action { ID = 14, Controller = "BackOffice", Name = "Team" }; } }
+
     }
 
     public class Action

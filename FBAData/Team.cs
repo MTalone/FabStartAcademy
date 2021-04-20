@@ -13,7 +13,7 @@ namespace FBAData
 
         public string Description { get; set; }
 
-        public int? ProgramID { get; set; }
+        public int ProgramID { get; set; }
 
         public int? LogoID { get; set; }
 
@@ -94,6 +94,8 @@ namespace FBAData
 
             }
         }
+
+
 
     }
 }
