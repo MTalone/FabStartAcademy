@@ -11,5 +11,9 @@ namespace FBAData
     {
         public DbSet<LearningCategory> LearningCategory { get; set; }
 
+        public DbSet<LearningUnit> LearningUnit { get; set; }
+
+        public DbSet<Document> Document { get; set; }
+
     }
 }
