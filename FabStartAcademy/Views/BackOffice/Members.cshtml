@@ -1,0 +1,27 @@
+﻿@model FabStartAcademy.Models.TeamModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Members</title>
+</head>
+<body>
+    <h1>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name) /  @Model.ProgramTitle</h1>
+    @{
+        Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, Action = Actions.Members });
+    }
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-title"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

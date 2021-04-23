@@ -21,6 +21,7 @@ namespace FabStartAcademy.Models
         public string Image { get; set; }
 
         public int? LogoID { get; set; }
+        public string Code { get; set; }
 
     }
     public class TeamModel
@@ -30,6 +31,14 @@ namespace FabStartAcademy.Models
         public string ProgramTitle { get; set; }
 
         public int ProgramID { get; set; }
+
+        public int TeamID { get; set; }
+
+        public List<Member> Members{get;set;}
+
+        public Team Team { get; set; }
+
+        public TeamModel() { }
 
         public TeamModel(int programID,string WebRootPath, string defaultPath)
         {

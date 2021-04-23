@@ -20,6 +20,7 @@
     @if (Model.IsReadOnly)
     {
         @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model=>model.Code)
 
         <dl class="row">
 

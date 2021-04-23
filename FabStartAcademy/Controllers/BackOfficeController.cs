@@ -199,7 +199,7 @@ namespace FabStartAcademy.Controllers
             {
                 var i = FBAData.Team.GetTeam(ID, true);
                 item = new TeamItem { ID = i.ID, Description = i.Description, Title = i.Name, ProgramID = i.ProgramID, ProgramTitle = i.Program.Name ,LogoID=i.LogoID, 
-                    Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : ""
+                    Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : "",Code=i.Code
                 };
                 item.IsReadOnly = read;
             }
@@ -279,7 +279,15 @@ namespace FabStartAcademy.Controllers
                 return RedirectToActionPermanent(Actions.Teams.Name, new { programID = item.ProgramID });
         }
 
+        public IActionResult Members (int teamID) 
+        {
+            TeamModel model = new TeamModel { TeamID = teamID, Team = FBAData.Team.GetTeam(teamID,true), Members = FBAData.Member.GetList(teamID) };
+            model.ProgramID = model.Team.ProgramID;
+            model.ProgramTitle = model.Team.Program.Name;
 
+
+            return View(model);
+        }
         public IActionResult Methods()
         {
             return View(new ProgramModel(0));

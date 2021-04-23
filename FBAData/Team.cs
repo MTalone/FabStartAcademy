@@ -21,6 +21,8 @@ namespace FBAData
 
         public Document Logo { get; set; }
 
+        public string Code { get; set; }
+
         public static List<Team> GetTeams(int programID)
         {
             using (var a = new ProgramContext())
