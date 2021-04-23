@@ -12,10 +12,10 @@ namespace FBAData
         public bool Active{get;set;}
         public string Teaser { get; set; }
         public string Content { get; set; }
-        public int CategoryID { get; set; }
         public int LogoID { get; set; }
-        public Document Document { get; set; }
-        public LearningCategory LearningCategory { get; set; }
+        public Document Logo { get; set; }
+        public int LearningCategoryID { get; set; }
+        public  LearningCategory LearningCategory { get; private set; }
 
         public static List<LearningUnit> GetList()
         {
@@ -23,7 +23,9 @@ namespace FBAData
             {
                 try
                 {
-                    var query = i.LearningUnit.ToList();
+                    var query = i.LearningUnit.Include(x => x.LearningCategory).Include(y => y.Logo).ToList();
+
+                   
 
                     return query;
 
@@ -46,7 +48,7 @@ namespace FBAData
 
                     LearningUnit query = i.LearningUnit.Where(i => i.ID == id).First();
 
-
+                   
 
                     return query;
 
@@ -86,13 +88,13 @@ namespace FBAData
 
         }
 
-        public static int Save(LearningUnit lc)
+        public static int Save(LearningUnit lu)
         {
             using (var a = new KnowledgeBaseContext())
             {
-                if (lc.ID == 0)
+                if (lu.ID == 0)
                 {
-                    var newgroup = a.LearningUnit.Add(lc);
+                    var newgroup = a.LearningUnit.Add(lu);
 
                     a.SaveChanges();
                     return newgroup.Entity.ID;
@@ -100,10 +102,10 @@ namespace FBAData
                 else
                 {
 
-                    a.LearningUnit.Update(lc);
+                    a.LearningUnit.Update(lu);
 
                     a.SaveChanges();
-                    return lc.ID;
+                    return lu.ID;
 
                 }
 

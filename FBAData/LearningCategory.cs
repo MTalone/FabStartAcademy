@@ -40,6 +40,8 @@ namespace FBAData
                 try
                 {
 
+                  
+
                     LearningCategory query = i.LearningCategory.Where(i => i.ID == id).First();
 
 
