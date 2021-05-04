@@ -1,4 +1,5 @@
 ﻿using FBAData;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,11 @@ namespace FabStartAcademy.Models
 
         public int TeamID { get; set; }
 
-        public List<Member> Members{get;set;}
+        public List<MemberItem> Members{get;set;}
+
+        public MemberItem Member { get; set; }
+
+        public List<SelectListItem> Roles { get; set; }
 
         public Team Team { get; set; }
 

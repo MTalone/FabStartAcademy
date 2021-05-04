@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirmed.
+        /// </summary>
+        public static string Confirmed {
+            get {
+                return ResourceManager.GetString("Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create new.
         /// </summary>
         public static string CreateNew {
@@ -156,6 +165,60 @@ namespace Resources {
         public static string IsEvaluated {
             get {
                 return ResourceManager.GetString("IsEvaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to clipboard.
+        /// </summary>
+        public static string Member_CopyClipboard {
+            get {
+                return ResourceManager.GetString("Member_CopyClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for users only.
+        /// </summary>
+        public static string Member_ForUsers {
+            get {
+                return ResourceManager.GetString("Member_ForUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual inventation for all roles.
+        /// </summary>
+        public static string Member_ManualInvitation {
+            get {
+                return ResourceManager.GetString("Member_ManualInvitation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and this registration url.
+        /// </summary>
+        public static string Member_RegistrationURL {
+            get {
+                return ResourceManager.GetString("Member_RegistrationURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share this token with anyone you want to join the group directly.
+        /// </summary>
+        public static string Member_ShareThisToken {
+            get {
+                return ResourceManager.GetString("Member_ShareThisToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team token.
+        /// </summary>
+        public static string Member_TeamToken {
+            get {
+                return ResourceManager.GetString("Member_TeamToken", resourceCulture);
             }
         }
         
@@ -259,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not confirmed.
+        /// </summary>
+        public static string NotConfirmed {
+            get {
+                return ResourceManager.GetString("NotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Program.
         /// </summary>
         public static string Program {
@@ -358,6 +430,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Team members.
+        /// </summary>
+        public static string TeamMembers {
+            get {
+                return ResourceManager.GetString("TeamMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teams.
         /// </summary>
         public static string Teams {
@@ -372,6 +453,15 @@ namespace Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tool.
+        /// </summary>
+        public static string Tool {
+            get {
+                return ResourceManager.GetString("Tool", resourceCulture);
             }
         }
         

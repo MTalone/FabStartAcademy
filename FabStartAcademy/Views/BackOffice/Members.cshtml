@@ -1,7 +1,17 @@
 ﻿@model FabStartAcademy.Models.TeamModel
 
 @{
-    Layout = null;
+
+    @using Microsoft.AspNetCore.Mvc;
+    @using Microsoft.AspNetCore.Mvc.Rendering;
+    @using Microsoft.Extensions.Configuration;
+
+
+    var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+    .AddJsonFile("appsettings.json");
+    var config = builder.Build();
+
+    string codeStart = config["Constants:CodeBegin"];
 }
 
 <!DOCTYPE html>
@@ -14,14 +24,119 @@
 <body>
     <h1>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name) /  @Model.ProgramTitle</h1>
     @{
-        Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, Action = Actions.Members });
+        Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, TeamID = Model.TeamID, Team = Model.Team.Name, Action = Actions.Members });
     }
-    <div class="row">
+    <div class="row" style="margin-top:20px">
         <div class="col-4">
-            <div class="card">
-                <div class="card-title"></div>
+            <div class="card" style="min-height:580px;">
+                <div class="card-title" style="text-align: center">
+                    <div class="row">
+                        <div class="col-12" style="margin-left:10px">
+                            <h3>@Resources.FabStartAcademy.Member_TeamToken  @Resources.FabStartAcademy.Member_ForUsers</h3><hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>@Resources.FabStartAcademy.Member_ShareThisToken</p>
+                    <hr />
+                    <h3>@codeStart@Model.Team.Code</h3>
+                    <div><a href="#" data-copy="@codeStart@Model.Team.Code">@Resources.FabStartAcademy.Member_CopyClipboard</a></div>
+                    <hr />
+                    <p>@Resources.FabStartAcademy.Member_RegistrationURL</p>
+                    <p>[Registration URL]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card" style="min-height:580px;padding-left:5px;">
+                <div class="card-title" style="text-align: center">
+                    <h3>@Resources.FabStartAcademy.Member_ManualInvitation</h3>
+                    <hr />
+                </div>
+                <div class="card-body">
+                    <span class="click icn-primary-large bi-person-plus-fill" id="addMember"></span>
+                    <div id="newMember" style="display:none">
+                        <form asp-action="@Actions.Member.Name" asp-route-teamId="@Model.TeamID">
+                            <div class="form-group">
+                                <label asp-for="Member.Email" class="control-label"></label>
+                                <input asp-for="Member.Email" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Member.RoleID" class="control-label"></label>
+                                @Html.DropDownListFor(x => x.Member.RoleID, Model.Roles, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="@Resources.FabStartAcademy.Save" class="btn btn-primary" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card " style="min-height:580px;padding-left:5px;">
+                <div class="card-title" style="text-align: center">
+                    <div class="row">
+                        <div class="col-12"><h3>@Resources.FabStartAcademy.TeamMembers</h3></div>
+
+                    </div>
+                    <hr />
+                </div>
+                <div class="card-body">
+                    @{
+                        bool isFirstConfirmed = true;
+                        bool isFirstNotConfirmed = true;
+                    }
+                    @foreach (var x in Model.Members)
+                    {
+                        if (x.IsConfirmed && isFirstConfirmed)
+                        {
+                            isFirstConfirmed = false;
+                            <div><h4>@Resources.FabStartAcademy.Confirmed</h4></div>
+                        }
+
+                        if (!x.IsConfirmed && isFirstNotConfirmed)
+                        {
+                            isFirstNotConfirmed = false;
+                            <div><h4>@Resources.FabStartAcademy.NotConfirmed</h4></div>
+                        }
+                        <div class="row">
+
+                            <div class="col-12">
+                                @if (x.IsConfirmed)
+                                {
+                                    <div class="bi-check-circle-fill success"></div>
+                                } @x.Email <div class="badge badge-secondary">@x.RoleName</div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        $("a[data-copy]").on("click", function () {
+
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(this).attr("data-copy")).select();
+            document.execCommand("copy");
+            $temp.remove();
+        })
+
+        $("#addMember.bi-person-plus-fill").click(function (e) {
+            debugger;
+            $("#newMember").show();
+            $("#addMember").hide();
+        })
+
+
+
+
+
+
+    </script>
 </body>
 </html>

@@ -17,7 +17,7 @@ namespace FabStartAcademy.Models
 
         public string ProgramTitle { get; set; }
 
-        
+        public int Order { get; set; }
 
     }
     public class SessionModel
@@ -26,10 +26,12 @@ namespace FabStartAcademy.Models
         public List<SessionItem> Sessions{ get; set; }
 
         public int ProcessID { get; set; }
+
+
         public SessionModel(int programID) 
         {
             ProcessTitle = FBAData.Process.GetProcess(programID).Name;
-            Sessions = Session.GetSessions(programID).Select(x=>new SessionItem {Title=x.Name,NumberSubtopics=x.NumberTasks,ID=x.ID,ProcessID=x.ProcessID }).ToList() ;
+            Sessions = Session.GetSessions(programID).Select(x=>new SessionItem {Title=x.Name,NumberSubtopics=x.NumberTasks,ID=x.ID,ProcessID=x.ProcessID,Order=x.Order }).ToList() ;
             ProcessID = programID;
         }
     }

@@ -82,6 +82,12 @@ namespace FBAData
             {
                 if (team.ID == 0)
                 {
+                    Guid g = Guid.NewGuid();
+                    string GuidString = Convert.ToBase64String(g.ToByteArray());
+                    GuidString = GuidString.Replace("=", "");
+                    GuidString = GuidString.Replace("+", "");
+                    team.Code = GuidString.Substring(0, 10);
+
                     var newgroup = a.Team.Add(team);
                     a.SaveChanges();
                     return newgroup.Entity.ID;

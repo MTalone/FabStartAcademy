@@ -68,5 +68,13 @@ namespace FBAData
 
             }
         }
+
+        public static Member GetByEmain(string email)
+        {
+            using (var a = new UserContext())
+            {
+                return a.Member.Where(x=>x.Email==email).FirstOrDefault();
+            }
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace FBAData
         [Display(Name = "AvailableOn", ResourceType = typeof(Resources.FabStartAcademy))]
         public DateTime? AvailableOn { get; set; }
 
+        [Display(Name = "Tool", ResourceType = typeof(Resources.FabStartAcademy))]
         public int? ToolID { get; set; }
 
         public static List<Task> GetTasks(int sessionID)
@@ -185,7 +186,7 @@ namespace FBAData
         {
             using (var a = new TaskContext())
             {
-                return a.TaskDocument.Include(x => x.Document).Select(x => new TaskDocumentView { FileName = x.Document.FileName, DocumentID = x.DocumentID, TaskID = x.TaskID }).ToList();
+                return a.TaskDocument.Include(x => x.Document).Where(x=>x.TaskID== iD).Select(x => new TaskDocumentView { FileName = x.Document.FileName, DocumentID = x.DocumentID, TaskID = x.TaskID }).ToList();
             }
 
 

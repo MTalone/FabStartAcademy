@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FBAData
@@ -17,7 +18,11 @@ namespace FBAData
         public int MemberID { get; set; }
         public bool IsConfirmed { get; set; }
 
+        public int RoleID { get; set; }
+
         public Member Member { get; set; }
+
+        public Role Role { get; set; }
 
         //public static List<TeamMember> GetList() {
         //    using (var a = new UserContext())
@@ -55,7 +60,7 @@ namespace FBAData
             {
                 if (tm.ID == 0)
                 {
-
+                   
 
                     var newgroup = a.TeamMember.Add(tm);
 
@@ -74,5 +79,20 @@ namespace FBAData
 
         }
 
+        public static bool Exists(int teamID, int memberid)
+        {
+            using (var a = new UserContext())
+            {
+                return a.TeamMember.Any(x=>x.TeamID==teamID && x.MemberID==memberid);
+            }
+        }
+
+        public static List<TeamMember> GetList(int teamID) 
+        {
+            using (var a = new UserContext())
+            {
+                return a.TeamMember.Include(x=>x.Role).Include(x=>x.Member).Where(x=>x.TeamID==teamID).ToList();
+            }
+        }
     }
 }

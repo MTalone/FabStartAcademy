@@ -129,6 +129,9 @@
   <data name="AvailableOn" xml:space="preserve">
     <value>Available on</value>
   </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
   <data name="CreateNew" xml:space="preserve">
     <value>Create new</value>
   </data>
@@ -156,6 +159,24 @@
   <data name="MembersConfirmed" xml:space="preserve">
     <value>Members confirmed</value>
   </data>
+  <data name="Member_CopyClipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="Member_ForUsers" xml:space="preserve">
+    <value>for users only</value>
+  </data>
+  <data name="Member_ManualInvitation" xml:space="preserve">
+    <value>Manual inventation for all roles</value>
+  </data>
+  <data name="Member_RegistrationURL" xml:space="preserve">
+    <value>and this registration url</value>
+  </data>
+  <data name="Member_ShareThisToken" xml:space="preserve">
+    <value>Share this token with anyone you want to join the group directly</value>
+  </data>
+  <data name="Member_TeamToken" xml:space="preserve">
+    <value>Team token</value>
+  </data>
   <data name="Mentor" xml:space="preserve">
     <value>Mentor</value>
   </data>
@@ -182,6 +203,9 @@
   </data>
   <data name="NewTopic" xml:space="preserve">
     <value>New topic</value>
+  </data>
+  <data name="NotConfirmed" xml:space="preserve">
+    <value>Not confirmed</value>
   </data>
   <data name="Program" xml:space="preserve">
     <value>Program</value>
@@ -216,11 +240,17 @@
   <data name="Team" xml:space="preserve">
     <value>Team</value>
   </data>
+  <data name="TeamMembers" xml:space="preserve">
+    <value>Team members</value>
+  </data>
   <data name="Teams" xml:space="preserve">
     <value>Teams</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="Tool" xml:space="preserve">
+    <value>Tool</value>
   </data>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>

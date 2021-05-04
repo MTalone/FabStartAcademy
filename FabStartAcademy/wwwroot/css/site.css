@@ -38,6 +38,14 @@ hr {
         background-color:white
     }
 
+.icn-primary-large {
+    color: #ff895a;
+    font-size:40px
+}
+.click{
+    cursor:pointer;
+}
+
 .badge-primary {
     color: #fff;
     background-color: #ff895a;
@@ -56,6 +64,21 @@ hr {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #ddd;
+}
+
+[data-letters]:before {
+    content: attr(data-letters);
+    display: inline-block;
+    font-size: 1em;
+    width: 2.5em;
+    height: 2.5em;
+    line-height: 2.5em;
+    text-align: center;
+    border-radius: 50%;
+    background: plum;
+    vertical-align: middle;
+    margin-right: 1em;
+    color: white;
 }
 
 

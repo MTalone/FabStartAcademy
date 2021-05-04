@@ -7,14 +7,39 @@ namespace FabStartAcademy.Models
     public class DashBoardModel
     {
        public List<DashBoardItem> ItemList = new List<DashBoardItem>();
-        public List<ProgramItem> groups = new List<ProgramItem>();
-        public DashBoardModel()
+        public List<ProgramItem> Programs = new List<ProgramItem>();
+        public DashBoardModel(string WebRootPath)
         {
+            string programDefaultPath = "/imgs/placeholder-group.png";
 
-            
             var groupDB = FBAData.Program.GetPrograms(3);
 
-            groups = groupDB.Select(x => new ProgramItem { Title = x.Name, Process = x.Process is null?"": x.Process.Name,Image= "/imgs/thumb_351_image_big.png" ,ID=x.ID}).ToList();
+            Programs = new List<ProgramItem>();
+
+            foreach (var x in groupDB)
+            {
+                ProgramItem pi = new ProgramItem
+                {
+
+                    Title = x.Name,
+
+                    Process = x.Process != null ? x.Process.Name : string.Empty,
+                    ID = x.ID
+                };
+                if (!(x.Logo is null))
+                {
+                    pi.Image = x.Logo.Path;
+                    if (!(pi.Image is null))
+                    {
+                        pi.Image = pi.Image.Replace(WebRootPath, "");
+                    }
+                }
+                if (pi.Image is null | pi.Image == string.Empty)
+                {
+                    pi.Image = programDefaultPath;
+                }
+                Programs.Add(pi);
+            }
 
             DashBoardBO dashBoardBO = new DashBoardBO();
 

@@ -19,7 +19,7 @@
             @Resources.FabStartAcademy.Programs
         </h2>
 
-        @foreach (var item in Model.groups)
+        @foreach (var item in Model.Programs)
         {
             Html.RenderPartial("ProgramItem", item);
         }

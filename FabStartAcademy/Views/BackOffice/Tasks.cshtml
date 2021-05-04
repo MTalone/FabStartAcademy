@@ -23,9 +23,10 @@
             <div class="col-3" style="float:right;margin-top:20px;font-size:20px">
                 <div class="col-4" style="float:left">&nbsp;</div>
                 <div class="col-8" style="float:left">
-                    <form asp-action="@Actions.TaskOrder.Name" asp-route-id="@item.ID" asp-route-sessionID="@item.SessionID" asp-route-order="@(item.Order-1)" style="float:left;">
+                    @*<form asp-action="@Actions.Task.Name" asp-route-id="@item.ID" asp-route-sessionID="@item.SessionID" style="float:left;">
                         <button class="btn btn-secondary bi-eye" style="padding:2px"></button>
-                    </form>
+                    </form>*@
+                    <button class="btn btn-secondary bi-eye float-left" style="padding:2px;margin-top:3px" asp-action="@Actions.Task.Name" asp-route-id="@item.ID" asp-route-sessionId="@item.SessionID"></button>
                     <form asp-action="@Actions.TaskDelete.Name" asp-route-id="@item.ID" asp-route-sessionID="@item.SessionID" style="float:left;margin-left:10px;">
                         <button class="btn btn-danger bi-trash-fill" style="padding:2px"></button>
                     </form>

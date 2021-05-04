@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Sessions";
     bool first = true;
+    int i = 0;
 }
 
 <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.ProcessTitle</h1>
@@ -17,16 +18,48 @@
 @foreach (var item in Model.Sessions)
 {
 
-    <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
-        <a asp-action="@Actions.Session.Name" asp-route-id="@item.ID" asp-route-programId="@item.ProcessID">
-            <div class="col-10" style="float:left"><h2>@item.Title</h2></div>
-            <div class="col-2" style="float:right; margin-top:20px">
-                <span class="badge badge-pill badge-secondary"> @item.NumberSubtopics</span> Subtopics 
-            </div> 
+<div class="col-12 card" style="@(!first? "margin-top:10px":"")">
+    <div class="" style="float:left">
+        <a class="col-10 float-left" asp-action="@Actions.Session.Name" asp-route-id="@item.ID" asp-route-programId="@item.ProcessID">
+            <h2>@item.Title</h2>
+
+
         </a>
+        <div class="col-2 float-left" style="margin-top:20px">
+            <a class=" " asp-action="@Actions.Tasks.Name" asp-route-sessionid="@item.ID">
+                <span class="badge badge-pill badge-secondary"> @item.NumberSubtopics</span> Subtopics
+            </a>
+            @if (i < Model.Sessions.Count - 1)
+            {
+
+
+
+
+
+                <form asp-action="@Actions.SessionOrder.Name" asp-route-id="@item.ID" asp-route-processID="@item.ProcessID" asp-route-order="@(item.Order+1)" style="float:left; margin-right:10px;">
+                    <button class="btn btn-primary bi-arrow-down" style="padding:2px"></button>
+                </form>
+
+            }
+            @if (i > 0)
+            {
+
+
+                <form asp-action="@Actions.SessionOrder.Name" asp-route-id="@item.ID" asp-route-processID="@item.ProcessID" asp-route-order="@(item.Order-1)" style='float:left;margin-right:10px;");'>
+                    <button class="btn btn-primary bi-arrow-up" style="padding:2px"></button>
+                </form>
+
+
+
+
+            }
+        </div>
+
     </div>
 
-    first = false;
+</div>
 
+    first = false;
+    i++;
 }
 
