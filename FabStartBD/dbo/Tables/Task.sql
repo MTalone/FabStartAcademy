@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Task] (
     [Id]           INT           IDENTITY (1, 1) NOT NULL,
-    [Name]         VARCHAR (100) NOT NULL,
-    [Description]  VARCHAR (400) NOT NULL,
+    [Name]         NVARCHAR (100) NOT NULL,
+    [Description]  NVARCHAR (400) NOT NULL,
     [SessionID]    INT           NOT NULL,
     [TaskType]     INT           DEFAULT ((0)) NOT NULL,
     [Instructions] VARCHAR (MAX) NULL,

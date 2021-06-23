@@ -664,5 +664,33 @@ namespace FabStartAcademy.Controllers
 
             return RedirectToActionPermanent(Actions.Task.Name, new { ID = taskID, SessionID = sessionID });
         }
+
+
+        [HttpPost]
+        public IActionResult TaskDocumentDelete(int taskDocumentID, int documentId,int taskID) 
+        {
+            FBAData.Task t = FBAData.Task.GetTask(taskID);
+            var template = FBAData.Document.Download(documentId);
+            try
+            {
+               
+
+                bool success = FBAData.TaskDocument.Delete(taskDocumentID);
+                if (success)
+                {
+                   
+                    System.IO.File.Delete(template.Path);
+                }
+            }
+            catch (Exception ex)
+            {
+
+              
+            }
+           
+
+
+            return RedirectToActionPermanent(Actions.Task.Name, new { ID = taskID, SessionID = t.SessionID });
+        }
     }
 }

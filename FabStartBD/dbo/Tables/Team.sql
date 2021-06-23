@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Team]
 (
 	[ID] INT NOT NULL IDENTITY PRIMARY KEY, 
-    [Name] VARCHAR(250) NOT NULL, 
-    [Description] VARCHAR(1000) NULL, 
+    [Name] NVARCHAR(250) NOT NULL, 
+    [Description] NVARCHAR(1000) NULL, 
     [LogoID] INT NULL,
     [ProgramID] INT NOT NULL, 
     

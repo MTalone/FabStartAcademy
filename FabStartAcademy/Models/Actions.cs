@@ -32,6 +32,8 @@ namespace FabStartAcademy.Models
 
         public static Action SessionOrder { get { return new Action { ID = 15, Controller = "BackOffice", Name = "SessionOrder" }; } }
 
+        public static Action TaskDocumentDelete { get { return new Action { ID = 15, Controller = "BackOffice", Name = "TaskDocumentDelete" }; } }
+
     }
 
     public class Action

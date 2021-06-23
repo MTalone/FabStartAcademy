@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Program] (
     [Id]          INT           IDENTITY (1, 1) NOT NULL,
-    [Name]        VARCHAR (100) NOT NULL,
-    [Description] VARCHAR (MAX) NOT NULL,
+    [Name]        NVARCHAR (100) NOT NULL,
+    [Description] NVARCHAR (MAX) NOT NULL,
     [ProcessID]   INT           NULL,
     [Code]        VARCHAR (10)  NULL,
     [LogoID]      INT           NULL,

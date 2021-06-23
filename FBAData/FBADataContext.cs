@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ namespace FBAData
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
+               var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json");
+            var config = builder.Build();
 
-            optionsBuilder.UseSqlServer( @"Server=(localdb)\mssqllocaldb;Database=FabStart;Integrated Security=True");
+            optionsBuilder.UseSqlServer(config["ConnectionStrings:DefaultConnection"]);
         }
 
 

@@ -21,7 +21,9 @@ namespace FBAData
 
         public Session Session { get; set; }
         public int ID { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
         public int SessionID { get; set; }
 
@@ -186,7 +188,7 @@ namespace FBAData
         {
             using (var a = new TaskContext())
             {
-                return a.TaskDocument.Include(x => x.Document).Where(x=>x.TaskID== iD).Select(x => new TaskDocumentView { FileName = x.Document.FileName, DocumentID = x.DocumentID, TaskID = x.TaskID }).ToList();
+                return a.TaskDocument.Include(x => x.Document).Where(x=>x.TaskID== iD).Select(x => new TaskDocumentView {ID=x.ID, FileName = x.Document.FileName, DocumentID = x.DocumentID, TaskID = x.TaskID }).ToList();
             }
 
 

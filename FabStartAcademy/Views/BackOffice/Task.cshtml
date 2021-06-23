@@ -13,10 +13,10 @@
     <div class="row">
         <div class="col-md-12">
             <form asp-action="Task" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 @Html.HiddenFor(x => x.Task.ID)
                 @Html.HiddenFor(x => x.Task.SessionID)
-
+               
                 <div class="form-group col-lg-8">
                     <label asp-for="Task.Name" class="control-label"></label>
                     <input asp-for="Task.Name" class="form-control" />
@@ -68,7 +68,11 @@
     <script>
 
     $(document).ready(function () {
-        CKEDITOR.replace('txtAreaInstructions');
+        CKEDITOR.replace('txtAreaInstructions', {
+
+            extraPlugins: 'embed',
+            embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
+        });
         $("#Task_TaskType").change(function (x) {
             debugger;
             var taskTool ='@((int)FBAData.Task.TaskTypes.Tool)'

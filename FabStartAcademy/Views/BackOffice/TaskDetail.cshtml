@@ -74,7 +74,7 @@
                 @Resources.FabStartAcademy.Documents
             </div>
             <div class="card-body">
-                <form asp-action="TaskDocument" enctype="multipart/form-data" style="margin-bottom:10px">
+                <form asp-action="TaskDocument" enctype="multipart/form-data" style="margin-bottom:10px" id="uploadFile">
                     <input type="hidden" value="@Model.Task.SessionID" name="sessionID" />
 
                     <input type="hidden" value="@Model.Task.ID" name="taskID" />
@@ -83,20 +83,29 @@
                             <input type="file" name="template" id="template" style="display:none" />
                             <a class="btn btn-primary browse col-12" onclick="$('#template').click();">Browse</a>
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-primary">@Resources.FabStartAcademy.Upload</button>
-                        </div>
+                        @*<div class="col-2">
+                            <button class="btn btn-primary" >@Resources.FabStartAcademy.Upload</button>
+                        </div>*@
                     </div>
                 </form>
                 <hr />
                 @foreach(var d in Model.TaskDocuments){
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-10">
                             @Html.ActionLink(d.FileName,Actions.Download.Name,Actions.Download.Controller,new { documentID=d.DocumentID })
                         </div>
+                        <div class="col-2"><form asp-action="@Actions.TaskDocumentDelete.Name" asp-route-documentid="@d.DocumentID" asp-route-taskdocumentid="@d.ID"  asp-route-taskid="@d.TaskID" style="float:left;margin-left:10px;">
+    <button class="btn btn-danger bi-trash-fill" style="padding:2px"></button>
+</form></div>
                     </div>
                 }
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function ()
+    {
+        $('#template').change(function (e) { $("#uploadFile").submit() });
+    });
+</script>

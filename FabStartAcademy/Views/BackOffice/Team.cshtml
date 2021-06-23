@@ -79,7 +79,11 @@
                             // Replace the <textarea id="editor1"> with a CKEditor 4
                             // instance, using default configuration.
                             $(document).ready(function () {
-                                CKEDITOR.replace('txtAreaDescription');
+                                CKEDITOR.replace('txtAreaDescription'), {
+
+                                    extraPlugins: 'embed',
+                                    embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
+                                };
                             })
 
                         </script>

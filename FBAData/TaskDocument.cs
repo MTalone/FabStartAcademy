@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FBAData
@@ -26,6 +27,30 @@ namespace FBAData
                
 
             }
+        }
+
+        public static bool Delete(int taskDocumentID)
+        {
+            try
+            {
+                using (var a = new TaskContext())
+                {
+                    var td = a.TaskDocument.Where(x => x.ID == taskDocumentID).First();
+                    var doc = a.Document.Where(x => x.ID == td.DocumentID).First();
+                    a.TaskDocument.Remove(td);
+                    a.Document.Remove(doc);
+                    a.SaveChanges();
+                    return true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

@@ -1,9 +1,9 @@
 CREATE TABLE [dbo].[LearningUnit] (
     [Id]        INT IDENTITY (1, 1) NOT NULL,
-    [Title]     VARCHAR (100) NOT NULL,
+    [Title]     NVARCHAR (100) NOT NULL,
     [Active]    BIT NOT NULL,
-    [Teaser]    VARCHAR (225),
-    [Content]   VARCHAR (4000),
+    [Teaser]    NVARCHAR (225),
+    [Content]   NVARCHAR (4000),
     [CategoryID] INT NULL, 
     [LogoID] INT NULL, 
     PRIMARY KEY CLUSTERED ([Id] ASC), 
