@@ -94,5 +94,13 @@ namespace FBAData
                 return a.TeamMember.Include(x=>x.Role).Include(x=>x.Member).Where(x=>x.TeamID==teamID).ToList();
             }
         }
+
+        public static TeamMember Get(int teamID, int memberID)
+        {
+            using (var a = new UserContext())
+            {
+                return a.TeamMember.Where(x => x.TeamID == teamID && x.MemberID == memberID).FirstOrDefault();
+            }
+        }
     }
 }

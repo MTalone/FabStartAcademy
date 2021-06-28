@@ -52,7 +52,7 @@ namespace FabStartAcademy.Models
             {
                 Title = x.Name,
                 ID = x.ID,
-                ProgramID = x.ProgramID,
+                ProgramID =x.ProgramID??0,
                 Description = x.Description,
                 ProgramTitle = ProgramTitle,
                 Image = GetImageFromDocument(x.Logo, WebRootPath, defaultPath)

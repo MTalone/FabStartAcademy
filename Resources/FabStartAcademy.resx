@@ -132,6 +132,9 @@
   <data name="Confirmed" xml:space="preserve">
     <value>Confirmed</value>
   </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
   <data name="CreateNew" xml:space="preserve">
     <value>Create new</value>
   </data>
@@ -147,11 +150,26 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
   <data name="ForEvaluation" xml:space="preserve">
     <value>For evaluation</value>
   </data>
+  <data name="InvalidTeam" xml:space="preserve">
+    <value>Invalid team</value>
+  </data>
   <data name="IsEvaluated" xml:space="preserve">
     <value>Will this task be evaluated?</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Log in</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>
@@ -207,11 +225,20 @@
   <data name="NotConfirmed" xml:space="preserve">
     <value>Not confirmed</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="Program" xml:space="preserve">
     <value>Program</value>
   </data>
   <data name="Programs" xml:space="preserve">
     <value>Programs</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -221,6 +248,9 @@
   </data>
   <data name="Sessions" xml:space="preserve">
     <value>Sessions</value>
+  </data>
+  <data name="SignUpForFree" xml:space="preserve">
+    <value>Sign up for free</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>

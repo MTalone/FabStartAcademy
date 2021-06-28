@@ -10,8 +10,13 @@ namespace FBAData
     {
         public int ID { get; set; }
         public string Email { get; set; }
-
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public bool IsUser { get; set; }
+
+        public string UserID { get; set; }
+
+        public int PartnerID { get; set; }
 
         public static List<Member> GetList(int teamID)
         {
@@ -69,11 +74,19 @@ namespace FBAData
             }
         }
 
-        public static Member GetByEmain(string email)
+        public static Member GetByEmail(string email)
         {
             using (var a = new UserContext())
             {
                 return a.Member.Where(x=>x.Email==email).FirstOrDefault();
+            }
+        }
+        
+        public static List<TeamMember> GetTeams(int MemberID)
+        {
+            using (var a = new UserContext())
+            {
+                return a.TeamMember.Where(x => x.MemberID == MemberID).ToList();
             }
         }
     }

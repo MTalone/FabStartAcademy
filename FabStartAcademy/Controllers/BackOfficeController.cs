@@ -200,13 +200,13 @@ namespace FabStartAcademy.Controllers
 
             if (ID > 0)
             {
-                var i = FBAData.Team.GetTeam(ID, true);
+                var i = FBAData.Team.Get(ID, true);
                 item = new TeamItem
                 {
                     ID = i.ID,
                     Description = i.Description,
                     Title = i.Name,
-                    ProgramID = i.ProgramID,
+                    ProgramID = i.ProgramID??0,
                     ProgramTitle = i.Program.Name,
                     LogoID = i.LogoID,
                     Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : "",
@@ -292,9 +292,9 @@ namespace FabStartAcademy.Controllers
 
         public IActionResult Members(int teamID)
         {
-            TeamModel model = new TeamModel { TeamID = teamID, Team = FBAData.Team.GetTeam(teamID, true),
+            TeamModel model = new TeamModel { TeamID = teamID, Team = FBAData.Team.Get(teamID, true),
                 Members = FBAData.TeamMember.GetList(teamID).Select(x => new MemberItem {Email=x.Member.Email,RoleName=x.Role.Name,RoleID=x.RoleID,IsConfirmed=x.IsConfirmed } ).OrderByDescending(x=>x.IsConfirmed).ToList()};
-            model.ProgramID = model.Team.ProgramID;
+            model.ProgramID = model.Team.ProgramID.Value;
             model.ProgramTitle = model.Team.Program.Name;
             model.Roles = FBAData.Role.GetList().Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.Name }).ToList();
 
@@ -305,9 +305,9 @@ namespace FabStartAcademy.Controllers
         public IActionResult Member(int teamID, TeamModel model)
         {
             //verificar se Member existe.
-            FBAData.Member m =FBAData.Member.GetByEmain(model.Member.Email);
+            FBAData.Member m =FBAData.Member.GetByEmail(model.Member.Email);
 
-            var team = FBAData.Team.GetTeam(teamID,false);
+            var team = FBAData.Team.Get(teamID,false);
 
             int memberid = 0;
             if (m is null || m.ID == 0)

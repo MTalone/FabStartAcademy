@@ -7,7 +7,8 @@ namespace FabStartAcademy.Models
 {
     public class Actions
     {
-       public static Action Programs { get { return new Action {ID=1, Controller = "BackOffice", Name = "Programs" }; } }
+        public static Action Dashboard { get { return new Action { ID = 0, Controller = "BackOffice", Name = "Dashboard" }; } }
+        public static Action Programs { get { return new Action {ID=1, Controller = "BackOffice", Name = "Programs" }; } }
         public static Action Program { get { return new Action { ID = 2, Controller = "BackOffice", Name = "Program" }; } }
         public static Action Methods { get { return new Action { ID = 3, Controller = "BackOffice", Name = "Methods" }; } }
         public static Action Method { get { return new Action { ID = 4, Controller = "BackOffice", Name = "Method" }; } }
@@ -34,6 +35,7 @@ namespace FabStartAcademy.Models
 
         public static Action TaskDocumentDelete { get { return new Action { ID = 15, Controller = "BackOffice", Name = "TaskDocumentDelete" }; } }
 
+        public static Action Home { get { return new Action { ID = 16, Controller = "Home", Name = "Index" }; } }
     }
 
     public class Action

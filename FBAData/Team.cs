@@ -13,7 +13,7 @@ namespace FBAData
 
         public string Description { get; set; }
 
-        public int ProgramID { get; set; }
+        public int? ProgramID { get; set; }
 
         public int? LogoID { get; set; }
 
@@ -22,6 +22,8 @@ namespace FBAData
         public Document Logo { get; set; }
 
         public string Code { get; set; }
+
+        public int PartnerID { get; set; }
 
         public static List<Team> GetTeams(int programID)
         {
@@ -47,7 +49,7 @@ namespace FBAData
 
         }
 
-        public static Team GetTeam(int ID, bool includeProgram)
+        public static Team Get(int ID, bool includeProgram)
         {
             using (var a = new ProgramContext())
             {
@@ -76,6 +78,14 @@ namespace FBAData
             }
         }
 
+        public static Team GetByToken(string groupToken)
+        {
+            using (var a = new ProgramContext())
+            {
+                return a.Team.Where(i => i.Code == groupToken).ToList().FirstOrDefault();
+            }
+        }
+
         public static int Save(Team team)
         {
             using (var a = new ProgramContext())
@@ -86,7 +96,7 @@ namespace FBAData
                     string GuidString = Convert.ToBase64String(g.ToByteArray());
                     GuidString = GuidString.Replace("=", "");
                     GuidString = GuidString.Replace("+", "");
-                    team.Code = GuidString.Substring(0, 10);
+                    team.Code = "T-"+GuidString.Substring(0, 8);
 
                     var newgroup = a.Team.Add(team);
                     a.SaveChanges();

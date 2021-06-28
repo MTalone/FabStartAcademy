@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using FabStartAcademy.Data;
 
 namespace FabStartAcademy
 {
@@ -20,12 +22,12 @@ namespace FabStartAcademy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<FBAData.FBAUserDBContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity <IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<FBAData.FBAUserDBContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -55,8 +57,10 @@ namespace FabStartAcademy
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=BackOffice}/{action=DashBoard}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           
         }
     }
 }

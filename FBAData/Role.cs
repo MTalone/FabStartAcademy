@@ -41,6 +41,15 @@ namespace FBAData
             }
         }
 
-        public static int Save(Role role) { return 0; }
+        public enum Roles
+        {
+            Admin = 1,
+            Mentor = 2,
+            User = 3,
+            SuperAdmin=4
+
+        }
+
+       // public static int Save(Role role) { return 0; }
     }
 }

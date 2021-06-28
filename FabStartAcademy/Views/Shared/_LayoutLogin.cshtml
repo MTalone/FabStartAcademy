@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FabStartAcademy</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-icons.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ckeditor.js"></script>
+</head>
+
+<body>
+    <header class=" clearfix " style="width: 100%; background-color: white">
+
+        <a title="Home" href="/" class="logo  show-info-box" alt="FabStart Academy" data-info-box-title="FabStart Academy" data-info-box-text="You created a ground-breaking business model with our tool? Do not forget to mention us in your chronicles. ">
+            <img class="group-logo" src="/imgs/thumb_3_image_big.png" alt="fabstart">
+        </a>
+
+        <nav class="pull-right header-content">
+
+            <div class="header-message">
+                Don’t have an account?
+            </div>
+
+            <a href="/register"><div class="btn-orange-md">Sign up</div></a>
+
+        </nav>
+    </header>
+    <div class="row">
+        <div class="col-md-6 " style="background-image: url('/imgs/LogInIntro.png'); background-repeat: no-repeat; background-size: contain; background-position-x: 100%; min-height: 100%; background-color: #ffffff; ">
+
+        </div>
+        <div class="col-6 float-left" style="width:470px;margin:0 auto;background-color:white">
+            @RenderBody()
+
+
+        </div>
+
+    </div>
+    <div class="row"><div class="col-lg-12"></div></div>
+
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

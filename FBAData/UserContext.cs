@@ -11,5 +11,7 @@ namespace FBAData
         public DbSet<Member> Member { get; set; }
 
         public DbSet<Role> Role { get; set; }
+
+        public DbSet<Partner> Partner { get; set; }
     }
 }

@@ -5,8 +5,10 @@
     [ProcessID]   INT           NULL,
     [Code]        VARCHAR (10)  NULL,
     [LogoID]      INT           NULL,
+    [PartnerID]   INT           NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Group_Document] FOREIGN KEY ([LogoID]) REFERENCES [dbo].[Document] ([Id]),
-    CONSTRAINT [FK_Group_Program] FOREIGN KEY ([ProcessID]) REFERENCES [dbo].[Process] ([Id])
+    CONSTRAINT [FK_Group_Program] FOREIGN KEY ([ProcessID]) REFERENCES [dbo].[Process] ([Id]),
+    CONSTRAINT [FK_Group_Partner] FOREIGN KEY ([PartnerID]) REFERENCES [dbo].[Partner] ([Id])
 );
 
