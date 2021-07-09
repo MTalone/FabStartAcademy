@@ -18,6 +18,10 @@ namespace FBAData
 
         public int PartnerID { get; set; }
 
+        public Partner Partner { get; set; }
+
+        public TeamMember TeamMember { get; set; }
+
         public static List<Member> GetList(int teamID)
         {
             using (var a = new UserContext())
@@ -78,7 +82,7 @@ namespace FBAData
         {
             using (var a = new UserContext())
             {
-                return a.Member.Where(x=>x.Email==email).FirstOrDefault();
+                return a.Member.Include(x=>x.Partner).Where(x=>x.Email==email).FirstOrDefault();
             }
         }
         

@@ -4,15 +4,17 @@ using System.Linq;
 
 namespace FabStartAcademy.Models
 {
-    public class DashBoardModel
+    public class DashBoardModel:IAccount
     {
        public List<DashBoardItem> ItemList = new List<DashBoardItem>();
         public List<ProgramItem> Programs = new List<ProgramItem>();
-        public DashBoardModel(string WebRootPath)
+        public Account.Account CurrentAccount { get; set; }
+        public DashBoardModel(string WebRootPath, Microsoft.AspNetCore.Http.ISession session,string username)
         {
             string programDefaultPath = "/imgs/placeholder-group.png";
+            CurrentAccount = Account.Account.GetAccountSession(session, username);
 
-            var groupDB = FBAData.Program.GetPrograms(3);
+            var groupDB = FBAData.Program.GetPrograms(3,CurrentAccount.IsSuperAdmin,CurrentAccount.PartnerID);
 
             Programs = new List<ProgramItem>();
 
@@ -41,7 +43,7 @@ namespace FabStartAcademy.Models
                 Programs.Add(pi);
             }
 
-            DashBoardBO dashBoardBO = new DashBoardBO();
+            DashBoardBO dashBoardBO = new DashBoardBO(CurrentAccount.IsSuperAdmin,CurrentAccount.PartnerID);
 
 
             ItemList.Add(new DashBoardItem { Title = Resources.FabStartAcademy.Programs, Class = "bi-people-fill", Count = dashBoardBO.ProgramsCount });

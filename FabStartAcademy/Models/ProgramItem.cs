@@ -25,7 +25,11 @@ namespace FabStartAcademy.Models
         public string Code { get; set; }
 
         public int? LogoID { get; set; }
+        [Display(Name = "Method", ResourceType = typeof(Resources.FabStartAcademy))]
         public int? ProcessID { get; set; }
+
+        [Display(Name = "Partner", ResourceType = typeof(Resources.FabStartAcademy))]
+        public int PartnerID { get; set; }
     }
 
     public class ProgramItemRow

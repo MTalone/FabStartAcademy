@@ -1,0 +1,73 @@
+﻿@model IEnumerable<FBAData.Partner>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Resources.FabStartAcademy.Partners</h1>
+
+<p>
+    <a asp-action="@Actions.Partner.Name">@Resources.FabStartAcademy.NewPartner</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Resources.FabStartAcademy.Status
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.IsMain)
+                    {
+                        @Resources.FabStartAcademy.Main
+                    }
+                    else if (item.IsSuspended)
+                    {
+                        @Resources.FabStartAcademy.Suspended
+                    }
+                    else if (item.IsDeleted)
+                    {
+                        @Resources.FabStartAcademy.Deleted
+                    }
+                    else
+                    {
+                        @Resources.FabStartAcademy.Active
+                    }
+
+                </td>
+
+                <td>
+                    
+                    @Html.ActionLink(Resources.FabStartAcademy.Details, Actions.Partner.Name, new { id=item.ID  }) 
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

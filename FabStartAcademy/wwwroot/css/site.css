@@ -46,6 +46,14 @@ hr {
     cursor:pointer;
 }
 
+.success {
+    color: #28a745
+}
+
+.danger {
+    color: #dc3545;
+}
+
 .badge-primary {
     color: #fff;
     background-color: #ff895a;

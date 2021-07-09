@@ -1,31 +1,50 @@
-﻿@model FabStartAcademy.Models.TeamModel
+﻿@model PartnerModel
 
 @{
 
-    @using Microsoft.AspNetCore.Mvc;
-    @using Microsoft.AspNetCore.Mvc.Rendering;
     @using Microsoft.Extensions.Configuration;
-
-
+    ViewData["Title"] = "Partner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
     .AddJsonFile("appsettings.json");
     var config = builder.Build();
-
     string codeStart = config["Constants:CodeBegin"];
 }
 
-<!DOCTYPE html>
+@if (Model.Partner.ID == 0)
+{
+    <h1>@Resources.FabStartAcademy.NewPartner</h1> }
+else
+{
+    <div class="row">
+        <div class="col-10"><h1> @Model.Partner.Name</h1></div>
+        <div class="col-2"><h1> @Model.Partner.Code</h1></div>
+    </div>
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Members</title>
-</head>
-<body>
-    <h1>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name) /  @Model.ProgramTitle</h1>
-    @{
-        Html.RenderPartial("ProgramBreadCrumbs", new ProgramBreadCrumb { ProgramID = Model.ProgramID, TeamID = Model.TeamID, Team = Model.Team.Name, Action = Actions.Members });
-    }
+
+<hr />
+@if (Model.ReadOnly)
+{
+
+    <div class="row">
+        <div class="col-2 float-left"><a asp-action="@Actions.Partner.Name" asp-route-id="@Model.Partner.ID" asp-route-readOnly="false" class="col-12 btn btn-primary">@Resources.FabStartAcademy.Edit</a></div>
+
+        @if (Model.IsSuperAdmin & !Model.Partner.IsMain)
+        {
+            @if (!Model.Partner.IsSuspended)
+            {
+                <div class="col-2 float-left"><form asp-action="@Actions.PartnerSuspend.Name" asp-route-id="@Model.Partner.ID" asp-route-suspend="true">  <input type="submit" value="@Resources.FabStartAcademy.Suspend" class="col-12 btn btn-warning" /></form></div>
+            }
+            else
+            {
+                <div class="col-2 float-left"><form asp-action="@Actions.PartnerSuspend.Name" asp-route-id="@Model.Partner.ID" asp-route-suspend="false">  <input type="submit" value="@Resources.FabStartAcademy.Activate" class="col-12 btn btn-success" /></form></div>
+            }
+
+            <div class="col-2 float-left"><form asp-action="@Actions.PartnerDelete.Name" asp-route-id="@Model.Partner.ID">  <input type="submit" value="@Resources.FabStartAcademy.Delete" class="col-12 btn btn-danger" /></form></div>
+        }
+    </div>
+
     <div class="row" style="margin-top:20px">
         <div class="col-4">
             <div class="card" style="min-height:580px;">
@@ -39,8 +58,8 @@
                 <div class="card-body">
                     <p>@Resources.FabStartAcademy.Member_ShareThisToken</p>
                     <hr />
-                    <h3>@codeStart@Model.Team.Code</h3>
-                    <div><a href="#" data-copy="@codeStart@Model.Team.Code">@Resources.FabStartAcademy.Member_CopyClipboard</a></div>
+                    <h3>@codeStart@Model.Partner.Code</h3>
+                    <div><a href="#" data-copy="@codeStart@Model.Partner.Code">@Resources.FabStartAcademy.Member_CopyClipboard</a></div>
                     <hr />
                     <p>@Resources.FabStartAcademy.Member_RegistrationURL</p>
                     <p>[Registration URL]</p>
@@ -56,15 +75,12 @@
                 <div class="card-body">
                     <span class="click icn-primary-large bi-person-plus-fill" id="addMember"></span>
                     <div id="newMember" style="display:none">
-                        <form asp-action="@Actions.Member.Name" asp-route-teamId="@Model.TeamID">
+                        <form asp-action="@Actions.Member.Name" asp-route-partnerId="@Model.Partner.ID">
                             <div class="form-group">
                                 <label asp-for="Member.Email" class="control-label"></label>
                                 <input asp-for="Member.Email" class="form-control" />
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Member.RoleID" class="control-label"></label>
-                                @Html.DropDownListFor(x => x.Member.RoleID, Model.Roles, new { @class = "form-control" })
-                            </div>
+
                             <div class="form-group">
                                 <input type="submit" value="@Resources.FabStartAcademy.Save" class="btn btn-primary" />
                             </div>
@@ -84,7 +100,7 @@
                     </div>
                     <hr />
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="padding-top:0px">
                     @{
                         bool isFirstConfirmed = true;
                         bool isFirstNotConfirmed = true;
@@ -94,13 +110,13 @@
                         if (x.IsConfirmed && isFirstConfirmed)
                         {
                             isFirstConfirmed = false;
-                            <div><h3>@Resources.FabStartAcademy.Confirmed</h3></div>
+                            <div style="margin-bottom:15px;"><h3 style="margin-top:0px;">@Resources.FabStartAcademy.Confirmed</h3></div>
                         }
 
                         if (!x.IsConfirmed && isFirstNotConfirmed)
                         {
                             isFirstNotConfirmed = false;
-                            <div style="margin-top:20px"><h3>@Resources.FabStartAcademy.NotConfirmed</h3></div>
+                            <div style="margin:15px 0;"><h3>@Resources.FabStartAcademy.NotConfirmed</h3></div>
                         }
                         <div class="row">
 
@@ -138,5 +154,42 @@
 
 
     </script>
-</body>
-</html>
+
+
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="@Actions.Partner.Name">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(x => x.Partner.ID)
+                @Html.HiddenFor(x => x.Partner.IsMain)
+                @Html.HiddenFor(x => x.Partner.IsSuspended)
+                @Html.HiddenFor(x => x.Partner.IsDeleted)
+                @if (Model.Partner.ID > 0)
+                {
+                    <div class="form-group">
+                        <label asp-for="Partner.Code" class="control-label"></label>
+                        <input readonly asp-for="Partner.Code" class="form-control" />
+                        <span asp-validation-for="Partner.Code" class="text-danger"></span>
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="Partner.Name" class="control-label"></label>
+                    <input asp-for="Partner.Name" class="form-control" />
+                    <span asp-validation-for="Partner.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Resources.FabStartAcademy.Save" class="btn btn-primary" />
+                    <div class="col-3 float-right">
+                        <a asp-action="@Actions.Partners.Name" class="btn btn-primary">@Resources.FabStartAcademy.Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+

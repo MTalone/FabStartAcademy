@@ -25,12 +25,10 @@
 
                     <img src="~/imgs/thumb_3_image_big.png" style="max-width:90%" />
                 </div>
-                @*<div class="card-body sidebar">
-                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name, Actions.Programs.Controller)</h4>
-                    <hr />
-                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name, Actions.Methods.Controller)</h4>
-                    <hr />
-                </div>*@
+                <div class="card-body sidebar">
+                    <form asp-action="@Actions.LogOut.Name" asp-controller="@Actions.LogOut.Controller"><input type="submit" id="btnLogOut" style="display:none;" /></form>
+                    <h5><a id="lnkLogOut" href="#">@Resources.FabStartAcademy.LogOut</a></h5>
+                </div>
             </div>
 
         </div>
@@ -47,5 +45,16 @@
 
 
     @RenderSection("Scripts", required: false)
+<script>
+    $(document).ready(function () {
+
+        $("#lnkLogOut").click(function (x)
+        {
+            $("#btnLogOut").click();
+        })
+
+        
+    })
+</script>
 </body>
 </html>

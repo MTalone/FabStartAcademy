@@ -30,14 +30,16 @@ namespace FBAData
 
         public Process Process { get;set;}
 
+        public int PartnerID { get; set; }
+
         public Document Logo { get; set; }
-        public static List<Program> GetPrograms(int max) 
+        public static List<Program> GetPrograms(int max,bool isSuperAdmin,int partnerID) 
         {
             using(var a = new ProgramContext())
             {
                 try
                 {
-                    var query = a.Program.Include(x => x.Process).Include(x => x.Logo);
+                    var query = a.Program.Include(x => x.Process).Include(x => x.Logo).Where(x=>x.PartnerID==partnerID|isSuperAdmin);
                     if (max > 0)
                     {
                         var progs = query.Take(max).ToList();

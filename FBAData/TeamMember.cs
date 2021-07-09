@@ -22,6 +22,8 @@ namespace FBAData
 
         public Member Member { get; set; }
 
+        public Team Team { get; set; }
+
         public Role Role { get; set; }
 
         //public static List<TeamMember> GetList() {
@@ -99,7 +101,19 @@ namespace FBAData
         {
             using (var a = new UserContext())
             {
-                return a.TeamMember.Where(x => x.TeamID == teamID && x.MemberID == memberID).FirstOrDefault();
+                var tm= a.TeamMember.Where(x => x.TeamID == teamID && x.MemberID == memberID).FirstOrDefault();
+
+                return tm;
+            }
+        }
+
+        public static bool CheckAllowedRole(int memberid, int roleID)
+        {
+            using (var a = new UserContext())
+            {
+                var tm = a.TeamMember.Where(x => x.RoleID != roleID&& x.MemberID == memberid).FirstOrDefault();
+
+                return tm is null;
             }
         }
     }

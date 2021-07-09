@@ -25,6 +25,8 @@ namespace FBAData
 
         public int PartnerID { get; set; }
 
+        public bool IsMain { get; set; }
+
         public static List<Team> GetTeams(int programID)
         {
             using (var a = new ProgramContext())
@@ -33,8 +35,6 @@ namespace FBAData
                 {
 
                     var query = a.Team.Include(x => x.Program).Where(x => x.ProgramID == programID).ToList();
-
-                    
 
                     return query;
 
@@ -92,11 +92,16 @@ namespace FBAData
             {
                 if (team.ID == 0)
                 {
-                    Guid g = Guid.NewGuid();
-                    string GuidString = Convert.ToBase64String(g.ToByteArray());
-                    GuidString = GuidString.Replace("=", "");
-                    GuidString = GuidString.Replace("+", "");
-                    team.Code = "T-"+GuidString.Substring(0, 8);
+                    if (string.IsNullOrEmpty(team.Code)) 
+                    {
+                        Guid g = Guid.NewGuid();
+                        string GuidString = Convert.ToBase64String(g.ToByteArray());
+                        GuidString = GuidString.Replace("=", "");
+                        GuidString = GuidString.Replace("+", "");
+                        team.Code = "T-" + GuidString.Substring(0, 8);
+
+                    }
+                   
 
                     var newgroup = a.Team.Add(team);
                     a.SaveChanges();
@@ -113,7 +118,12 @@ namespace FBAData
             }
         }
 
-
-
+        public static Team GetMain(int partnerID)
+        {
+            using (var a = new ProgramContext())
+            {
+                return a.Team.Where(i => i.PartnerID == partnerID & i.IsMain).ToList().FirstOrDefault();
+            }
+        }
     }
 }

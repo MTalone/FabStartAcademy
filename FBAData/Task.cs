@@ -14,7 +14,7 @@ namespace FBAData
         {
             Template=1,
             Tool=2,
-            URL=3,
+            Text=3,
 
         
         }
@@ -180,6 +180,7 @@ namespace FBAData
 
             toRet.Add((int)TaskTypes.Template, Resources.FabStartAcademy.TaskType_Template);
             toRet.Add((int)TaskTypes.Tool, Resources.FabStartAcademy.TaskType_Tool);
+            toRet.Add((int)TaskTypes.Text, Resources.FabStartAcademy.TaskType_Tool);
 
             return toRet;
         }

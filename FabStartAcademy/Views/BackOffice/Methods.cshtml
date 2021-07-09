@@ -1,11 +1,11 @@
 ﻿@model FabStartAcademy.Models.ProgramModel
 
 @{
-    ViewData["Title"] = "Programs";
+    ViewData["Title"] = Resources.FabStartAcademy.Methods;
     bool first = true;
 }
 
-<h1>Programs</h1>
+<h1>@Resources.FabStartAcademy.Methods</h1>
 
 <p>
     <a asp-action="@Actions.Method.Name">@Resources.FabStartAcademy.CreateNew</a>

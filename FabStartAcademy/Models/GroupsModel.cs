@@ -14,6 +14,10 @@ namespace FabStartAcademy.Models
 
         public ProgramItem Program { get; set; }  
 
+        public List<SelectListItem> Partners { get; set; }
+
+        public bool IsSuperAdmin { get; set; }
+
         public ProgramsModel() 
         { 
             

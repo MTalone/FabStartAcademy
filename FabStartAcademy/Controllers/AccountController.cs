@@ -2,8 +2,10 @@
 using FabStartAcademy.Models.Account;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +41,18 @@ namespace FabStartAcademy.Controllers
                 return View(userModel);
             }
 
-            FBAData.Team team =  FBAData.Team.GetByToken(userModel.GroupToken);
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json");
+            var config = builder.Build();
+            ;
+            FBAData.Team team =  FBAData.Team.GetByToken(userModel.GroupToken.Replace(config["Constants:CodeBegin"],""));
             if(team is null) 
             {
                 ModelState.TryAddModelError("GroupToken",Resources.FabStartAcademy.InvalidTeam);
                 return View(userModel);
             }
 
-            var user = new IdentityUser { Email = userModel.Email,UserName=userModel.Email };
+            var user = new IdentityUser { Email = userModel.Email,UserName=userModel.Email,EmailConfirmed=true };
             var result = await _userManager.CreateAsync(user, userModel.Password);
             if (!result.Succeeded)
             {
@@ -64,6 +70,7 @@ namespace FabStartAcademy.Controllers
             if(member is null) 
             {
                 member = new FBAData.Member { Email = user.Email };
+                member.PartnerID = team.PartnerID;
             }
             member.UserID = user.Id;
             member.FirstName = userModel.FirstName;
@@ -71,7 +78,7 @@ namespace FabStartAcademy.Controllers
             member.IsUser = true;
 
             member.ID=FBAData.Member.Save(member);
-            var teammember = FBAData.TeamMember.Get(member.ID, team.ID);
+            var teammember = FBAData.TeamMember.Get( team.ID, member.ID);
 
             if(teammember is null) 
             {
@@ -87,7 +94,7 @@ namespace FabStartAcademy.Controllers
 
         public IActionResult Login()
         {
-             NewMethod();
+             
 
             AccountLogin model = new AccountLogin();
 
@@ -95,37 +102,8 @@ namespace FabStartAcademy.Controllers
             return View(model);
         }
 
-        private async Task NewMethod()
-        {
-            try
-            {
-                if (!FBAData.Partner.CheckMainCreated())
-                {
+      
 
-                    FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Start Ups", IsMain = true };
-                    partner.ID = FBAData.Partner.Save(partner);
-                    FBAData.Team team = new FBAData.Team { Name = "FabStart", PartnerID = partner.ID };
-                    team.ID = FBAData.Team.Save(team);
-                    var user = new IdentityUser { Email = "talk@fabstart.pt", UserName = "talk@fabstart.pt", EmailConfirmed = true };
-                    var result = await _userManager.CreateAsync(user, "Fabrica.2020");
-                    if (result.Succeeded)
-                    {
-                        FBAData.Member member = new FBAData.Member { Email = user.Email, IsUser = true, UserID = user.Id, PartnerID = partner.ID };
-                        member.ID = FBAData.Member.Save(member);
-                        FBAData.TeamMember teamMember = new FBAData.TeamMember { IsConfirmed = true, MemberID = member.ID, TeamID = team.ID, RoleID = (int)FBAData.Role.Roles.SuperAdmin };
-                        FBAData.TeamMember.Save(teamMember);
-
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            
-        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -150,18 +128,28 @@ namespace FabStartAcademy.Controllers
             {
 
                 FBAData.Member m = FBAData.Member.GetByEmail(model.Email);
+
+                if(m.Partner.IsDeleted || m.Partner.IsSuspended)
+                {
+                    ModelState.AddModelError("", Resources.FabStartAcademy.InvalidLogin);
+                    return View(model);
+                }
+
                 List<FBAData.TeamMember> tms = FBAData.Member.GetTeams(m.ID);
 
                 Account account = new Account { Email = model.Email, UserID = user.Id };
 
-                account.IsAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Admin || x.RoleID == (int)FBAData.Role.Roles.SuperAdmin);
+                account.IsAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Admin);
+                account.IsSuperAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.SuperAdmin);
                 account.IsMentor = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Mentor);
                 account.IsUser = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.User);
+                account.PartnerID = m.PartnerID;
 
+                Account.SetAccountSession(account, ControllerContext.HttpContext.Session);
 
                 if (string.IsNullOrEmpty(returnUrl))
                 {
-                    if (account.IsAdmin) 
+                    if (account.IsAdmin || account.IsSuperAdmin) 
                     {
                         return RedirectToActionPermanent(Models.Actions.Dashboard.Name, Models.Actions.Dashboard.Controller);
                     }
@@ -171,7 +159,13 @@ namespace FabStartAcademy.Controllers
                     }
 
                 }
-                    
+
+
+                
+                
+                
+                
+
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
@@ -179,13 +173,63 @@ namespace FabStartAcademy.Controllers
                 return View("Lockout");
             }
             else {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                ModelState.AddModelError("", Resources.FabStartAcademy.InvalidLogin);
                 return View(model);
             }
 
 
 
             
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Logout() 
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToActionPermanent("Login");
+        }
+
+
+        public IActionResult CreateDefaultUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> CreateDefaultUser(string t)
+        {
+            try
+            {
+                if (!FBAData.Partner.CheckMainCreated())
+                {
+
+                    FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Start Ups", IsMain = true };
+                    partner.ID = FBAData.Partner.Save(partner);
+                    partner = FBAData.Partner.Get(partner.ID);
+                    FBAData.Team team = new FBAData.Team { Name = "FabStart", PartnerID = partner.ID, IsMain = true, Code = partner.Code };
+                    team.ID = FBAData.Team.Save(team);
+                    var user = new IdentityUser { Email = "talk@fabstart.pt", UserName = "talk@fabstart.pt", EmailConfirmed = true };
+                    var result = await _userManager.CreateAsync(user, "Fabrica.2020");
+                    if (result.Succeeded)
+                    {
+                        FBAData.Member member = new FBAData.Member { Email = user.Email, IsUser = true, UserID = user.Id, PartnerID = partner.ID };
+                        member.ID = FBAData.Member.Save(member);
+                        FBAData.TeamMember teamMember = new FBAData.TeamMember { IsConfirmed = true, MemberID = member.ID, TeamID = team.ID, RoleID = (int)FBAData.Role.Roles.SuperAdmin };
+                        FBAData.TeamMember.Save(teamMember);
+
+                    }
+
+                }
+                return RedirectToActionPermanent("Login");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
     }
 }

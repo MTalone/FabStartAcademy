@@ -29,13 +29,21 @@ namespace FabStartAcademy.Models
         public static Action Team { get { return new Action { ID = 14, Controller = "BackOffice", Name = "Team" }; } }
 
         public static Action Members { get { return new Action { ID = 15, Controller = "BackOffice", Name = "Members" }; } }
-        public static Action Member { get { return new Action { ID = 15, Controller = "BackOffice", Name = "Member" }; } }
+        public static Action Member { get { return new Action { ID = 16, Controller = "BackOffice", Name = "Member" }; } }
 
-        public static Action SessionOrder { get { return new Action { ID = 15, Controller = "BackOffice", Name = "SessionOrder" }; } }
+        public static Action SessionOrder { get { return new Action { ID = 17, Controller = "BackOffice", Name = "SessionOrder" }; } }
 
-        public static Action TaskDocumentDelete { get { return new Action { ID = 15, Controller = "BackOffice", Name = "TaskDocumentDelete" }; } }
+        public static Action TaskDocumentDelete { get { return new Action { ID = 18, Controller = "BackOffice", Name = "TaskDocumentDelete" }; } }
 
-        public static Action Home { get { return new Action { ID = 16, Controller = "Home", Name = "Index" }; } }
+        public static Action Home { get { return new Action { ID = 19, Controller = "Home", Name = "Index" }; } }
+
+        public static Action Partners { get { return new Action { ID = 20, Controller = "Partner", Name = "Partners" }; } }
+        public static Action Partner { get { return new Action { ID = 21, Controller = "Partner", Name = "Partner" }; } }
+        public static Action PartnerSuspend { get { return new Action { ID = 22, Controller = "Partner", Name = "Suspend" }; } }
+        public static Action PartnerDelete { get { return new Action { ID = 23, Controller = "Partner", Name = "Delete" }; } }
+
+        public static Action LogOut { get { return new Action { ID = -1, Controller = "Account", Name = "LogOut" }; } }
+        public static Action PartnerMethods { get { return new Action { ID = 23, Controller = "Partner", Name = "PartnerMethods" }; } }
     }
 
     public class Action

@@ -22,6 +22,13 @@ namespace FabStartAcademy.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            var account = Models.Account.Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
+            if (account.IsSuperAdmin||account.IsAdmin) 
+            {
+                return RedirectToActionPermanent(Actions.Dashboard.Name,Actions.Dashboard.Controller);
+            }
+
+
             return View();
         }
 

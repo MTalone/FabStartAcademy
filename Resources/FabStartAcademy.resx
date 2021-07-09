@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -129,6 +135,9 @@
   <data name="AvailableOn" xml:space="preserve">
     <value>Available on</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Confirmed" xml:space="preserve">
     <value>Confirmed</value>
   </data>
@@ -138,8 +147,17 @@
   <data name="CreateNew" xml:space="preserve">
     <value>Create new</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="Documents" xml:space="preserve">
     <value>Documents</value>
@@ -159,6 +177,9 @@
   <data name="ForEvaluation" xml:space="preserve">
     <value>For evaluation</value>
   </data>
+  <data name="InvalidLogin" xml:space="preserve">
+    <value>Invalid login attempt.</value>
+  </data>
   <data name="InvalidTeam" xml:space="preserve">
     <value>Invalid team</value>
   </data>
@@ -170,6 +191,12 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>Log in</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Main</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>
@@ -202,16 +229,19 @@
     <value>Mentors</value>
   </data>
   <data name="Method" xml:space="preserve">
-    <value>Method</value>
+    <value>Methodology</value>
   </data>
   <data name="Methods" xml:space="preserve">
-    <value>Methods</value>
+    <value>Methodologies</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="NewMethod" xml:space="preserve">
-    <value>New method</value>
+    <value>New methodology</value>
+  </data>
+  <data name="NewPartner" xml:space="preserve">
+    <value>New partner</value>
   </data>
   <data name="NewProgram" xml:space="preserve">
     <value>New program</value>
@@ -224,6 +254,12 @@
   </data>
   <data name="NotConfirmed" xml:space="preserve">
     <value>Not confirmed</value>
+  </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Partner</value>
+  </data>
+  <data name="Partners" xml:space="preserve">
+    <value>Partners</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -240,6 +276,9 @@
   <data name="RememberMe" xml:space="preserve">
     <value>Remember me</value>
   </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -249,8 +288,20 @@
   <data name="Sessions" xml:space="preserve">
     <value>Sessions</value>
   </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
   <data name="SignUpForFree" xml:space="preserve">
     <value>Sign up for free</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Suspend" xml:space="preserve">
+    <value>Suspend</value>
+  </data>
+  <data name="Suspended" xml:space="preserve">
+    <value>Suspended</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
@@ -260,6 +311,9 @@
   </data>
   <data name="TaskType_Template" xml:space="preserve">
     <value>Upload a Template</value>
+  </data>
+  <data name="TaskType_Text" xml:space="preserve">
+    <value>Text content</value>
   </data>
   <data name="TaskType_Tool" xml:space="preserve">
     <value>Go to a tool</value>

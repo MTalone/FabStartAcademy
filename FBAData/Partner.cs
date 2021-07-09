@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -11,9 +13,11 @@ namespace FBAData
         public string Code { get; set; }
 
         public string Name { get; set; }
+       // [Display(Name = "IsMain", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsMain { get; set; }
-
+       // [Display(Name = "IsSuspended", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsSuspended { get; set; }
+      //  [Display(Name = "IsDeleted", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsDeleted { get; set; }
 
         public static int Save(Partner partner)
@@ -54,6 +58,14 @@ namespace FBAData
 
         }
 
+        public static List<TeamMember> Members(int PartnerID)
+        {
+            using (var a = new UserContext())
+            {
+                return a.TeamMember.Include(x => x.Member).Include(x=>x.Role).Where(x => x.Member.PartnerID == PartnerID && x.RoleID==(int)Role.Roles.Admin).ToList() ;
+            }
+        }
+
         public static Partner Get(int ID) 
         {
             using (var a = new UserContext())
@@ -62,11 +74,11 @@ namespace FBAData
             }
         }
 
-        public static List<Partner> List()
+        public static List<Partner> List(bool IsSuperAdmin,int PartnerID)
         {
             using (var a = new UserContext())
             {
-                return a.Partner.ToList();
+                return a.Partner.Where(p=>!p.IsDeleted&&(p.ID==PartnerID||IsSuperAdmin)).ToList();
             }
         }
 

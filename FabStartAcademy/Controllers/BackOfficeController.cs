@@ -1,6 +1,10 @@
-﻿using FabStartAcademy.Models;
+﻿using AutoMapper;
+using FabStartAcademy.Models;
+using FabStartAcademy.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -20,23 +24,33 @@ namespace FabStartAcademy.Controllers
 
         private IWebHostEnvironment Environment;
 
-        public BackOfficeController(IWebHostEnvironment _environment)
+        private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public BackOfficeController(IMapper mapper, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IWebHostEnvironment _environment)
         {
+            _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
             Environment = _environment;
         }
 
+
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult DashBoard()
         {
-            DashBoardModel dash = new DashBoardModel(Environment.WebRootPath);
-
+            DashBoardModel dash = new DashBoardModel(Environment.WebRootPath, ControllerContext.HttpContext.Session, User.Identity.Name);
+            //dash.ItemList.Last().Count = _userManager.Users.Count();
             return View(dash);
         }
-
+        [Authorize]
         public IActionResult Programs()
         {
             ProgramsModel model = new ProgramsModel();
@@ -49,7 +63,9 @@ namespace FabStartAcademy.Controllers
             //    ID = x.ID
             //}).ToList();
 
-            var ps = FBAData.Program.GetPrograms(0);
+            Account account = Account.GetAccountSession(ControllerContext.HttpContext.Session, User.Identity.Name);
+
+            var ps = FBAData.Program.GetPrograms(0,account.IsSuperAdmin,account.PartnerID);
 
             string programDefaultPath = "/imgs/placeholder-group.png";
             model.Programs = new List<ProgramItem>();
@@ -59,12 +75,12 @@ namespace FabStartAcademy.Controllers
 
 
         }
-
+        [Authorize]
         public IActionResult Program(int ID = 0, bool read = true)
         {
             ProgramItem groupItem = new ProgramItem();
             read = ID == 0 ? false : read;
-
+            var account = Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
             if (ID > 0)
             {
                 var group = FBAData.Program.GetProgram(ID);
@@ -76,20 +92,37 @@ namespace FabStartAcademy.Controllers
                     Code = group.Code,
                     Description = group.Description,
                     ProcessID = group.ProcessID,
-                    Image = group.Logo != null ? group.Logo.Path.Replace(Environment.WebRootPath, "") : ""
-
+                    Image = group.Logo != null ? group.Logo.Path.Replace(Environment.WebRootPath, "") : "",
+                    PartnerID=group.PartnerID
                 };
 
             }
-            groupItem.IsRead = read;
+            else
+            {
+                groupItem.PartnerID = account.PartnerID;
 
+            }
+
+
+
+            
+
+            groupItem.IsRead = read;
+            
             ProgramsModel model = new ProgramsModel();
             model.Program = groupItem;
-            model.Processes = FBAData.Process.GetProcesses(0).Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
+            model.IsSuperAdmin = account.IsSuperAdmin;
+            if (account.IsSuperAdmin)
+            {
+                model.Partners = FBAData.Partner.List(true, 0).Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
+            }
+
+            model.Processes = FBAData.Process.GetProcesses(0,false,groupItem.PartnerID).Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
 
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Program(ProgramsModel item, IFormFile Logo, bool isNext = false)
         {
@@ -140,6 +173,8 @@ namespace FabStartAcademy.Controllers
 
             }
 
+             
+
             int id = FBAData.Program.Save(new FBAData.Program
             {
                 ID = item.Program.ID,
@@ -147,7 +182,8 @@ namespace FabStartAcademy.Controllers
                 Description = item.Program.Description,
                 ProcessID = item.Program.ProcessID,
                 Code = item.Program.Code,
-                LogoID = documentID
+                LogoID = documentID,
+                PartnerID=item.Program.PartnerID
             });
 
             if (item.Program.ID == 0 && Logo != null && Logo.Length > 0)
@@ -172,7 +208,7 @@ namespace FabStartAcademy.Controllers
 
 
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult ProgramDelete(int id)
         {
@@ -189,7 +225,7 @@ namespace FabStartAcademy.Controllers
             return View(model);
         }
 
-
+        [Authorize]
         public IActionResult Team(int ID, int programID, bool read = true)
         {
 
@@ -206,7 +242,7 @@ namespace FabStartAcademy.Controllers
                     ID = i.ID,
                     Description = i.Description,
                     Title = i.Name,
-                    ProgramID = i.ProgramID??0,
+                    ProgramID = i.ProgramID ?? 0,
                     ProgramTitle = i.Program.Name,
                     LogoID = i.LogoID,
                     Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : "",
@@ -219,6 +255,7 @@ namespace FabStartAcademy.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Team(TeamItem item, IFormFile Logo, bool isNext = false)
         {
             int? documentID = item.LogoID;
@@ -266,8 +303,9 @@ namespace FabStartAcademy.Controllers
 
             }
 
+            var program = FBAData.Program.GetProgram(item.ProgramID);
 
-            int id = FBAData.Team.Save(new FBAData.Team { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID, ProgramID = item.ProgramID });
+            int id = FBAData.Team.Save(new FBAData.Team { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID, ProgramID = item.ProgramID,PartnerID=program.PartnerID });
 
             if (item.ID == 0 && Logo != null && Logo.Length > 0)
             {
@@ -292,40 +330,64 @@ namespace FabStartAcademy.Controllers
 
         public IActionResult Members(int teamID)
         {
-            TeamModel model = new TeamModel { TeamID = teamID, Team = FBAData.Team.Get(teamID, true),
-                Members = FBAData.TeamMember.GetList(teamID).Select(x => new MemberItem {Email=x.Member.Email,RoleName=x.Role.Name,RoleID=x.RoleID,IsConfirmed=x.IsConfirmed } ).OrderByDescending(x=>x.IsConfirmed).ToList()};
+            TeamModel model = new TeamModel
+            {
+                TeamID = teamID,
+                Team = FBAData.Team.Get(teamID, true),
+                Members = FBAData.TeamMember.GetList(teamID).Select(x => new MemberItem { Email = x.Member.Email, RoleName = x.Role.Name, RoleID = x.RoleID, IsConfirmed = x.IsConfirmed }).OrderByDescending(x => x.IsConfirmed).ToList()
+            };
             model.ProgramID = model.Team.ProgramID.Value;
             model.ProgramTitle = model.Team.Program.Name;
-            model.Roles = FBAData.Role.GetList().Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.Name }).ToList();
+            model.Roles = FBAData.Role.GetList(false).Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.Name }).ToList();
 
             return View(model);
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Member(int teamID, TeamModel model)
         {
             //verificar se Member existe.
-            FBAData.Member m =FBAData.Member.GetByEmail(model.Member.Email);
+            FBAData.Member m = FBAData.Member.GetByEmail(model.Member.Email);
 
-            var team = FBAData.Team.Get(teamID,false);
-
+            var team = FBAData.Team.Get(teamID, false);
+            bool roleAllowed = true;
             int memberid = 0;
             if (m is null || m.ID == 0)
             {
+               
                 //Criar Member
-                memberid= FBAData.Member.Save(new FBAData.Member { Email = model.Member.Email });
+                memberid = FBAData.Member.Save(new FBAData.Member { Email = model.Member.Email,PartnerID=team.PartnerID });
 
             }
             else
             {
+                roleAllowed = false;
                 memberid = m.ID;
+                roleAllowed = FBAData.TeamMember.CheckAllowedRole(memberid, model.Member.RoleID);
+
             }
+
+            if (!roleAllowed) 
+            {
+                model.TeamID = teamID;
+                return RedirectToActionPermanent(Actions.Members.Name, new { teamID = teamID });
+            }
+
             //Criar TeamMember;
             // Check if member exists in team
-            if (!FBAData.TeamMember.Exists(teamID, memberid)) 
+
+            //If role isn't the same as existing error
+
+            
+
+            if (!FBAData.TeamMember.Exists(teamID, memberid))
             {
+                
                 FBAData.TeamMember.Save(new FBAData.TeamMember { MemberID = memberid, TeamID = teamID, RoleID = model.Member.RoleID });
             }
+
+            
 
             var builder = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json");
@@ -341,42 +403,67 @@ namespace FabStartAcademy.Controllers
             var mailMessage = new MailMessage
             {
                 From = new MailAddress(config["Smtp:Username"]),
-                Subject = string.Format("Invitation to join team {0}",team.Name),
-                Body = string.Format("Hello<br/> you are invited to join the team {0}. Please use this link to register, and insert the code {1}",team.Name, config["Constants:CodeBegin"]+team.Code),
+                Subject = string.Format("Invitation to join team {0}", team.Name),
+                Body = string.Format("Hello<br/> you are invited to join the team {0}. Please use this link to register, and insert the code {1}", team.Name, config["Constants:CodeBegin"] + team.Code),
                 IsBodyHtml = true,
             };
             mailMessage.To.Add(model.Member.Email);
 
             smtpClient.Send(mailMessage);
 
-            return RedirectToActionPermanent(Actions.Members.Name,new {teamID=teamID });
+            return RedirectToActionPermanent(Actions.Members.Name, new { teamID = teamID });
 
         }
+
+        [Authorize]
         public IActionResult Methods()
         {
-            return View(new ProgramModel(0));
+            return View(new ProgramModel(0,ControllerContext.HttpContext.Session, User.Identity.Name));
 
         }
-
+        [Authorize]
         public IActionResult Method(int ID = 0, bool read = true)
         {
             ProcessItem item = new ProcessItem();
 
             read = ID == 0 ? false : read;
-
+            var account = Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
             if (ID > 0)
             {
                 var i = FBAData.Process.GetProcess(ID);
 
+              
 
-
-                item = new ProcessItem { ID = i.ID, Description = i.Description, Title = i.Name, LogoID = i.LogoID, Logo = i.Logo == null ? new byte[0] : System.IO.File.ReadAllBytes(i.Logo.Path) };
+                item = new ProcessItem
+                {
+                    ID = i.ID,
+                    Description = i.Description,
+                    Title = i.Name,
+                    LogoID = i.LogoID,
+                    Logo = i.Logo == null ? new byte[0] : System.IO.File.ReadAllBytes(i.Logo.Path),
+                    IsSuperAdmin = account.IsSuperAdmin,
+                    PartnerID=i.PartnerID
+                };
                 item.IsReadOnly = read;
+
             }
+            else
+            {
+                item.PartnerID = account.PartnerID;
+
+            }
+
+            if (account.IsSuperAdmin)
+            {
+                item.Partners = FBAData.Partner.List(true, 0).Select(x => new SelectListItem { Text = x.Name, Value = x.ID.ToString() }).ToList();
+            }
+
+            item.IsSuperAdmin = account.IsSuperAdmin;
+            
 
             return View(item);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Method(ProcessItem item, IFormFile Logo, bool isNext = false)
         {
@@ -425,8 +512,8 @@ namespace FabStartAcademy.Controllers
 
             }
 
-
-            int id = FBAData.Process.Save(new FBAData.Process { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID });
+            var account = Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
+            int id = FBAData.Process.Save(new FBAData.Process { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID,PartnerID=item.PartnerID });
 
             if (item.ID == 0 && Logo != null && Logo.Length > 0)
             {
@@ -448,7 +535,7 @@ namespace FabStartAcademy.Controllers
             else
                 return RedirectToActionPermanent(Actions.Methods.Name);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult MethodDelete(int id)
         {
@@ -457,7 +544,7 @@ namespace FabStartAcademy.Controllers
 
             return RedirectToActionPermanent(Actions.Methods.Name);
         }
-
+        [Authorize]
         public IActionResult Sessions(int ProgramID)
         {
 
@@ -465,7 +552,7 @@ namespace FabStartAcademy.Controllers
 
             return View(model);
         }
-
+        [Authorize]
         public IActionResult Session(int ID, int programID, bool read = true)
         {
 
@@ -483,15 +570,16 @@ namespace FabStartAcademy.Controllers
 
             return View(item);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Session(SessionItem item)
         {
             FBAData.Session.SaveSession(new FBAData.Session { ID = item.ID, Name = item.Title, Description = item.Description, ProcessID = item.ProcessID });
 
-            return RedirectToActionPermanent(Actions.Sessions.Name,new { programid = item.ProcessID });
+            return RedirectToActionPermanent(Actions.Sessions.Name, new { programid = item.ProcessID });
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult SessionOrder(int id, int order, int processID)
         {
@@ -501,7 +589,7 @@ namespace FabStartAcademy.Controllers
             return RedirectToActionPermanent(Actions.Sessions.Name, new { programID = processID });
         }
 
-
+        [Authorize]
         public IActionResult Tasks(int sessionID)
         {
             TasksModel tasksModel = new TasksModel();
@@ -516,6 +604,8 @@ namespace FabStartAcademy.Controllers
             return View(tasksModel);
 
         }
+
+        [Authorize]
         [HttpPost]
         public IActionResult TaskDelete(int id, int sessionID)
         {
@@ -525,6 +615,7 @@ namespace FabStartAcademy.Controllers
             return RedirectToActionPermanent(Actions.Tasks.Name, new { sessionID = sessionID });
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult TaskOrder(int id, int order, int sessionID)
         {
@@ -534,7 +625,7 @@ namespace FabStartAcademy.Controllers
             return RedirectToActionPermanent(Actions.Tasks.Name, new { sessionID = sessionID });
         }
 
-
+        [Authorize]
         public IActionResult Task(int ID, int sessionID, bool read = true)
         {
             read = ID == 0 ? false : read;
@@ -587,7 +678,7 @@ namespace FabStartAcademy.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult Task(TasksModel item, IFormFile template, bool isNext = false)
         {
@@ -623,6 +714,7 @@ namespace FabStartAcademy.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult TaskDocument(int taskID, int sessionID, IFormFile template)
         {
@@ -665,29 +757,29 @@ namespace FabStartAcademy.Controllers
             return RedirectToActionPermanent(Actions.Task.Name, new { ID = taskID, SessionID = sessionID });
         }
 
-
+        [Authorize]
         [HttpPost]
-        public IActionResult TaskDocumentDelete(int taskDocumentID, int documentId,int taskID) 
+        public IActionResult TaskDocumentDelete(int taskDocumentID, int documentId, int taskID)
         {
             FBAData.Task t = FBAData.Task.GetTask(taskID);
             var template = FBAData.Document.Download(documentId);
             try
             {
-               
+
 
                 bool success = FBAData.TaskDocument.Delete(taskDocumentID);
                 if (success)
                 {
-                   
+
                     System.IO.File.Delete(template.Path);
                 }
             }
             catch (Exception ex)
             {
 
-              
+
             }
-           
+
 
 
             return RedirectToActionPermanent(Actions.Task.Name, new { ID = taskID, SessionID = t.SessionID });

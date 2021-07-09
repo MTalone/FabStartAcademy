@@ -75,7 +75,7 @@ else
             }
             else
             {
-                <h1>  @Resources.FabStartAcademy.Add @Resources.FabStartAcademy.NewMethod.ToLower()</h1>
+                <h1>  @Resources.FabStartAcademy.Add @Resources.FabStartAcademy.NewProgram.ToLower()</h1>
             }
 
         </div>
@@ -87,6 +87,19 @@ else
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @Html.HiddenFor(model => model.Program.ID)
                 @Html.HiddenFor(model => model.Program.LogoID)
+                @if (!Model.IsSuperAdmin)
+                {
+                    @Html.HiddenFor(model => model.Program.PartnerID)
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label asp-for="Program.PartnerID" class="control-label"></label>
+                        @Html.DropDownListFor(x => x.Program.PartnerID, Model.Partners, "", new { @class = "form-control" })
+                        <span asp-validation-for="Program.PartnerID" class="text-danger"></span>
+                    </div>
+                }
+
                 <div class="form-group">
                     <label asp-for="Program.Title" class="control-label"></label>
                     <input asp-for="Program.Title" class="form-control" />
@@ -102,7 +115,7 @@ else
                         // instance, using default configuration.
                         $(document).ready(function () {
                             CKEDITOR.replace('txtAreaDescription', {
-                                
+
                                 extraPlugins: 'embed',
                                 embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
                             });
@@ -120,7 +133,7 @@ else
             </div>
 
             <div class="col-lg-5" style="text-align:center">
-                @if (!(Model.Program.Image is null) && Model.Program.Image!=string.Empty)
+                @if (!(Model.Program.Image is null) && Model.Program.Image != string.Empty)
                 {
                     <img src="@Model.Program.Image" width="200">
                 }
@@ -149,6 +162,32 @@ else
         </form>
 
     </div>
+    @if (Model.IsSuperAdmin)
+    {
+        <script>
+
+            $("#Program_PartnerID").on("change", function(){
+                showValue($(this).val());
+        })
+
+        function showValue(val)
+        {
+            console.log(val);
+            $.getJSON('@Url.Action(Actions.PartnerMethods.Name, Actions.PartnerMethods.Controller)' + "?partnerID=" + val, function (result) {
+                $("#Program_ProcessID").html(""); // makes select null before filling process
+                var data = result.data;
+                debugger;
+                $("#Program_ProcessID").append("<option value></option>")
+                for (var i = 0; i < data.length; i++) {
+                       
+                        $("#Program_ProcessID").append("<option value='"+data[i].value+"'>"+ data[i].text +"</option>")
+                    }
+
+            })
+        }
+
+        </script>
+    }
 
 
 }

@@ -10,13 +10,15 @@ namespace FBAData
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public static List<Role> GetList() {
+        public bool IsAdmin { get; set; }
+
+        public static List<Role> GetList(bool includeAdmin) {
             using (var a = new UserContext())
             {
                 try
                 {
 
-                    var query = a.Role.ToList();
+                    var query = a.Role.Where(x=>!x.IsAdmin||includeAdmin).ToList();
 
 
 

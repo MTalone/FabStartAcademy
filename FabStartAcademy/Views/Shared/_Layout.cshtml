@@ -23,29 +23,43 @@
                 <div class="card-header">
 
 
-                    <img src="~/imgs/thumb_3_image_big.png" style="max-width:90%" />
+                    <a href="/"> <img src="~/imgs/thumb_3_image_big.png" style="max-width:90%" /></a>
                 </div>
                 <div class="card-body sidebar">
+                    <form asp-action="@Actions.LogOut.Name" asp-controller="@Actions.LogOut.Controller"><input type="submit" id="btnLogOut" style="display:none;" /></form>
+                    <h5><a id="lnkLogOut" href="#" class="btn btn-danger bi-box-arrow-left" style="font-size:20px"></a></h5>
+                    <hr />
                     <h4>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name, Actions.Programs.Controller)</h4>
                     <hr />
                     <h4>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name, Actions.Methods.Controller)</h4>
                     <hr />
+                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Partners, Actions.Partners.Name, Actions.Partners.Controller)</h4>
                 </div>
             </div>
 
         </div>
-        <div class="col-8 float-left">
+        <div class="col-10 float-left">
             @RenderBody()
 
 
         </div>
 
     </div>
-   <div class="row"><div class="col-lg-12"></div></div> 
-  
+    <div class="row"><div class="col-lg-12"></div></div>
+
 
 
 
     @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+
+            $("#lnkLogOut").click(function (x) {
+                $("#btnLogOut").click();
+            })
+
+
+        })
+    </script>
 </body>
 </html>
