@@ -1,0 +1,19 @@
+REQUIREMENTS (just need to do it once):
+1. In your Computer make sure you have installed Java Runtime environment installed
+2. Make sure you set the JAVA_HOME environment variable points to the folder where the JRE is installed.
+3. Make sure you set CASSANDRA_HOME environment variable with the value: C:\Program Files\apache-cassandra-3.11.10
+4. Make sure you have created a Python 2.7 environment in Anaconda.
+5. (See EXAMPLE below) from the Quick start, don't forget to add "python" in the beginning (python cqlsh.py ...)
+
+#################################################################
+STEPS/COMMANDS TO CONNECT TO COSMOS DB CASSANDRA ACCOUNT:
+1)Open Anaconda Prompt
+
+2) IN THE ANACONDA PROMPT PASTE:
+cd C:\Program Files\apache-cassandra-3.11.10\bin
+conda activate Python27
+set SSL_VERSION=TLSv1_2
+set SSL_VALIDATE=false
+
+3)EXAMPLE(GET YOUR OWN COMMAND FROM QUICK START MENU):
+python cqlsh.py cassandral300.cassandra.cosmos.azure.com 10350 -u cassandral300 -p H0OEcQcWi9Uidt3isLwpMxikAQMkrEh32ifyv283M6E58vWPqzMe0PNZPabhLoF8E61fDkkpM739BM32Hh== --ssl

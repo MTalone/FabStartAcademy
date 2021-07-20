@@ -3,7 +3,7 @@
     [Name]         NVARCHAR (100) NOT NULL,
     [Description]  NVARCHAR (400) NOT NULL,
     [SessionID]    INT           NOT NULL,
-    [TaskType]     INT           DEFAULT ((0)) NOT NULL,
+    [TaskType]     INT           DEFAULT ((0)) NULL,
     [Instructions] VARCHAR (MAX) NULL,
     [Order]        INT           DEFAULT ((0)) NOT NULL,
     [IsEvaluated]  BIT           DEFAULT ((0)) NOT NULL,

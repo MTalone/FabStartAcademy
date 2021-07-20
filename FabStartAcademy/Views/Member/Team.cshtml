@@ -1,0 +1,132 @@
+﻿@model FabStartAcademy.Models.MemberFlowTeam
+
+@{
+    ViewData["Title"] = "Team";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="primary">@Model.Team.Name</h2>
+<hr />
+<div class="row " style="background-color:white;padding-top:5px;">
+
+
+
+
+
+    <div class="col-1 float-left"><img src="@Model.LogoPath" width="70" /></div>
+    <div class="col-8 float-left">
+        @*@item.ProgramTitle -@item.Title  - *@
+        <div class="row">
+            <div class="col-2 primary"> Team</div>
+            <div class="col-6"> @Model.Team.Name</div>
+
+        </div>
+        <div class="row">
+            <div class="col-2 primary"> Program</div>
+            <div class="col-6">@Model.ProgramName</div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-2 primary"> Methodology</div>
+
+            <div class="col-6"> @Model.MethodName</div>
+        </div>
+    </div>
+    <div class="col-3 float-left" style="border-left:1px solid lightgrey;">
+        <div class="row">
+            <div class="col-5"> Progress</div>
+            <div class="col-5"> Rate</div>
+        </div>
+        <div class="row">
+            <div class="col-5"> 0%</div>
+            <div class="col-5"> -</div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+<h2 class="primary">@Model.MethodName</h2>
+@foreach (var s in Model.Sessions)
+{
+    <h3>@s.Name</h3>
+    <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color: #E2E2E2 ">
+        <div class="col-3">@Resources.FabStartAcademy.Title</div>
+        <div class="col-3">@Resources.FabStartAcademy.Description</div>
+        <div class="col-2">@Resources.FabStartAcademy.Status</div>
+        <div class="col-3">@Resources.FabStartAcademy.Rating</div>
+        <div class="col-1">@Resources.FabStartAcademy.Action</div>
+    </div>
+    @foreach (var t in s.Tasks)
+    {
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
+            <div class="col-3">@t.Task.Name</div>
+            <div class="col-3" style="white-space:nowrap;overflow-x:hidden">@t.Task.Description</div>
+            <div class="col-2">@t.Status</div>
+            @if (t.Rate == 0)
+            {
+                <div class="col-3">@(t.RateDisplay)</div>
+            }
+            else
+            {
+                <div class="col-3">
+                    @{int rate = t.Rate;
+                        string c = rate > 0 ? "-fill" : "";
+                        <i class="bi-star@(c) primary" data-val="1"></i>
+                        rate--;
+                        c = rate > 0 ? "-fill" : "";
+                        <i class="bi-star@(c) primary" data-val="2"></i>
+                        rate--;
+                        c = rate > 0 ? "-fill" : "";
+                        <i class="bi-star@(c) primary" data-val="3"></i>
+                        rate--;
+                        c = rate > 0 ? "-fill" : "";
+                        <i class="bi-star@(c) primary" data-val="4"> </i>
+                        rate--;
+                        c = rate > 0 ? "-fill" : "";
+                        <i class="bi-star@(c) primary" data-val="5"></i>}
+                </div>
+            }
+
+            <div class="col-1"><a asp-action="Task" asp-route-teamid="@Model.Team.ID" asp-route-taskid="@t.Task.ID" class="btn btn-primary col-12">@Resources.FabStartAcademy.View</a></div>
+        </div>
+    }
+
+
+}
+
+@if (Model.ProcessDocuments.Count > 0 || Model.ProcessLinks.Count > 0)
+{
+    <div class="row" style="margin-top: 30px; background-color: #E2E2E2; padding-top: 10px; padding-bottom: 10px; ">
+        <div class="col-12">
+            @Resources.FabStartAcademy.RelatedDocuments
+        </div>
+      
+    </div>
+      @foreach (var d in Model.ProcessDocuments)
+        {
+            <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
+                <div class="col-12"> <a asp-action="@Actions.Download.Name" asp-controller="@Actions.Download.Controller" asp-route-documentID="@d.ID" style="margin-right:5px;margin-left:5px;font-weight:bold">@d.FileName</a></div>
+            </div>
+
+        }
+        @foreach (var l in Model.ProcessLinks)
+        {
+            <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
+                <div class="col-12"> <a href="@l.URL" style="margin-right:5px;margin-left:5px;font-weight:bold">@l.URL</a></div>
+            </div>
+
+        }
+}
+
+<div style="margin-bottom:10px;"></div>

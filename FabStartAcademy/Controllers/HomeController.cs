@@ -28,6 +28,10 @@ namespace FabStartAcademy.Controllers
                 return RedirectToActionPermanent(Actions.Dashboard.Name,Actions.Dashboard.Controller);
             }
 
+            if (account.IsUser) 
+            {
+                return RedirectToActionPermanent(Models.Controllers.Member.Actions.Dashboard.Name, Models.Controllers.Member.Controller);
+            }
 
             return View();
         }

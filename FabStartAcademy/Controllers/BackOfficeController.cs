@@ -682,32 +682,7 @@ namespace FabStartAcademy.Controllers
         [HttpPost]
         public IActionResult Task(TasksModel item, IFormFile template, bool isNext = false)
         {
-            int? documentID = item.Task.DocumentID;
-
-            if (template != null)
-            {
-                if (template.Length > 0)
-                {
-                    FBAData.Document document = new FBAData.Document
-                    {
-                        ID = documentID.HasValue ? documentID.Value : 0,
-                        FileName = template.FileName,
-                        FileType = template.ContentType
-                    };
-
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        template.CopyTo(memoryStream);
-
-                        document.Content = memoryStream.ToArray();
-
-                    }
-
-                    documentID = FBAData.Document.Upload(document);
-                }
-
-            }
-            item.Task.DocumentID = documentID;
+          
 
             int id = FBAData.Task.Save(item.Task);
             return RedirectToActionPermanent(Actions.Tasks.Name, new { SessionID = item.Task.SessionID });

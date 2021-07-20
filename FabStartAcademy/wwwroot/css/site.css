@@ -6,7 +6,10 @@ body {
 }
 
 hr {
-    border-top: solid 2px #d2e1ec
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: solid 1px #cccccc
 }
 
 .browser{
@@ -54,6 +57,10 @@ hr {
     color: #dc3545;
 }
 
+.primary {
+  color:  #ff895a !important;
+}
+
 .badge-primary {
     color: #fff;
     background-color: #ff895a;
@@ -72,6 +79,10 @@ hr {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #ddd;
+}
+
+[data-rate=true]{
+    cursor:pointer;
 }
 
 [data-letters]:before {
@@ -270,9 +281,9 @@ html {
         margin-bottom: 70px
     }
 
-.section hr {
+/*.section hr {
     border-top: solid 2px #d2e1ec
-}
+}*/
 
 .admin-header {
     width: 100%;
@@ -30433,12 +30444,12 @@ img {
     border-radius: 50%
 }
 
-hr {
+/*hr {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;
     border-top: 1px solid #eee
-}
+}*/
 
 .sr-only {
     position: absolute;
@@ -37646,12 +37657,7 @@ img {
     border-radius: 50%
 }
 
-hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #eee
-}
+
 
 .sr-only {
     position: absolute;

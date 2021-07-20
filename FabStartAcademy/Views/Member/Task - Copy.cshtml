@@ -1,0 +1,84 @@
+﻿@model FabStartAcademy.Models.MemberTask
+
+@{
+    ViewData["Title"] = "Task";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    bool firstTD = true;
+}
+
+
+<div class="card">
+    <div class="card-title" style="margin:20px;">
+        <div class="row h2 ">
+            <div class="col-4 primary">@Model.Task.Session.Process.Name - @Model.Task.Session.Name</div>
+            <div class="col-8 primary" style="text-align:right;">@Model.Team.Program.Name - @Model.Team.Name</div>
+        </div>
+    </div>
+</div>
+<hr />
+
+
+<div class="row h2">
+    <div class="col-12 " style="text-align:center"> @Model.Task.Name / @Model.Task.Description</div>
+
+</div>
+<hr />
+<div class="row">
+    <div class="col-12 ">
+        <label asp-for="Task.Instructions" class="control-label"></label>
+        @Html.Raw(Model.Task.Instructions)
+    </div>
+
+</div>
+
+@if (Model.TaskDocuments.Count() > 0)
+{
+    <div class="row h3">
+        <div class="col-12">
+            @Resources.FabStartAcademy.TaskDocuments
+        </div>
+    </div>
+
+}
+
+<div class="row ">
+    <div class="col-12">
+        @foreach (var d in Model.TaskDocuments)
+        {
+
+
+            @if (!firstTD)
+            {@Html.Raw("|");
+        }
+            <a asp-action="@Actions.Download.Name" asp-controller="@Actions.Download.Controller" asp-route-id="@d.ID" style="margin-right:5px;margin-left:5px;font-weight:bold">@d.FileName</a>
+            firstTD = false;
+        }
+    </div>
+</div>
+
+<div class="row h4">
+    <div class="col-12">
+        @Resources.FabStartAcademy.SubmitDocument
+    </div>
+</div>
+<form asp-action="TaskSubmission" enctype="multipart/form-data" style="margin-bottom:10px" id="uploadFile">
+    <input type="hidden" value="@Model.Task.SessionID" name="sessionID" />
+    <input type="hidden" value="@Model.Team.ID" name="teamID" />
+    <input type="hidden" value="@Model.Task.ID" name="taskID" />
+    <input type="hidden" value="@Model.Task.Session.ProcessID" name="ProcessID" />
+    <input type="hidden" value="@((int)FBAData.ActivityType.Types.Document)" name="activityTypeID" />
+    <input type="hidden" value="@Model.TaskSubmissionID" name="TaskSubmissionID" />
+    <div class="row">
+        <div class="col-2">
+            <input type="file" name="doc" id="template" style="display:none" />
+            <a class="btn btn-primary browse col-12" onclick="$('#template').click();">Browse</a>
+        </div>
+
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#template').change(function (e) { $("#uploadFile").submit() });
+    });
+</script>

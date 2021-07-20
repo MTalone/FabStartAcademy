@@ -24,6 +24,8 @@ namespace FabStartAcademy.Models
         public int? LogoID { get; set; }
         public string Code { get; set; }
 
+        public string MethodName { get; set; }
+
     }
     public class TeamModel
     {

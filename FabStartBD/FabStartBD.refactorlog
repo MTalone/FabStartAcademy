@@ -7,4 +7,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="IsUser" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="3b78567c-4d72-42e6-96fb-2d35b475f070" ChangeDateTime="07/13/2021 11:37:33">
+    <Property Name="ElementName" Value="[dbo].[TaskSubmissionComment].[CreatedBy]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TaskSubmissionComment]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreatedByMemberID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="beecb1b4-7290-402b-93ab-93083316e713" ChangeDateTime="07/13/2021 11:40:44">
+    <Property Name="ElementName" Value="[dbo].[Activity].[CreatedBy]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Activity]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreatedByMemberID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a4bd9fe3-5157-45f5-a9df-304f4d26a9fd" ChangeDateTime="07/13/2021 12:40:35">
+    <Property Name="ElementName" Value="[dbo].[TaskSubmissionComment].[CreatedByMemberID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TaskSubmissionComment]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MemberID" />
+  </Operation>
 </Operations>

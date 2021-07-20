@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+
+    var account = FabStartAcademy.Models.Account.Account.GetAccountSession(HttpContextAccessor.HttpContext.Session, User.Identity.Name);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,6 +35,10 @@
                 <div class="card-body sidebar">
                     <form asp-action="@Actions.LogOut.Name" asp-controller="@Actions.LogOut.Controller"><input type="submit" id="btnLogOut" style="display:none;" /></form>
                     <h5><a id="lnkLogOut" href="#" class="btn btn-danger bi-box-arrow-left" style="font-size:20px"></a></h5>
+                    <hr />
+                    <h4>@Resources.FabStartAcademy.Greeting @account.FullName</h4>
+                    <hr />
+                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Dashboard, Actions.Dashboard.Name, Actions.Dashboard.Controller)</h4>
                     <hr />
                     <h4>@Html.ActionLink(Resources.FabStartAcademy.Programs, Actions.Programs.Name, Actions.Programs.Controller)</h4>
                     <hr />

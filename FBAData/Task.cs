@@ -33,7 +33,7 @@ namespace FBAData
         [Display(Name = "IsEvaluated", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsEvaluated { get; set; }
         [Display(Name = "TaskType", ResourceType = typeof(Resources.FabStartAcademy))]
-        public int TaskType { get; set; }
+        public int? TaskType { get; set; }
 
         public int? DocumentID { get; set; }
         
@@ -179,8 +179,9 @@ namespace FBAData
             Dictionary<int, string> toRet=new Dictionary<int, string>();
 
             toRet.Add((int)TaskTypes.Template, Resources.FabStartAcademy.TaskType_Template);
+            toRet.Add((int)TaskTypes.Text, Resources.FabStartAcademy.TaskType_Text);
             toRet.Add((int)TaskTypes.Tool, Resources.FabStartAcademy.TaskType_Tool);
-            toRet.Add((int)TaskTypes.Text, Resources.FabStartAcademy.TaskType_Tool);
+            
 
             return toRet;
         }
