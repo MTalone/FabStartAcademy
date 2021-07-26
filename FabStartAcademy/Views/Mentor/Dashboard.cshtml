@@ -1,0 +1,33 @@
+﻿@model FabStartAcademy.Models.MentorModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h1> @Resources.FabStartAcademy.Dashboard</h1>
+
+
+<div class="row">
+    <div class="col-12">
+
+        <h2>@Resources.FabStartAcademy.Activities</h2>
+
+       
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+
+        <h2>
+
+            @Resources.FabStartAcademy.Programs
+        </h2>
+
+        @foreach (var item in Model.Programs)
+        {
+            Html.RenderPartial("ProgramItem", item);
+        }
+    </div>
+</div>

@@ -126,6 +126,9 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="Activities" xml:space="preserve">
+    <value>Activities</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="AvailableOn" xml:space="preserve">
     <value>Available on</value>
+  </data>
+  <data name="AverageRating" xml:space="preserve">
+    <value>Average rating group overall</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
@@ -270,6 +276,9 @@
   <data name="NotConfirmed" xml:space="preserve">
     <value>Not confirmed</value>
   </data>
+  <data name="NumberMessages" xml:space="preserve">
+    <value>Number messages exchanged</value>
+  </data>
   <data name="Partner" xml:space="preserve">
     <value>Partner</value>
   </data>
@@ -284,6 +293,9 @@
   </data>
   <data name="Programs" xml:space="preserve">
     <value>Programs</value>
+  </data>
+  <data name="ProgressGroup" xml:space="preserve">
+    <value>Progress Group</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>

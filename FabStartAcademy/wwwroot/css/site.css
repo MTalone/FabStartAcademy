@@ -12,8 +12,8 @@ hr {
     border-top: solid 1px #cccccc
 }
 
-.browser{
-    color:white;
+.browser {
+    color: white;
 }
 
 .container {
@@ -21,9 +21,8 @@ hr {
 }
 
 .form {
-    background-color:white;
-    padding-top:20px;
-    
+    background-color: white;
+    padding-top: 20px;
 }
 
 .FBAbreadcrumb {
@@ -38,15 +37,16 @@ hr {
         color: #ff895a;
         float: left;
         background-image: url('\imgs\steps-breadcrumbs-arrow.png');
-        background-color:white
+        background-color: white
     }
 
 .icn-primary-large {
     color: #ff895a;
-    font-size:40px
+    font-size: 40px
 }
-.click{
-    cursor:pointer;
+
+.click {
+    cursor: pointer;
 }
 
 .success {
@@ -58,16 +58,41 @@ hr {
 }
 
 .primary {
-  color:  #ff895a !important;
+    color: #ff895a !important;
 }
 
 .badge-primary {
     color: #fff;
     background-color: #ff895a;
 }
-.sidebar{
-    min-height:600px;
 
+.sidebar {
+    min-height: 600px;
+}
+
+img.fba-header {
+    width: 50%;
+}
+
+.fba-title {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.fba-dashboard-item {
+    margin-top: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #5d6569;
+    text-align:center;
+}
+
+.fba-dashboard-title {
+    font-weight: bold;
+    color: #a2a9bc;
+    text-align: center;
+    text-transform:uppercase;
 }
 
 .FBAbreadcrumb:not(:last-child):after {
@@ -81,8 +106,8 @@ hr {
     border-left: 10px solid #ddd;
 }
 
-[data-rate=true]{
-    cursor:pointer;
+[data-rate=true] {
+    cursor: pointer;
 }
 
 [data-letters]:before {
@@ -102,14 +127,14 @@ hr {
 
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
@@ -119,55 +144,58 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 
@@ -27957,7 +27985,7 @@ a.box {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075)
 }
 
- /*   .btn-default:active, .btn-primary:active, .btn-success:active, .btn-info:active, .btn-warning:active, .btn-danger:active, .btn-default.active, .btn-primary.active, .btn-success.active, .btn-info.active, .btn-warning.active, .btn-danger.active {
+/*   .btn-default:active, .btn-primary:active, .btn-success:active, .btn-info:active, .btn-warning:active, .btn-danger:active, .btn-default.active, .btn-primary.active, .btn-success.active, .btn-info.active, .btn-warning.active, .btn-danger.active {
         -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
     }
@@ -34339,9 +34367,9 @@ a.label:hover, a.label:focus {
     border-radius: 10px
 }*/
 
-    .badge:empty {
-        display: none
-    }
+.badge:empty {
+    display: none
+}
 
 .btn .badge {
     position: relative;
@@ -41547,9 +41575,9 @@ a.label:focus, a.label:hover {
     border-radius: 10px
 }*/
 
-    .badge:empty {
-        display: none
-    }
+.badge:empty {
+    display: none
+}
 
 .btn .badge {
     position: relative;

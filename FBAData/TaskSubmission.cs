@@ -15,6 +15,8 @@ namespace FBAData
         public int ID { get; set; }
         public int TaskID { get; set; }
         public int TeamID { get; set; }
+
+        public Team Team { get; set; }
         public int ProcessID { get; set; }
 
         public int SessionID { get; set; }
@@ -25,6 +27,7 @@ namespace FBAData
 
         public bool IsSubmitted { get; set; }
 
+        public Task Task { get; set; }
         public static TaskSubmission Get(int ID)
         {
             using (var a = new MemberContext())

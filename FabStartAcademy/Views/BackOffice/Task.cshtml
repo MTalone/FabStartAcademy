@@ -16,7 +16,7 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 @Html.HiddenFor(x => x.Task.ID)
                 @Html.HiddenFor(x => x.Task.SessionID)
-               
+                @Html.HiddenFor(x => x.Task.ProcessID)
                 <div class="form-group col-lg-8">
                     <label asp-for="Task.Name" class="control-label"></label>
                     <input asp-for="Task.Name" class="form-control" />

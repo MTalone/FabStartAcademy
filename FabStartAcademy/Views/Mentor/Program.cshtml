@@ -1,0 +1,157 @@
+﻿@model FabStartAcademy.Models.MentorModel
+@{
+    ViewData["Title"] = "Program";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    bool first = true;
+}
+
+<h1>@Resources.FabStartAcademy.Program</h1>
+<div class="row fba-title">
+    <div class="col-3"><img src="@Model.Program.Image" class="fba-header" /></div>
+    <div class="col-9">
+        <div class="row">
+            <div class="col-12">
+                <h3>@Model.Program.Title</h3>
+                <div style="margin-bottom:5px"><span style="color: #a2a9bc; ">@Resources.FabStartAcademy.Method:</span> @Model.Program.Process</div>
+                <div style="margin-bottom:5px"><span style="color: #a2a9bc; ">@Resources.FabStartAcademy.Description:</span>@Html.Raw(Model.Program.Description)</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:10px;">
+    <div class="col-3">
+        <div class="row fba-title">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 fba-dashboard-title"> @Resources.FabStartAcademy.Teams.ToUpper()</div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center;"><span class="fba-dashboard-item"> @Model.DashBoard.TeamCount</span></div>
+                </div>
+            </div>
+            <div class="col-6" style="margin-top:5px;text-align:center">
+                <img src="~/imgs/Icon Project3x.png" />
+            </div>
+        </div>
+    </div>
+    <div class="col-3" style="margin-left:10px;">
+        <div class="row fba-title">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 fba-dashboard-title"> @Resources.FabStartAcademy.Mentors.ToUpper()</div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center;"><span class="fba-dashboard-item"> @Model.DashBoard.MentorCount</span></div>
+                </div>
+            </div>
+            <div class="col-6" style="margin-top:5px;text-align:center">
+                <img src="~/imgs/Icon Mentors@3x.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:13px;">
+    <div class="col-3">
+        <div class="row fba-title" style="padding-bottom:35px;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 fba-dashboard-title"> @Resources.FabStartAcademy.AverageRating</div>
+                </div>
+                <div class="row">
+                    <div class="col-12 fba-dashboard-item">- </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3" style="margin-left:13px;">
+        <div class="row fba-title" style="padding-bottom:35px;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 fba-dashboard-title"> @Resources.FabStartAcademy.NumberMessages</div>
+                </div>
+                <div class="row">
+                    <div class="col-12 fba-dashboard-item"> @Model.DashBoard.MessageCount </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 " style="margin-left:13px;">
+        <div class="row fba-title">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 fba-dashboard-title"> @Resources.FabStartAcademy.ProgressGroup</div>
+                </div>
+                <div class="row">
+
+                    <div class="col-4 fba-dashboard-item"> @Model.DashBoard.TasksCompleted </div>
+                    <div class="col-4 fba-dashboard-item"> @Model.DashBoard.TasksSubmitted</div>
+                    <div class="col-4 fba-dashboard-item"> @Model.DashBoard.TasksOpened  </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-4 fba-dashboard-title"> @Resources.FabStartAcademy.TaskStatus_Finished </div>
+                    <div class="col-4 fba-dashboard-title"> @Resources.FabStartAcademy.TaskStatus_Submitted </div>
+                    <div class="col-4 fba-dashboard-title"> @Resources.FabStartAcademy.TaskStatus_NotStarted</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>@Resources.FabStartAcademy.Teams</h1>
+@foreach (var item in Model.Teams)
+{
+    <a asp-action="@FabStartAcademy.Models.Controllers.Member.Actions.Team.Name" asp-controller="@FabStartAcademy.Models.Controllers.Member.Actions.Team.Controller" asp-route-id="@item.ID">
+        <div class="row fba-title" style="@(!first? "margin-top:10px":"")">
+
+
+
+
+
+            <div class="col-1 float-left"><img src="@item.Image" width="70" /></div>
+            <div class="col-8 float-left">
+                @*@item.ProgramTitle -@item.Title  - *@
+                <div class="row">
+                    <div class="col-2 primary"> Team</div>
+                    <div class="col-6"> @item.Title</div>
+
+                </div>
+                <div class="row">
+                    <div class="col-2 primary"> Program</div>
+                    <div class="col-6">@item.ProgramTitle </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-2 primary"> Methodology</div>
+
+                    <div class="col-6"> @item.MethodName</div>
+                </div>
+            </div>
+            <div class="col-3 float-left" style="border-left:1px solid lightgrey;">
+                <div class="row">
+                    <div class="col-5"> Progress</div>
+                    <div class="col-5"> Rate</div>
+                </div>
+                <div class="row">
+                    <div class="col-5"> 0%</div>
+                    <div class="col-5"> -</div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </a>
+
+    first = false;
+
+}

@@ -10,9 +10,11 @@
     [DocumentID]   INT           NULL,
     [AvailableOn]  DATE          NULL,
     [ToolID]       INT           NULL,
+    [ProcessID] INT NOT NULL DEFAULT 1, 
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Task_Document] FOREIGN KEY ([DocumentID]) REFERENCES [dbo].[Document] ([Id]),
     CONSTRAINT [FK_Task_Session] FOREIGN KEY ([SessionID]) REFERENCES [dbo].[Session] ([Id]),
+    CONSTRAINT [FK_Task_Process] FOREIGN KEY ([ProcessID]) REFERENCES [dbo].[Process] ([Id]),
     CONSTRAINT [FK_Task_Tool] FOREIGN KEY ([ToolID]) REFERENCES [dbo].[Tool] ([Id])
 );
 

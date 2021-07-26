@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activities.
+        /// </summary>
+        public static string Activities {
+            get {
+                return ResourceManager.GetString("Activities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -120,6 +129,15 @@ namespace Resources {
         public static string AvailableOn {
             get {
                 return ResourceManager.GetString("AvailableOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average rating group overall.
+        /// </summary>
+        public static string AverageRating {
+            get {
+                return ResourceManager.GetString("AverageRating", resourceCulture);
             }
         }
         
@@ -520,6 +538,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number messages exchanged.
+        /// </summary>
+        public static string NumberMessages {
+            get {
+                return ResourceManager.GetString("NumberMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Partner.
         /// </summary>
         public static string Partner {
@@ -561,6 +588,15 @@ namespace Resources {
         public static string Programs {
             get {
                 return ResourceManager.GetString("Programs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Progress Group.
+        /// </summary>
+        public static string ProgressGroup {
+            get {
+                return ResourceManager.GetString("ProgressGroup", resourceCulture);
             }
         }
         

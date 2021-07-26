@@ -16,6 +16,7 @@ namespace FBAData
 
         public int MembersCount { get; set; }
 
+        public DashBoardBO() { }
         public DashBoardBO(bool IsSuperAdmin, int PartnerID)
         {
             using (var a = new DashBoardBOContext())
@@ -28,6 +29,8 @@ namespace FBAData
                     Select(x => new { memberid = x.MemberID }).Distinct().Count();
             }
         }
+
+       
 
     }
 

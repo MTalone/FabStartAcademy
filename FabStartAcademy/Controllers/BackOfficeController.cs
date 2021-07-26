@@ -645,7 +645,7 @@ namespace FabStartAcademy.Controllers
             };
             if (ID == 0)
             {
-                model.Task = new FBAData.Task { SessionID = sessionID };
+                model.Task = new FBAData.Task { SessionID = sessionID,ProcessID=session.ProcessID };
             }
             else
             {

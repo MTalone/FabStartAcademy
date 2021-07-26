@@ -27,6 +27,8 @@ namespace FBAData
         public string Description { get; set; }
         public int SessionID { get; set; }
 
+        public int ProcessID { get; set; }
+
         public string Instructions { get; set; }
 
         public int Order { get; set; }

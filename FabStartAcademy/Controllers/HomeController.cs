@@ -22,6 +22,9 @@ namespace FabStartAcademy.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated) {
+                var x = 1;
+            }
             var account = Models.Account.Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
             if (account.IsSuperAdmin||account.IsAdmin) 
             {
@@ -31,6 +34,11 @@ namespace FabStartAcademy.Controllers
             if (account.IsUser) 
             {
                 return RedirectToActionPermanent(Models.Controllers.Member.Actions.Dashboard.Name, Models.Controllers.Member.Controller);
+            }
+
+            if (account.IsMentor)
+            {
+                return RedirectToActionPermanent(Models.Controllers.Mentor.Actions.Dashboard.Name, Models.Controllers.Mentor.Controller);
             }
 
             return View();

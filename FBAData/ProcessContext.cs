@@ -29,6 +29,8 @@ namespace FBAData
 
         public List<Session> Session { get; set; }
 
+        public List<Task> Task { get; set; }
+
         public static List<ProcessExtended> GetProcesses(int max,bool IsSuperAdmin,int PartnerID)
         {
             using (var a = new ProcessContext())

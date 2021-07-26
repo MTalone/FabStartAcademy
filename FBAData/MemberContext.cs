@@ -9,6 +9,7 @@ namespace FBAData
     public class MemberContext:FBADataContext
     {
         public DbSet<Team> Team { get; set; }
+        public DbSet<TeamMember> TeamMember { get; set; }
         public DbSet<Program> Program { get; set; }
 
         public DbSet<Process> Process { get; set; }
