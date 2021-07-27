@@ -8,14 +8,6 @@
 <h1> @Resources.FabStartAcademy.Dashboard</h1>
 
 
-<div class="row">
-    <div class="col-12">
-
-        <h2>@Resources.FabStartAcademy.Activities</h2>
-
-       
-    </div>
-</div>
 
 <div class="row">
     <div class="col-12">
@@ -29,5 +21,30 @@
         {
             Html.RenderPartial("ProgramItem", item);
         }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+
+        <h2>@Resources.FabStartAcademy.Activities</h2>
+        @foreach (var item in Model.Activities)
+        {
+
+            <div class="row fba-title" style="margin-top:10px;">
+                <div class="col-1"><img src="@item.Image" class="fba-header" style=" background-color: #e2e9ec; border-radius: 35px; width: 60px; " /></div>
+                <div class="col-2" style="margin-top:15px;"><h3 style="margin-top:0px;">@item.TeamName</h3></div>
+                
+                <div class="col-6" style="font-size: 18px; margin-top: 15px;">@Html.Raw(@item.Message)</div>
+                <div class="col-1" style="margin-top:10px;">
+                    <a asp-action="@FabStartAcademy.Models.Controllers.Member.Actions.Task.Name" asp-controller="@FabStartAcademy.Models.Controllers.Member.Controller" asp-route-taskid="@item.TaskID" asp-route-teamid="@item.TeamID" class="col-12 btn btn-primary">
+                        @Resources.FabStartAcademy.View
+                    </a>
+                </div>
+                <div class="col-1 fba-dashboard-title" style="margin-top:17px;">@item.DisplayDate</div>
+            </div>
+
+        }
+
     </div>
 </div>

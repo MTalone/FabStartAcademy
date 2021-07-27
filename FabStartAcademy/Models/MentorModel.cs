@@ -11,7 +11,7 @@ namespace FabStartAcademy.Models
 
         public List<TeamItem> Teams { get; set; }
 
-        public List<FBAData.Activity> Activities { get; set; }
+        public List<ActivityDisplay> Activities { get; set; }
         public ProgramItem Program { get; set; }
         public FBAData.MentorFlow.DashBoard DashBoard { get; set; }
     }

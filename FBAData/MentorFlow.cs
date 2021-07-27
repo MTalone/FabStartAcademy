@@ -69,7 +69,7 @@ namespace FBAData
             using(MemberContext context= new MemberContext()) 
             {
                 List<int> teamsID = context.Member.Include(x => x.TeamMember.Team).Where(x => x.Email == username && (x.TeamMember.Team.ProgramID == programid || programid==0)).Select(x => x.TeamMember.TeamID).ToList();
-                List<Activity> activities = context.Activity.Include(x=>x.TaskSubmission.Task.Session).Include(a=>a.Team.Logo).Include(a => a.Team.Program).Where(a => teamsID.Contains(a.TeamID) && a.TaskSubmission.Rating>0).ToList();
+                List<Activity> activities = context.Activity.Include(x=>x.TaskSubmission.Task.Session).Include(a=>a.Team.Logo).Include(a => a.Team.Program).Include(a=>a.Member).Where(a => teamsID.Contains(a.TeamID) && a.TaskSubmission.Rating>0).ToList();
                 return activities;
             }
             

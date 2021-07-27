@@ -37,8 +37,21 @@ namespace FabStartAcademy.Controllers
                 Title = x.Name
             }).ToList();
 
+            List<ActivityDisplay> activities = act.Select(x=>new ActivityDisplay
+            {
+                Date = x.CreatedOn,
+                SessionName = x.TaskSubmission.Task.Session.Name,
+                TaskTitle = x.TaskSubmission.Task.Name,
+                TeamName = x.Team.Name,
+                Image = TeamModel.GetImageFromDocument(x.Team.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
+                Type=(FBAData.ActivityType.Types)x.ActivityTypeID,
+                MemberName=x.Member.FirstName+" "+x.Member.LastName,
+                TeamID = x.TeamID,
+                TaskID = x.TaskSubmission.TaskID
 
-            MentorModel mentorModel = new MentorModel { Programs = items, Activities = act };
+            }).ToList();
+
+            MentorModel mentorModel = new MentorModel { Programs = items, Activities = activities };
 
             return View(mentorModel);
         }
@@ -67,9 +80,21 @@ namespace FabStartAcademy.Controllers
                 Image = TeamModel.GetImageFromDocument(x.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
                 MethodName = x.Program.Process.Name
             }).ToList(); ;
+            List<ActivityDisplay> activities = act.Select(x => new ActivityDisplay
+            {
+                Date = x.CreatedOn,
+                SessionName = x.TaskSubmission.Task.Session.Name,
+                TaskTitle = x.TaskSubmission.Task.Name,
+                TeamName = x.Team.Name,
+                Image = TeamModel.GetImageFromDocument(x.Team.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
+                Type = (FBAData.ActivityType.Types)x.ActivityTypeID,
+                MemberName = x.Member.FirstName + " " + x.Member.LastName,
+                TeamID=x.TeamID,
+                TaskID=x.TaskSubmission.TaskID
 
+            }).ToList();
 
-            MentorModel mentorModel = new MentorModel { Program = item ,DashBoard=x,Teams=teams,Activities=act};
+            MentorModel mentorModel = new MentorModel { Program = item ,DashBoard=x,Teams=teams,Activities= activities };
             return View(mentorModel);
         }
     }

@@ -129,6 +129,18 @@
   <data name="Activities" xml:space="preserve">
     <value>Activities</value>
   </data>
+  <data name="ActivityComment" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; left a message on the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;</value>
+  </data>
+  <data name="ActivityDocument" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; uploaded a new file to the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;</value>
+  </data>
+  <data name="ActivityEvaluation" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; evaluated the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;</value>
+  </data>
+  <data name="ActivitySubmitted" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; submitted the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>

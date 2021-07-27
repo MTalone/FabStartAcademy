@@ -97,6 +97,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; left a message on the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;.
+        /// </summary>
+        public static string ActivityComment {
+            get {
+                return ResourceManager.GetString("ActivityComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; uploaded a new file to the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;.
+        /// </summary>
+        public static string ActivityDocument {
+            get {
+                return ResourceManager.GetString("ActivityDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; evaluated the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;.
+        /// </summary>
+        public static string ActivityEvaluation {
+            get {
+                return ResourceManager.GetString("ActivityEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; submitted the task &lt;strong&gt;{1}&lt;/strong&gt; of the &lt;strong&gt;{2}&lt;/strong&gt;.
+        /// </summary>
+        public static string ActivitySubmitted {
+            get {
+                return ResourceManager.GetString("ActivitySubmitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
