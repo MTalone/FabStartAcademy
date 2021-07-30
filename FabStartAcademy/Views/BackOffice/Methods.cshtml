@@ -13,20 +13,22 @@
 
 @foreach (var item in Model.Programs)
 {
-   
 
-    <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
-        <a asp-action="@Actions.Method.Name" asp-route-id="@item.ID" asp-route-read="false">
-            <div class="col-8" style="float:left"><h2>@item.Title</h2></div>
-            <div class="col-4" style="float:right; margin-top:20px">
-                <span class="badge badge-pill badge-secondary" style="float:left"> @item.SessionCount</span> <div style="float:left; margin-left:2px;">@Resources.FabStartAcademy.Sessions|</div>
+    <div class="row">
+        <div class="col-12 card" style="@(!first? "margin-top:10px":"")">
+            <a asp-action="@Actions.Method.Name" asp-route-id="@item.ID" asp-route-read="false">
+                <div class="row">
+                    <div class="col-8" style="float:left"><h2>@item.Title</h2></div>
+                    <div class="col-4" style="float:right; margin-top:20px">
+                        <span class="badge badge-pill badge-secondary" style="float:left"> @item.SessionCount</span> <div style="float:left; margin-left:2px;">@Resources.FabStartAcademy.Sessions|</div>
 
-                <form asp-action="@Actions.MethodDelete.Name" asp-route-id="@item.ID" style="float:left;margin-left:5px;margin-top:-5px">
-                    <button class="btn btn-danger bi-trash-fill" style="padding:2px;"></button>
-                </form>
-            </div>
-        </a>
-    </div>
-
-    first = false;
-}
+                        <form asp-action="@Actions.MethodDelete.Name" asp-route-id="@item.ID" style="float:left;margin-left:5px;margin-top:-5px">
+                            <button class="btn btn-danger bi-trash-fill" style="padding:2px;"></button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+        </div>
+        </div>
+        first = false;
+        }
