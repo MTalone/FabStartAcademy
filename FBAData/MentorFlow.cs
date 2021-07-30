@@ -15,7 +15,7 @@ namespace FBAData
                 List<int> teamsID = context.Member.Include(x => x.TeamMember).Where(x => x.Email == username).Select(x => x.TeamMember.TeamID).ToList();
 
 
-                List<Program> programs = context.Team.Include(x => x.Program.Process).Include(x => x.Program.Logo).Where(x => teamsID.Contains(x.ID)).Select(x=>x.Program).ToList();
+                List<Program> programs = context.Team.Include(x => x.Program.Process).Include(x => x.Program.Logo).Where(x => teamsID.Contains(x.ID)).Select(x=>x.Program).ToList().Where(x=>!(x is null)).ToList();
 
                 return programs;
             }
@@ -69,7 +69,7 @@ namespace FBAData
             using(MemberContext context= new MemberContext()) 
             {
                 List<int> teamsID = context.Member.Include(x => x.TeamMember.Team).Where(x => x.Email == username && (x.TeamMember.Team.ProgramID == programid || programid==0)).Select(x => x.TeamMember.TeamID).ToList();
-                List<Activity> activities = context.Activity.Include(x=>x.TaskSubmission.Task.Session).Include(a=>a.Team.Logo).Include(a => a.Team.Program).Include(a=>a.Member).Where(a => teamsID.Contains(a.TeamID) && a.TaskSubmission.Rating>0).ToList();
+                List<Activity> activities = context.Activity.Include(x=>x.TaskSubmission.Task.Session).Include(a=>a.Team.Logo).Include(a => a.Team.Program).Include(a=>a.Member).Where(a => teamsID.Contains(a.TeamID) ).ToList();
                 return activities;
             }
             

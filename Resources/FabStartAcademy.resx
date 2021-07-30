@@ -144,8 +144,14 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddFile" xml:space="preserve">
+    <value>Add file</value>
+  </data>
   <data name="AddMembers" xml:space="preserve">
     <value>Add members</value>
+  </data>
+  <data name="Administrators" xml:space="preserve">
+    <value>Administrators</value>
   </data>
   <data name="Available" xml:space="preserve">
     <value>Available</value>
@@ -240,6 +246,9 @@
   <data name="Member_CopyClipboard" xml:space="preserve">
     <value>Copy to clipboard</value>
   </data>
+  <data name="Member_ForAdministrators" xml:space="preserve">
+    <value />
+  </data>
   <data name="Member_ForUsers" xml:space="preserve">
     <value>for users only</value>
   </data>
@@ -279,11 +288,11 @@
   <data name="NewProgram" xml:space="preserve">
     <value>New program</value>
   </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>New session</value>
+  </data>
   <data name="NewTeam" xml:space="preserve">
     <value>New team</value>
-  </data>
-  <data name="NewTopic" xml:space="preserve">
-    <value>New topic</value>
   </data>
   <data name="NotConfirmed" xml:space="preserve">
     <value>Not confirmed</value>

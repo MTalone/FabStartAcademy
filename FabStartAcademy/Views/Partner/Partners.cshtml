@@ -10,64 +10,35 @@
 <p>
     <a asp-action="@Actions.Partner.Name">@Resources.FabStartAcademy.NewPartner</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Resources.FabStartAcademy.Status
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @if (item.IsMain)
-                    {
-                        @Resources.FabStartAcademy.Main
-                    }
-                    else if (item.IsSuspended)
-                    {
-                        @Resources.FabStartAcademy.Suspended
-                    }
-                    else if (item.IsDeleted)
-                    {
-                        @Resources.FabStartAcademy.Deleted
-                    }
-                    else
-                    {
-                        @Resources.FabStartAcademy.Active
-                    }
 
-                </td>
+@foreach (var item in Model)
+{
+   
+    <a asp-action="@Actions.Partner.Name" asp-route-id="@item.ID" style="margin-top:10px">
+    <div class="row fba-title" style="margin-top:10px">
+        <div class="col-6">  @Html.DisplayFor(modelItem => item.Name)</div>
+        <div class="col-2">  @Html.DisplayFor(modelItem => item.Code)</div>
+        <div class="col-4" style="text-align:right">
+            @if (item.IsMain)
+            {
+                @Resources.FabStartAcademy.Main
+            }
+            else if (item.IsSuspended)
+            {
+                @Resources.FabStartAcademy.Suspended
+            }
+            else if (item.IsDeleted)
+            {
+                @Resources.FabStartAcademy.Deleted
+            }
+            else
+            {
+                @Resources.FabStartAcademy.Active
+            }
+        </div>
+    </div>
 
-                <td>
-                    
-                    @Html.ActionLink(Resources.FabStartAcademy.Details, Actions.Partner.Name, new { id=item.ID  }) 
-                   
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+</a>
+}
+    

@@ -74,25 +74,21 @@ namespace FabStartAcademy.Models.Account
 
         public static void SetAccountSession(ISession session,string userName)
         {
-            FBAData.Member m = FBAData.Member.GetByEmail(userName);
-            List<FBAData.TeamMember> tms = FBAData.Member.GetTeams(m.ID);
+            if (!string.IsNullOrEmpty(userName))
+            {
+                FBAData.Member m = FBAData.Member.GetByEmail(userName);
+                List<FBAData.TeamMember> tms = FBAData.Member.GetTeams(m.ID);
 
-            Account account = new Account { Email = userName, UserID = m.UserID, FullName=m.FirstName+" "+m.LastName };
+                Account account = new Account { Email = userName, UserID = m.UserID, FullName = m.FirstName + " " + m.LastName };
 
-            account.IsAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Admin);
-            account.IsSuperAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.SuperAdmin);
-            account.IsMentor = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Mentor);
-            account.IsUser = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.User);
-            account.PartnerID = m.PartnerID;
+                account.IsAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Admin);
+                account.IsSuperAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.SuperAdmin);
+                account.IsMentor = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Mentor);
+                account.IsUser = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.User);
+                account.PartnerID = m.PartnerID;
 
-            session.SetString("UserID", account.UserID);
-            session.SetString("IsAdmin", account.IsAdmin.ToString());
-            session.SetString("IsMentor", account.IsMentor.ToString());
-            session.SetString("IsUser", account.IsUser.ToString());
-            session.SetString("IsSuperAdmin", account.IsSuperAdmin.ToString());
-            session.SetString("Email", account.Email);
-            session.SetInt32("PartnerID", account.PartnerID);
-            session.SetString("FullName", account.FullName);
+                SetAccountSession(account, session);
+            }
 
         }
 
@@ -106,11 +102,16 @@ namespace FabStartAcademy.Models.Account
             session.SetString("IsSuperAdmin", account.IsSuperAdmin.ToString());
             session.SetString("Email", account.Email);
             session.SetInt32("PartnerID", account.PartnerID);
+            session.SetString("FullName", account.FullName);
 
         }
 
         public static Account GetAccountSession(ISession session,string username)
         {
+            if(username is null) 
+            {
+                return null;
+            }
             if(!session.IsAvailable || string.IsNullOrEmpty(session.GetString("Email"))) 
             {
                 SetAccountSession(session, username);

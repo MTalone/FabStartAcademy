@@ -27,6 +27,8 @@ namespace FBAData
 
         public bool IsSubmitted { get; set; }
 
+        public string Text { get; set; }
+
         public Task Task { get; set; }
         public static TaskSubmission Get(int ID)
         {

@@ -142,11 +142,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add file.
+        /// </summary>
+        public static string AddFile {
+            get {
+                return ResourceManager.GetString("AddFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add members.
         /// </summary>
         public static string AddMembers {
             get {
                 return ResourceManager.GetString("AddMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrators.
+        /// </summary>
+        public static string Administrators {
+            get {
+                return ResourceManager.GetString("Administrators", resourceCulture);
             }
         }
         
@@ -412,6 +430,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Member_ForAdministrators {
+            get {
+                return ResourceManager.GetString("Member_ForAdministrators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to for users only.
         /// </summary>
         public static string Member_ForUsers {
@@ -547,20 +574,20 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New session.
+        /// </summary>
+        public static string NewSession {
+            get {
+                return ResourceManager.GetString("NewSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New team.
         /// </summary>
         public static string NewTeam {
             get {
                 return ResourceManager.GetString("NewTeam", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New topic.
-        /// </summary>
-        public static string NewTopic {
-            get {
-                return ResourceManager.GetString("NewTopic", resourceCulture);
             }
         }
         

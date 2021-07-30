@@ -8,6 +8,7 @@
     [MemberID] INT NOT NULL,  
     [Rating] INT NOT NULL DEFAULT 0, 
     [IsSubmitted] BIT NOT NULL DEFAULT 0, 
+    [Text] varchar(2000) NULL,
     CONSTRAINT [FK_TaskSubmission_Task] FOREIGN KEY ([TaskID]) REFERENCES [Task]([ID]),
     CONSTRAINT [FK_TaskSubmission_Team] FOREIGN KEY ([TeamID]) REFERENCES [Team]([ID]),
     CONSTRAINT [FK_TaskSubmission_Process] FOREIGN KEY ([ProcessID]) REFERENCES [Process]([ID]),

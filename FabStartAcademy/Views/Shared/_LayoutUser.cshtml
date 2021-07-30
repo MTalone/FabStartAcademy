@@ -37,7 +37,10 @@
                     <form asp-action="@Actions.LogOut.Name" asp-controller="@Actions.LogOut.Controller"><input type="submit" id="btnLogOut" style="display:none;" /></form>
                     <h5><a id="lnkLogOut" href="#" class="btn btn-danger bi-box-arrow-left" style="font-size:20px"></a></h5>
                     <hr />
-                    <h4>@Resources.FabStartAcademy.Greeting @account.FullName</h4>
+                    @if (!(account is null))
+                    {
+                        <h4>@Resources.FabStartAcademy.Greeting @account.FullName</h4>
+                    }
                     <hr />
                     <h4>@Html.ActionLink(Resources.FabStartAcademy.Dashboard, FabStartAcademy.Models.Controllers.Member.Actions.Dashboard.Name, FabStartAcademy.Models.Controllers.Member.Actions.Dashboard.Controller)</h4>
                     <hr />

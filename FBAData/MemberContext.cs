@@ -96,7 +96,11 @@ namespace FBAData
             using (MemberContext context = new MemberContext())
             {
                 
-                return context.Process.Include(x=>x.Session).ThenInclude(y=>y.Task).Where(x => x.ID==processID).FirstOrDefault();
+                var process = context.Process.Include(x=>x.Session).ThenInclude(y=>y.Task).Where(x => x.ID==processID).FirstOrDefault();
+
+                process.Session.ForEach(s => s.Task = s.Task.OrderBy(t => t.Order).ToList());
+
+                return process;
             }
         }
 

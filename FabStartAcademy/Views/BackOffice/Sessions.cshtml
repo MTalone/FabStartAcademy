@@ -27,7 +27,7 @@
         </a>
         <div class="col-2 float-left" style="margin-top:20px">
             <a class=" " asp-action="@Actions.Tasks.Name" asp-route-sessionid="@item.ID">
-                <span class="badge badge-pill badge-secondary"> @item.NumberSubtopics</span> Subtopics
+                <span class="badge badge-pill badge-secondary"> @item.NumberSubtopics</span> @Resources.FabStartAcademy.Tasks
             </a>
             @if (i < Model.Sessions.Count - 1)
             {

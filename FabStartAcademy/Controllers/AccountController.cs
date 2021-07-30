@@ -137,7 +137,7 @@ namespace FabStartAcademy.Controllers
 
                 List<FBAData.TeamMember> tms = FBAData.Member.GetTeams(m.ID);
 
-                Account account = new Account { Email = model.Email, UserID = user.Id };
+                Account account = new Account { Email = model.Email, UserID = user.Id,FullName=m.FirstName+" "+m.LastName };
 
                 account.IsAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.Admin);
                 account.IsSuperAdmin = tms.Any(x => x.RoleID == (int)FBAData.Role.Roles.SuperAdmin);
@@ -205,7 +205,7 @@ namespace FabStartAcademy.Controllers
                 if (!FBAData.Partner.CheckMainCreated())
                 {
 
-                    FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Start Ups", IsMain = true };
+                    FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Startups", IsMain = true };
                     partner.ID = FBAData.Partner.Save(partner);
                     partner = FBAData.Partner.Get(partner.ID);
                     FBAData.Team team = new FBAData.Team { Name = "FabStart", PartnerID = partner.ID, IsMain = true, Code = partner.Code };
@@ -214,7 +214,7 @@ namespace FabStartAcademy.Controllers
                     var result = await _userManager.CreateAsync(user, "Fabrica.2020");
                     if (result.Succeeded)
                     {
-                        FBAData.Member member = new FBAData.Member { Email = user.Email, IsUser = true, UserID = user.Id, PartnerID = partner.ID };
+                        FBAData.Member member = new FBAData.Member { Email = user.Email, IsUser = true, UserID = user.Id, PartnerID = partner.ID,FirstName="Fábrica",LastName="de Startups" };
                         member.ID = FBAData.Member.Save(member);
                         FBAData.TeamMember teamMember = new FBAData.TeamMember { IsConfirmed = true, MemberID = member.ID, TeamID = team.ID, RoleID = (int)FBAData.Role.Roles.SuperAdmin };
                         FBAData.TeamMember.Save(teamMember);

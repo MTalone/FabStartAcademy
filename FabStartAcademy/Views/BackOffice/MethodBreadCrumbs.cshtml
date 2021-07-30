@@ -42,7 +42,7 @@
             <div style="float:left" class="col-2 FBAbreadcrumb  @(Model.Action.ID==Actions.Session.ID? "active":"")">
 
                 <a asp-action="Session" asp-route-programid="@Model.ProcessID" asp-route-id="@Model.SessionID">
-                    <span class="badge badge-pill @(Model.Action.ID==Actions.Session.ID? "badge-primary":"badge-secondary")">3</span>  @( Model.SessionID==0?Resources.FabStartAcademy.NewTopic:Model.Session)
+                    <span class="badge badge-pill @(Model.Action.ID==Actions.Session.ID? "badge-primary":"badge-secondary")">3</span>  @( Model.SessionID==0?Resources.FabStartAcademy.NewSession:Model.Session)
                 </a>
 
 
