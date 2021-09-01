@@ -27,6 +27,8 @@ namespace FBAData
 
         public bool IsMain { get; set; }
 
+        public string HypothesisValidationUrl { get; set; }
+
         public static List<Team> GetTeams(int programID)
         {
             using (var a = new ProgramContext())

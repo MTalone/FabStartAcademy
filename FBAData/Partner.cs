@@ -62,7 +62,7 @@ namespace FBAData
         {
             using (var a = new UserContext())
             {
-                return a.TeamMember.Include(x => x.Member).Include(x=>x.Role).Where(x => x.Member.PartnerID == PartnerID && x.RoleID==(int)Role.Roles.Admin).ToList() ;
+                return a.TeamMember.Include(x => x.Member).Include(x=>x.Role).Where(x => x.Member.PartnerID == PartnerID && (x.RoleID==(int)Role.Roles.Admin|| x.RoleID == (int)Role.Roles.SuperAdmin) ).ToList() ;
             }
         }
 

@@ -1,7 +1,9 @@
 ﻿@model List<FabStartAcademy.Models.TeamItem>
+
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+   
+
     bool first = true;
 }
 
@@ -11,53 +13,53 @@
 <h2>@Resources.FabStartAcademy.Teams</h2>
 @foreach (var item in Model)
 {
-<a asp-action="Team" asp-route-id="@item.ID">
-    <div class="row " style="background-color:white;padding-top:5px;@(!first? "margin-top:10px":"")">
+    <a asp-action="Team" asp-route-id="@item.ID">
+        <div class="row " style="background-color:white;padding-top:5px;@(!first? "margin-top:10px":"")">
 
 
 
 
 
-        <div class="col-1 float-left"><img src="@item.Image" width="70" /></div>
-        <div class="col-8 float-left">
-            @*@item.ProgramTitle -@item.Title  - *@
-            <div class="row">
-                <div class="col-2 primary"> Team</div>
-                <div class="col-6"> @item.Title</div>
+            <div class="col-1 float-left"><img src="@item.Image" width="70" /></div>
+            <div class="col-8 float-left">
+                @*@item.ProgramTitle -@item.Title  - *@
+                <div class="row">
+                    <div class="col-2 primary"> Team</div>
+                    <div class="col-6"> @item.Title</div>
 
+                </div>
+                <div class="row">
+                    <div class="col-2 primary"> Program</div>
+                    <div class="col-6">@item.ProgramTitle </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-2 primary"> Methodology</div>
+
+                    <div class="col-6"> @item.MethodName</div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-2 primary"> Program</div>
-                <div class="col-6">@item.ProgramTitle </div>
-
+            <div class="col-3 float-left" style="border-left:1px solid lightgrey;">
+                <div class="row">
+                    <div class="col-5"> Progress</div>
+                    <div class="col-5"> Rate</div>
+                </div>
+                <div class="row">
+                    <div class="col-5"> 0%</div>
+                    <div class="col-5"> -</div>
+                </div>
             </div>
 
-            <div class="row">
 
-                <div class="col-2 primary"> Methodology</div>
 
-                <div class="col-6"> @item.MethodName</div>
-            </div>
+
+
+
+
         </div>
-        <div class="col-3 float-left" style="border-left:1px solid lightgrey;">
-            <div class="row">
-                <div class="col-5"> Progress</div>
-                <div class="col-5"> Rate</div>
-            </div>
-            <div class="row">
-                <div class="col-5"> 0%</div>
-                <div class="col-5"> -</div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-    </div>
-</a>
+    </a>
 
     first = false;
 

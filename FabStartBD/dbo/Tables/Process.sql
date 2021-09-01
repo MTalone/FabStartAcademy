@@ -4,6 +4,7 @@
     [Description] NVARCHAR (MAX) NULL,
     [LogoID]      INT           NULL,
     [PartnerID]   INT           NULL,
+    [IsForAll] BIT NOT NULL DEFAULT 0, 
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Process_Document] FOREIGN KEY ([LogoID]) REFERENCES [dbo].[Document] ([Id]),
     CONSTRAINT [FK_Process_Partner] FOREIGN KEY ([PartnerID]) REFERENCES [dbo].[Partner] ([Id])

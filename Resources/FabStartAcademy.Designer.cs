@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual inventation for administrators.
+        /// </summary>
+        public static string Admin_ManualInvitation {
+            get {
+                return ResourceManager.GetString("Admin_ManualInvitation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrators.
         /// </summary>
         public static string Administrators {
@@ -358,6 +367,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hypothesis validation.
+        /// </summary>
+        public static string HypothesisValidationUrl {
+            get {
+                return ResourceManager.GetString("HypothesisValidationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid login attempt..
         /// </summary>
         public static string InvalidLogin {
@@ -381,6 +399,15 @@ namespace Resources {
         public static string IsEvaluated {
             get {
                 return ResourceManager.GetString("IsEvaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For all partners.
+        /// </summary>
+        public static string IsForAll {
+            get {
+                return ResourceManager.GetString("IsForAll", resourceCulture);
             }
         }
         
@@ -439,7 +466,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to for administrators.
         /// </summary>
         public static string Member_ForAdministrators {
             get {

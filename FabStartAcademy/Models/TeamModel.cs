@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,10 @@ namespace FabStartAcademy.Models
         public string Code { get; set; }
 
         public string MethodName { get; set; }
+
+        //HypothesisValidationUrl
+        [Display(Name = "HypothesisValidationUrl", ResourceType = typeof(Resources.FabStartAcademy))]
+        public string HypothesisValidationUrl { get; set; }
 
     }
     public class TeamModel

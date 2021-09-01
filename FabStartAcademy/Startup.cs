@@ -32,6 +32,7 @@ namespace FabStartAcademy
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSession();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,9 +57,11 @@ namespace FabStartAcademy
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "Home", pattern: "/", new { action = "Index", controller = "Home" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+              
             });
 
            

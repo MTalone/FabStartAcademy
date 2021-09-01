@@ -1,7 +1,18 @@
 ﻿@model FabStartAcademy.Models.MentorModel
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Program";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var account = FabStartAcademy.Models.Account.Account.GetAccountSession(HttpContextAccessor.HttpContext.Session, User.Identity.Name);
+    if (account.IsSuperAdmin || account.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+
     bool first = true;
 }
 

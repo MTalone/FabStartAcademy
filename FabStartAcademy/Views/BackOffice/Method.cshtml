@@ -1,8 +1,25 @@
 ﻿@model FabStartAcademy.Models.ProcessItem
 
 @{
+
+    @using Microsoft.AspNetCore.Mvc;
+    @using Microsoft.AspNetCore.Mvc.Rendering;
+    @using Microsoft.Extensions.Configuration;
+
+
+    var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
+    .AddJsonFile("appsettings.json");
+    var config = builder.Build();
+
+    int partner = int.Parse(config["Constants:partner"]);
+    Model.PrimaryPartnerID = partner;
+}
+
+@{
     ViewData["Title"] = "Process";
 }
+
+
 
 @if (Model.ID == 0)
 {
@@ -15,19 +32,19 @@ else
 {
     <h1>@Html.ActionLink(Resources.FabStartAcademy.Methods, Actions.Methods.Name) /  @Model.Title</h1>
 
-    Html.RenderPartial("MethodBreadCrumbs",new ProcessBreadCrumb { ProcessID = Model.ID,Action=Actions.Method });
+    Html.RenderPartial("MethodBreadCrumbs", new ProcessBreadCrumb { ProcessID = Model.ID, Action = Actions.Method });
 
 }
 
 
 
-<div @(Model.IsReadOnly? "style='margin-top:50px;'":"")>
+<div @(Model.IsReadOnly ? "style='margin-top:50px;'" : "")>
 
     <hr />
     @if (Model.IsReadOnly)
     {
         @Html.HiddenFor(model => model.ID)
-        
+       
         <dl class="row">
 
             <dt class="col-sm-2">
@@ -57,18 +74,19 @@ else
                 }
                 else
                 {
-                  <h1>  @Resources.FabStartAcademy.Add @Resources.FabStartAcademy.NewMethod.ToLower()</h1>
+                    <h1>  @Resources.FabStartAcademy.Add @Resources.FabStartAcademy.NewMethod.ToLower()</h1>
                 }
 
             </div>
         </div>
         <div class="row form">
-            
+
             <form enctype="multipart/form-data" asp-action="@Actions.Method.Name">
                 <div class="col-lg-7">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @Html.HiddenFor(model => model.ID)
                     @Html.HiddenFor(model => model.LogoID)
+                    @Html.HiddenFor(model => model.PrimaryPartnerID)
 
                     @if (!Model.IsSuperAdmin)
                     {
@@ -81,6 +99,18 @@ else
                             @Html.DropDownListFor(x => x.PartnerID, Model.Partners, "", new { @class = "form-control" })
                             <span asp-validation-for="PartnerID" class="text-danger"></span>
                         </div>
+                        @if (Model.PartnerID == partner)
+                        {
+                            <div class="form-group" id="dvIsForAll">
+                                <label asp-for="IsForAll" class="control-label"></label>  @Html.CheckBoxFor(x => x.IsForAll)
+                                 
+                            </div>
+
+                        }
+                        else
+                        { <div class="form-group" id="dvIsForAll" style="display:none;">
+                                @Html.CheckBoxFor(x => x.IsForAll) <label asp-for="IsForAll" class="control-label"></label>
+                            </div>}
                     }
 
                     <div class="form-group">
@@ -110,16 +140,16 @@ else
 
 
                 </div>
-              
+
                 <div class="col-lg-5" style="text-align:center">
-                    @if (!(Model.Logo is null)&&Model.Logo.Length>0)
+                    @if (!(Model.Logo is null) && Model.Logo.Length > 0)
                     {
                         <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Logo))" width="200">
                     }
                     else
                     {
                         <img src="~/imgs/placeholder-process.png" width="150">
-                            
+
                     }
                     <div class="form-group">
                         <input type="file" name="Logo" id="Logo" style="display:none" />
@@ -136,11 +166,26 @@ else
                         <input type="submit" value="@Resources.FabStartAcademy.SaveAndNext" class="btn btn-primary" asp-route-isNext="true" />
                     </div>
                 </div>
-                
+
             </form>
-           
+
         </div>
 
+        @if (Model.IsSuperAdmin)
+        {
+            <script>
+
+            $("#PartnerID").on("change", function(){
+                if ($(this).val() == "@partner") {
+                    $("#dvIsForAll").show()
+                }
+                else {$("#dvIsForAll").hide()}
+        })
+
+        
+
+            </script>
+        }
 
     }
 

@@ -55,9 +55,10 @@ namespace FBAData
         {
             using (MemberContext context = new MemberContext())
             {
+                bool isAdmin = context.Member.Include(x => x.TeamMember).Any(m => m.Email == userName && m.TeamMember.RoleID == (int)Role.Roles.Admin || m.TeamMember.RoleID == (int)Role.Roles.SuperAdmin);
                 List<int> teamsID = context.Member.Include(x => x.TeamMember.Team).Where(x => x.Email == userName && x.TeamMember.Team.ProgramID==programid).Select(x => x.TeamMember.TeamID).ToList();
 
-                List<Team> teams = context.Team.Include(x => x.Program.Process).Include(x => x.Logo).Where(x => teamsID.Contains(x.ID)).ToList();
+                List<Team> teams = context.Team.Include(x => x.Program.Process).Include(x => x.Logo).Where(x => (isAdmin && x.ProgramID==programid)|| teamsID.Contains(x.ID)).ToList();
 
                 return teams;
             }

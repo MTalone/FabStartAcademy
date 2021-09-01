@@ -1,9 +1,21 @@
 ﻿@model FabStartAcademy.Models.MemberFlowTeam
-
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Team";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var account = FabStartAcademy.Models.Account.Account.GetAccountSession(HttpContextAccessor.HttpContext.Session, User.Identity.Name);
+    if (account.IsSuperAdmin || account.IsAdmin)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+
+ 
 }
+
 
 <h2 class="primary">@Model.Team.Name</h2>
 <hr />
@@ -111,22 +123,22 @@
         <div class="col-12">
             @Resources.FabStartAcademy.RelatedDocuments
         </div>
-      
+
     </div>
-      @foreach (var d in Model.ProcessDocuments)
-        {
-            <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
-                <div class="col-12"> <a asp-action="@Actions.Download.Name" asp-controller="@Actions.Download.Controller" asp-route-documentID="@d.ID" style="margin-right:5px;margin-left:5px;font-weight:bold">@d.FileName</a></div>
-            </div>
+    @foreach (var d in Model.ProcessDocuments)
+    {
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
+            <div class="col-12"> <a asp-action="@Actions.Download.Name" asp-controller="@Actions.Download.Controller" asp-route-documentID="@d.ID" style="margin-right:5px;margin-left:5px;font-weight:bold">@d.FileName</a></div>
+        </div>
 
-        }
-        @foreach (var l in Model.ProcessLinks)
-        {
-            <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
-                <div class="col-12"> <a href="@l.URL" style="margin-right:5px;margin-left:5px;font-weight:bold">@l.URL</a></div>
-            </div>
+    }
+    @foreach (var l in Model.ProcessLinks)
+    {
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px; background-color:white;">
+            <div class="col-12"> <a href="@l.URL" style="margin-right:5px;margin-left:5px;font-weight:bold">@l.URL</a></div>
+        </div>
 
-        }
+    }
 }
 
 <div style="margin-bottom:10px;"></div>

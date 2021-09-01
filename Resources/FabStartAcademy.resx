@@ -153,6 +153,9 @@
   <data name="Administrators" xml:space="preserve">
     <value>Administrators</value>
   </data>
+  <data name="Admin_ManualInvitation" xml:space="preserve">
+    <value>Manual inventation for administrators</value>
+  </data>
   <data name="Available" xml:space="preserve">
     <value>Available</value>
   </data>
@@ -216,6 +219,9 @@
   <data name="Greeting" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="HypothesisValidationUrl" xml:space="preserve">
+    <value>Hypothesis validation</value>
+  </data>
   <data name="InvalidLogin" xml:space="preserve">
     <value>Invalid login attempt.</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="IsEvaluated" xml:space="preserve">
     <value>Will this task be evaluated?</value>
+  </data>
+  <data name="IsForAll" xml:space="preserve">
+    <value>For all partners</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Last name</value>
@@ -250,7 +259,7 @@
     <value>Copy to clipboard</value>
   </data>
   <data name="Member_ForAdministrators" xml:space="preserve">
-    <value />
+    <value>for administrators</value>
   </data>
   <data name="Member_ForUsers" xml:space="preserve">
     <value>for users only</value>

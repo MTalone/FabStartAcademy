@@ -9,6 +9,8 @@
     .AddJsonFile("appsettings.json");
     var config = builder.Build();
     string codeStart = config["Constants:CodeBegin"];
+
+   
 }
 
 @if (Model.Partner.ID == 0)
@@ -51,7 +53,7 @@ else
                 <div class="card-title" style="text-align: center">
                     <div class="row">
                         <div class="col-12" style="margin-left:10px">
-                            <h3>@Resources.FabStartAcademy.Member_TeamToken  @Resources.FabStartAcademy.Member_ForUsers</h3><hr />
+                            <h3>@Resources.FabStartAcademy.Member_TeamToken  @Resources.FabStartAcademy.Member_ForAdministrators</h3><hr />
                         </div>
                     </div>
                 </div>
@@ -69,7 +71,7 @@ else
         <div class="col-4">
             <div class="card" style="min-height:580px;padding-left:5px;">
                 <div class="card-title" style="text-align: center">
-                    <h3>@Resources.FabStartAcademy.Member_ManualInvitation</h3>
+                    <h3>@Resources.FabStartAcademy.Admin_ManualInvitation</h3>
                     <hr />
                 </div>
                 <div class="card-body">
@@ -154,6 +156,7 @@ else
 
 
     </script>
+
 
 
 }

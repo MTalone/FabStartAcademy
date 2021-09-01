@@ -25,6 +25,8 @@ namespace FBAData
 
         public int PartnerID { get; set; }
 
+        public bool IsForAll { get; set; }
+
         public Document Logo { get; set; }
 
         public List<Session> Session { get; set; }
@@ -39,11 +41,11 @@ namespace FBAData
                 {
                     if (max > 0)
                     {
-                        return a.Process.Where(x => x.PartnerID == PartnerID || IsSuperAdmin).Include(x=>x.Session).Take(max).Select(x=> new ProcessExtended { Description=x.Description,ID=x.ID,LogoID=x.LogoID, Name=x.Name,SessionCount=x.Session.Count }).ToList();
+                        return a.Process.Where(x => x.PartnerID == PartnerID || IsSuperAdmin || x.IsForAll).Include(x=>x.Session).Take(max).Select(x=> new ProcessExtended { Description=x.Description,ID=x.ID,LogoID=x.LogoID, Name=x.Name,SessionCount=x.Session.Count }).ToList();
                     }
                     else
                     {
-                        return a.Process.Where(x => x.PartnerID == PartnerID || IsSuperAdmin).Include(x => x.Session).Select(x => new ProcessExtended { Description = x.Description, ID = x.ID, LogoID = x.LogoID, Name = x.Name, SessionCount = x.Session.Count }).ToList();
+                        return a.Process.Where(x => x.PartnerID == PartnerID || IsSuperAdmin || x.IsForAll).Include(x => x.Session).Select(x => new ProcessExtended { Description = x.Description, ID = x.ID, LogoID = x.LogoID, Name = x.Name, SessionCount = x.Session.Count }).ToList();
                     }
                 }
                 catch (Exception ex)

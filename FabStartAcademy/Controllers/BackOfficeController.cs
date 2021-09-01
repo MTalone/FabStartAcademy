@@ -246,7 +246,8 @@ namespace FabStartAcademy.Controllers
                     ProgramTitle = i.Program.Name,
                     LogoID = i.LogoID,
                     Image = i.Logo != null ? i.Logo.Path.Replace(Environment.WebRootPath, "") : "",
-                    Code = i.Code
+                    Code = i.Code,
+                    HypothesisValidationUrl=i.HypothesisValidationUrl
                 };
                 item.IsReadOnly = read;
             }
@@ -305,7 +306,17 @@ namespace FabStartAcademy.Controllers
 
             var program = FBAData.Program.GetProgram(item.ProgramID);
 
-            int id = FBAData.Team.Save(new FBAData.Team { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID, ProgramID = item.ProgramID,PartnerID=program.PartnerID });
+            int id = FBAData.Team.Save(new FBAData.Team
+            {
+                ID = item.ID,
+                Name = item.Title,
+                Description = item.Description,
+                LogoID = documentID,
+                ProgramID = item.ProgramID,
+                PartnerID = program.PartnerID,
+                Code = item.Code,
+                HypothesisValidationUrl = item.HypothesisValidationUrl
+            });
 
             if (item.ID == 0 && Logo != null && Logo.Length > 0)
             {
@@ -442,7 +453,8 @@ namespace FabStartAcademy.Controllers
                     LogoID = i.LogoID,
                     Logo = i.Logo == null ? new byte[0] : System.IO.File.ReadAllBytes(i.Logo.Path),
                     IsSuperAdmin = account.IsSuperAdmin,
-                    PartnerID=i.PartnerID
+                    PartnerID=i.PartnerID,
+                    IsForAll=i.IsForAll
                 };
                 item.IsReadOnly = read;
 
@@ -513,7 +525,7 @@ namespace FabStartAcademy.Controllers
             }
 
             var account = Account.GetAccountSession(HttpContext.Session, User.Identity.Name);
-            int id = FBAData.Process.Save(new FBAData.Process { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID,PartnerID=item.PartnerID });
+            int id = FBAData.Process.Save(new FBAData.Process { ID = item.ID, Name = item.Title, Description = item.Description, LogoID = documentID, PartnerID = item.PartnerID, IsForAll = item.PrimaryPartnerID == item.PartnerID ? item.IsForAll : false }) ;
 
             if (item.ID == 0 && Logo != null && Logo.Length > 0)
             {

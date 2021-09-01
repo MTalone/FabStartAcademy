@@ -19,11 +19,14 @@ namespace FabStartAcademy.Models
         public bool IsReadOnly { get; set; }
 
        public int? LogoID { get; set; }
+
+        public int PrimaryPartnerID { get; set; }
         
         public byte[] Logo { get; set; }
       
         public int SessionCount { get; set; }
-
+        [Display(Name = "IsForAll", ResourceType = typeof(Resources.FabStartAcademy))]
+        public bool IsForAll { get; set; }
         public List<SelectListItem> Partners { get; set; }
     }
 

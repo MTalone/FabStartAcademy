@@ -9,6 +9,7 @@
     [Code] VARCHAR(10) NOT NULL, 
     [PartnerID] INT NOT NULL, 
     [IsMain] BIT NOT NULL DEFAULT 0, 
+    [HypothesisValidationUrl] varchar(250),
     CONSTRAINT [FK_Team_Document] FOREIGN KEY ([LogoID]) REFERENCES [dbo].[Document] ([Id]),
     CONSTRAINT [FK_Team_Group] FOREIGN KEY ([ProgramID]) REFERENCES [dbo].[Program] ([Id]),
     CONSTRAINT [FK_Team_Partner] FOREIGN KEY ([PartnerID]) REFERENCES [dbo].[Partner] ([Id]),
