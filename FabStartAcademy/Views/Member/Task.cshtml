@@ -13,9 +13,9 @@
         Layout = "~/Views/Shared/_LayoutUser.cshtml";
     }
 
-    FabStartAcademy.Models.Action Back= new FabStartAcademy.Models.Action { Name="Team", Controller= account.IsUser?"Member":"Mentor" };
+    FabStartAcademy.Models.Action Back = new FabStartAcademy.Models.Action { Name = "Team", Controller = account.IsUser ? "Member" : "Mentor" };
 
-           
+
 
     bool firstTD = true;
 }
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-2"><a asp-action="@Back.Name"  asp-route-id="@Model.Team.ID" class="btn btn-primary col-12">@Resources.FabStartAcademy.Back</a></div>
+                    <div class="col-2"><a asp-action="@Back.Name" asp-route-id="@Model.Team.ID" class="btn btn-primary col-12">@Resources.FabStartAcademy.Back</a></div>
                     <div class="col-8"></div>
                     @if (!Model.IsSubmitted && !Model.IsMentor)
                     {<div class="col-2">
@@ -117,11 +117,31 @@
                                 <input type="hidden" value="@Model.Rate" name="Rate" />
                                 <input type="hidden" value="true" name="IsSubmitted" />
                                 <input type="hidden" value="@Model.IsMentor" name="IsMentor" />
-
+                                <input type="hidden" value="@((int)FBAData.TaskStatus.Status.Submitted)" name="TaskStatusID" />
                                 <input type="submit" class="btn btn-primary col-12" value="@Resources.FabStartAcademy.Submit" />
 
                             </form>
                         </div> }
+                    else if (Model.IsMentor && Model.TaskStatusID == (int)FBAData.TaskStatus.Status.InReview)
+                    {
+                        <div class="col-2">
+                            <form asp-action="TaskSubmission" enctype="multipart/form-data" style="margin-bottom:10px" id="Submit">
+                                <input type="hidden" value="@Model.Task.SessionID" name="sessionID" />
+                                <input type="hidden" value="@Model.Team.ID" name="teamID" />
+                                <input type="hidden" value="@Model.Task.ID" name="taskID" />
+                                <input type="hidden" value="@Model.Task.Session.ProcessID" name="ProcessID" />
+                                <input type="hidden" value="@((int)FBAData.ActivityType.Types.Complete)" name="activityTypeID" />
+                                <input type="hidden" value="@Model.TaskSubmissionID" name="TaskSubmissionID" />
+                                <input type="hidden" value="@Model.MemberID" name="MemberID" />
+                                <input type="hidden" value="@Model.Rate" name="Rate" />
+                                <input type="hidden" value="true" name="IsSubmitted" />
+                                <input type="hidden" value="@Model.IsMentor" name="IsMentor" />
+                                <input type="hidden" value="@((int)FBAData.TaskStatus.Status.Completed)" name="TaskStatusID" />
+                                <input type="submit" class="btn btn-primary col-12" value="@Resources.FabStartAcademy.Complete" />
+
+                            </form>
+                        </div>
+                    }
                     else
                     { <div class="col-2"></div>}
                 </div>
@@ -167,33 +187,61 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header" style="font-size:15px;font-weight:600;">
-                        @Resources.FabStartAcademy.SubmittedDocuments
+                        @Resources.FabStartAcademy.TaskWork
                     </div>
                     <div class="card-body">
-                        @if (!Model.IsSubmitted && !Model.IsMentor)
+                        @if (Model.TaskStatusID!=(int)FBAData.TaskStatus.Status.Completed && !Model.IsMentor)
                         {
                             <form asp-action="TaskSubmission" enctype="multipart/form-data" style="margin-bottom:10px" id="uploadFile">
                                 <input type="hidden" value="@Model.Task.SessionID" name="sessionID" />
                                 <input type="hidden" value="@Model.Team.ID" name="teamID" />
                                 <input type="hidden" value="@Model.Task.ID" name="taskID" />
                                 <input type="hidden" value="@Model.Task.Session.ProcessID" name="ProcessID" />
-                                <input type="hidden" value="@((int)FBAData.ActivityType.Types.Document)" name="activityTypeID" />
+                                <input type="hidden" value="@((int)FBAData.ActivityType.Types.Submission)" name="activityTypeID" />
                                 <input type="hidden" value="@Model.TaskSubmissionID" name="TaskSubmissionID" />
                                 <input type="hidden" value="@Model.MemberID" name="MemberID" />
-                                <input type="hidden" value="@Model.IsSubmitted" name="IsSubmitted" />
+                                <input type="hidden" value="true" name="IsSubmitted" />
                                 <input type="hidden" value="@Model.Rate" name="Rate" />
-                                <input type="hidden" value="@Model.IsMentor" name="IsMentor" />
+                                <input type="hidden" value="@Model.IsMentor.ToString()" name="IsMentor" />
+                                <input type="hidden" value="@((int)FBAData.TaskStatus.Status.Submitted)" name="TaskStatusID" />
                                 <div class="row">
                                     <div class="col-2">
                                         <input type="file" name="doc" id="template" style="display:none" />
                                         <a class="btn btn-primary browse col-12" onclick="$('#template').click();">Browse</a>
                                     </div>
                                     <div class="col-8"><label style="float:left;margin-top:5px;margin-right:10px;">Or add URL</label><input type="text" class="form-control col-10" name="URL" /></div>
-                                    <div class="col-2"><input type="submit" value="@Resources.FabStartAcademy.Add" class="btn btn-primary" /></div>
-                                </div>
-                            </form>
 
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" style="margin-top:20px;">
+                                        <label asp-for="Text" class="control-label"></label>
+                                        <textarea asp-for="Text" class="form-control" rows="10" id="txtTaskResponse"></textarea>
+
+                                        <span asp-validation-for="Text" class="text-danger"></span>
+                                    </div>
+                                    
+                                </div>
+
+
+                                <div class="row" style="margin-top:20px;">
+                                    <div class="col-10"></div>
+                                    <div class="col-2"><input type="submit" class="btn btn-primary col-12" value="@Resources.FabStartAcademy.Submit" /></div>
+                                </div>
+
+                            </form>
                             <hr />
+
+                        }
+                        else if(!string.IsNullOrEmpty(Model.Text))
+                        {
+                            <div class="row">
+                                <div  style=" border: 1px solid #ddd; margin-top: 10px; width: 98%; margin-left: 10px; margin-bottom: 10px; padding: 10px; ">
+                                    
+                                    @Html.Raw(Model.Text)
+
+                                </div>
+                                
+                            </div>
                         }
 
                         @foreach (var d in Model.SubmittedDocuments)
@@ -229,7 +277,8 @@
                             <input type="hidden" value="@Model.MemberID" name="MemberID" />
                             <input type="hidden" value="@Model.IsSubmitted.ToString()" name="IsSubmitted" />
                             <input type="hidden" value="@Model.Rate" name="Rate" />
-                            <input type="hidden" value="@Model.IsMentor" name="IsMentor" />
+                            <input type="hidden" value="@Model.IsMentor.ToString()" name="IsMentor" />
+                            <input type="hidden" value="@Model.TaskStatusID" name="TaskStatusID" />
                             <div class="row">
                                 <div class="col-12">
                                     <textarea name="Comment" rows="4" class="form-control"></textarea>
@@ -260,55 +309,37 @@
         </div>
 
 
-
-        @if (Model.ProcessDocuments.Count > 0 || Model.ProcessLinks.Count > 0)
-        {
-            <div class="row" style="margin-top:30px">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header" style="font-size:15px;font-weight:600;">
-                            @Resources.FabStartAcademy.RelatedDocuments
-                        </div>
-                        <div class="card-body">
-
-
-                            @foreach (var d in Model.ProcessDocuments)
-                            {
-
-                                <div> <a asp-action="@Actions.Download.Name" asp-controller="@Actions.Download.Controller" asp-route-documentID="@d.ID" style="margin-right:5px;margin-left:5px;font-weight:bold">@d.FileName</a></div>
-
-                            }
-                            @foreach (var l in Model.ProcessLinks)
-                            {
-                                <div><a href="@l.URL" style="margin-right:5px;margin-left:5px;font-weight:bold">@l.URL</a></div>
-
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
 </div>
 
 @if (!Model.IsMentor)
 {
-    <script>
+@*<script>
         $(document).ready(function () {
             $('#template').change(function (e) { $("#uploadFile").submit() });
         });
+    </script>*@
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtTaskResponse', {
+
+                extraPlugins: 'embed',
+                embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
+            });
+
     </script>
+    
 }
 else
 {
-    <script>
-        $(document).ready(function () {
-            $("[data-rate=true]").click(function (e) {
-                $("#hdRate").val($(this).attr("data-val"));
-                $("#frmRate").submit();
+<script>
+    $(document).ready(function () {
+        $("[data-rate=true]").click(function (e) {
+            $("#hdRate").val($(this).attr("data-val"));
+            $("#frmRate").submit();
 
-            })
-        });
-    </script>
+        })
+    });
+</script>
 }
 

@@ -57,10 +57,8 @@ namespace FabStartAcademy.Controllers
             taskSubmission = taskSubmission is null ? new FBAData.TaskSubmission() : taskSubmission;
 
             List <FBAData.Document> submdocs = FBAData.MemberFlow.GetSubmittedDocuments(taskSubmission.ID);
-            List<FBAData.Document> procdocs = FBAData.MemberFlow.GetProcessDocuments(task.Session.ProcessID, TeamID,taskSubmission.ID);
-            List<FBAData.TaskSubmissionComment> comments = FBAData.MemberFlow.GetComments(taskSubmission.ID);
-            List<FBAData.TaskSubmissionLink> links = FBAData.MemberFlow.GetLinks(taskSubmission.ID);
-            List<FBAData.TaskSubmissionLink> proclinks = FBAData.MemberFlow.GetProcessLinks(task.Session.ProcessID, TeamID, taskSubmission.ID);
+            List<FBAData.TaskSubmissionLink> submlinks = FBAData.MemberFlow.GetLinks(taskSubmission.ID);
+            List<FBAData.TaskSubmissionComment> comments = FBAData.MemberFlow.GetComments(taskSubmission.ID).OrderByDescending(x=>x.CreatedOn).ToList();
             Models.MemberTask model = new Models.MemberTask
             {
                 Task = task,
@@ -69,14 +67,14 @@ namespace FabStartAcademy.Controllers
                 TaskSubmissionID = taskSubmission is null ? 0 : taskSubmission.ID,
                 MemberID = taskSubmission.MemberID,
                 SubmittedDocuments = submdocs,
-                ProcessDocuments = procdocs,
                 Comments=comments,
                 Process = FBAData.MemberFlow.GetProcess(task.Session.ProcessID),
                 IsSubmitted=taskSubmission.IsSubmitted,
                 Rate=taskSubmission.Rating,
                 IsMentor= account.IsSuperAdmin || account.IsAdmin || account.IsMentor,
-                Links=links,
-                ProcessLinks=proclinks
+                Links=submlinks,
+                TaskStatusID=taskSubmission.TaskStatusID,
+                Text=taskSubmission.Text
                 
             };
 
@@ -88,16 +86,35 @@ namespace FabStartAcademy.Controllers
         public IActionResult TaskSubmission(Models.MemberTaskSubmission memberTaskSubmission, IFormFile doc)
         {
 
+            if(memberTaskSubmission.ActivityTypeID== (int)FBAData.ActivityType.Types.Submission)
+            {
+                if (!(doc is null) || !string.IsNullOrEmpty(memberTaskSubmission.URL))
+                {
+                    memberTaskSubmission.ActivityTypeID = (int)FBAData.ActivityType.Types.Document;
+                }
+            }
+            else
+            {
+                if (memberTaskSubmission.TaskSubmissionID > 0)
+                {
+                    FBAData.TaskSubmission old = FBAData.MemberFlow.GetTaskSubmission(memberTaskSubmission.TaskID,memberTaskSubmission.TeamID);
+                    memberTaskSubmission.Text = old.Text;
+                }
+            }
+
+
             FBAData.TaskSubmission taskSubmission = new FBAData.TaskSubmission
             {
                 ProcessID = memberTaskSubmission.ProcessID,
                 TaskID = memberTaskSubmission.TaskID,
                 TeamID = memberTaskSubmission.TeamID,
-                SessionID=memberTaskSubmission.SessionID,
-                ID=memberTaskSubmission.TaskSubmissionID,
-                MemberID=memberTaskSubmission.MemberID,
-                IsSubmitted=memberTaskSubmission.IsSubmitted,
-                Rating=memberTaskSubmission.Rate
+                SessionID = memberTaskSubmission.SessionID,
+                ID = memberTaskSubmission.TaskSubmissionID,
+                MemberID = memberTaskSubmission.MemberID,
+                IsSubmitted = memberTaskSubmission.IsSubmitted,
+                Rating = memberTaskSubmission.Rate,
+                TaskStatusID = memberTaskSubmission.TaskStatusID,
+                Text = memberTaskSubmission.Text
             };
 
             memberTaskSubmission.TaskSubmissionID = FBAData.MemberFlow.SubmitTask(taskSubmission,memberTaskSubmission.ActivityTypeID,User.Identity.Name,memberTaskSubmission.IsMentor);
@@ -151,7 +168,11 @@ namespace FabStartAcademy.Controllers
                 }
                 else
                 {
-                    FBAData.TaskSubmissionLink.Save(new FBAData.TaskSubmissionLink { TaskSubmissionID = taskSubmission.ID, URL = memberTaskSubmission.URL });
+                    if(!string.IsNullOrEmpty(memberTaskSubmission.URL))
+                    {
+                        FBAData.TaskSubmissionLink.Save(new FBAData.TaskSubmissionLink { TaskSubmissionID = taskSubmission.ID, URL = memberTaskSubmission.URL });
+
+                    }
                 }
             }
 
@@ -169,6 +190,7 @@ namespace FabStartAcademy.Controllers
         {
             FBAData.TaskSubmission taskSubmission = FBAData.TaskSubmission.Get(ID);
             taskSubmission.Rating = rate;
+            taskSubmission.TaskStatusID = (int)FBAData.TaskStatus.Status.InReview;
             FBAData.MemberFlow.SubmitTask(taskSubmission, (int)FBAData.ActivityType.Types.Evaluation,User.Identity.Name,true);
 
             return RedirectToActionPermanent(Models.Controllers.Member.Actions.Task.Name, new { TaskID = taskSubmission.TaskID, TeamID = taskSubmission.TeamID });
@@ -184,20 +206,39 @@ namespace FabStartAcademy.Controllers
 
             MemberFlowTeam model = new MemberFlowTeam { Team = new FBAData.Team { Name = team.Name, ID = team.ID }, MethodName = team.Program.Process.Name, ProgramName = team.Program.Name, Sessions = new List<MemberFlowSession>(),LogoPath=team.Logo.Path };
 
+            int total = 0;
+            int complete = 0;
+            int totalRate = 0;
+
             foreach(var s in team.Program.Process.Session) 
             {
                 MemberFlowSession currentSession = new MemberFlowSession { Name = s.Name, SessionID = s.ID };
                 currentSession.Tasks = new List<MemberFlowTaskItem>();
                 foreach (var t in s.Task.OrderBy(x=>x.Order))
                 {
+                    total++;
+
                     FBAData.TaskSubmission current = submissions.Where(x => x.TaskID == t.ID).FirstOrDefault();
+                    if (!(current is null))
+                    {
+                        complete += current.TaskStatusID == (int)FBAData.TaskStatus.Status.Completed ? 1 : 0;
+                        totalRate += current.TaskStatusID == (int)FBAData.TaskStatus.Status.Completed ? current.Rating : 0;
+
+                    }
                     current = current is null ? new FBAData.TaskSubmission() : current;
-                    MemberFlowTaskItem currentTask = new MemberFlowTaskItem { Task = t, IsSubmitted = current.IsSubmitted, Process = team.Program.Process, Rate = current.Rating, TeamID = team.ID, TaskSubmissionID = current.ID };
+                    MemberFlowTaskItem currentTask = new MemberFlowTaskItem { Task = t, IsSubmitted = current.IsSubmitted, Process = team.Program.Process, Rate = current.Rating, TeamID = team.ID, TaskSubmissionID = current.ID,Status=(current.ID==0?"":current.TaskStatus.Label)};
                     currentSession.Tasks.Add(currentTask);
                 }
                 model.Sessions.Add(currentSession);
             }
 
+            model.Progress = (int)((complete / (float)total) * 100);
+
+            if (complete > 0)
+            {
+                model.Rate = (totalRate / (complete )) ;
+
+            }
             List<FBAData.Document> procdocs = FBAData.MemberFlow.GetProcessDocuments(team.Program.ProcessID.Value, ID, 0);
             model.ProcessDocuments = procdocs;
             model.ProcessLinks =  FBAData.MemberFlow.GetProcessLinks(team.Program.ProcessID.Value, ID, 0); 

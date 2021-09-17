@@ -232,6 +232,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete.
+        /// </summary>
+        public static string Complete {
+            get {
+                return ResourceManager.GetString("Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmed.
         /// </summary>
         public static string Confirmed {
@@ -799,6 +808,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Status_Completed {
+            get {
+                return ResourceManager.GetString("Status_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In review.
+        /// </summary>
+        public static string Status_InReview {
+            get {
+                return ResourceManager.GetString("Status_InReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string Status_Pending {
+            get {
+                return ResourceManager.GetString("Status_Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started.
+        /// </summary>
+        public static string Status_Started {
+            get {
+                return ResourceManager.GetString("Status_Started", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -871,6 +916,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In Review.
+        /// </summary>
+        public static string TaskStatus_InReview {
+            get {
+                return ResourceManager.GetString("TaskStatus_InReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not started.
         /// </summary>
         public static string TaskStatus_NotStarted {
@@ -939,6 +993,15 @@ namespace Resources {
         public static string TaskType_URL {
             get {
                 return ResourceManager.GetString("TaskType_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task work.
+        /// </summary>
+        public static string TaskWork {
+            get {
+                return ResourceManager.GetString("TaskWork", resourceCulture);
             }
         }
         

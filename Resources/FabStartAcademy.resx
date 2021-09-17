@@ -174,6 +174,9 @@
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
   <data name="Confirmed" xml:space="preserve">
     <value>Confirmed</value>
   </data>
@@ -363,6 +366,18 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Status_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Status_InReview" xml:space="preserve">
+    <value>In review</value>
+  </data>
+  <data name="Status_Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Status_Started" xml:space="preserve">
+    <value>Started</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
@@ -387,6 +402,9 @@
   <data name="TaskStatus_Finished" xml:space="preserve">
     <value>Finished</value>
   </data>
+  <data name="TaskStatus_InReview" xml:space="preserve">
+    <value>In Review</value>
+  </data>
   <data name="TaskStatus_NotStarted" xml:space="preserve">
     <value>Not started</value>
   </data>
@@ -410,6 +428,9 @@
   </data>
   <data name="TaskType_URL" xml:space="preserve">
     <value>Go to a URL</value>
+  </data>
+  <data name="TaskWork" xml:space="preserve">
+    <value>Task work</value>
   </data>
   <data name="Team" xml:space="preserve">
     <value>Team</value>

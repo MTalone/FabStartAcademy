@@ -29,7 +29,11 @@ namespace FBAData
 
         public string Text { get; set; }
 
+        public int TaskStatusID { get; set; }
         public Task Task { get; set; }
+
+        public TaskStatus TaskStatus { get; set; }
+
         public static TaskSubmission Get(int ID)
         {
             using (var a = new MemberContext())

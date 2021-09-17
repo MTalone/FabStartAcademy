@@ -117,12 +117,14 @@ namespace FBAData
         {
             int createdby = Member.GetByEmail(username).ID;
 
+           
+
             using (var a = new MemberContext())
             {
                 if (taskSubmission.ID == 0)
                 {
                     taskSubmission.MemberID = createdby;
-
+                    taskSubmission.TaskStatusID =taskSubmission.IsSubmitted ? (int)TaskStatus.Status.Submitted:(int)TaskStatus.Status.Started;
                     var newgroup = a.TaskSubmission.Add(taskSubmission);
 
                     a.SaveChanges();
@@ -130,6 +132,12 @@ namespace FBAData
                 }
                 else
                 {
+                    
+                   
+
+
+                    if (activityTypeID== (int)FBAData.ActivityType.Types.Comment && IsMentor && taskSubmission.IsSubmitted ) { taskSubmission.TaskStatusID = (int)TaskStatus.Status.InReview; }
+
                     var changes = a.Update(taskSubmission);
                     a.SaveChanges();
                     
@@ -170,7 +178,34 @@ namespace FBAData
         {
             using (MemberContext context = new MemberContext())
             {
-                return context.TaskSubmission.Where(x => x.ProcessID == processID&& x.TeamID == teamID).ToList();
+                var subm = context.TaskSubmission.Include(x=>x.TaskStatus).Where(x => x.ProcessID == processID&& x.TeamID == teamID).ToList();
+                foreach (var item in subm)
+                {
+                    switch ((TaskStatus.Status)item.TaskStatus.ID)
+                    {
+                        case TaskStatus.Status.Pending:
+                            item.TaskStatus.Label=Resources.FabStartAcademy.Status_Pending;
+                            break;
+                        case TaskStatus.Status.Started:
+                            item.TaskStatus.Label = Resources.FabStartAcademy.Status_Started;
+                            break;
+                        case TaskStatus.Status.InReview:
+                            item.TaskStatus.Label = Resources.FabStartAcademy.TaskStatus_InReview;
+                            break;
+                        case TaskStatus.Status.Submitted:
+                            item.TaskStatus.Label = Resources.FabStartAcademy.TaskStatus_Submitted;
+                            break;
+                        case TaskStatus.Status.Completed:
+                            item.TaskStatus.Label = Resources.FabStartAcademy.TaskStatus_Finished;
+
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return subm;
             }
         }
     }

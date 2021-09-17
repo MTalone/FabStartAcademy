@@ -15,7 +15,8 @@ namespace FBAData
             Submission=2,
             Message=3,
             Comment=4,
-            Evaluation=5
+            Evaluation=5,
+            Complete=6,
         }
     }
 }

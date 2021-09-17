@@ -28,7 +28,9 @@ namespace FabStartAcademy.Models
         public int MemberID { get; set; }
 
         public bool IsMentor { get; set; }
+        public int TaskStatusID { get; set; }
 
+        public string Text { get; set; }
         public FBAData.Process Process { get; set; }
     }
 

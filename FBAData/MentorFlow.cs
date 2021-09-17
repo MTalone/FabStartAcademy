@@ -26,7 +26,7 @@ namespace FBAData
             using (MemberContext context = new MemberContext())
             {
                
-                Program program = context.Program.Include(x=>x.Process).Include(x=>x.Logo).Where(x=>x.ID==iD).First();
+                Program program = context.Program.Include(x => x.Logo).Include(x=>x.Process.Session).ThenInclude(y => y.Task).Where(x=>x.ID==iD).First();
 
                 return program;
             }

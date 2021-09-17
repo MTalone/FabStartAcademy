@@ -59,7 +59,11 @@ namespace FabStartAcademy.Controllers
         public IActionResult Program(int ID) 
         {
             FBAData.Program program = FBAData.MentorFlow.GetProgram(ID);
-            var act = FBAData.MentorFlow.GetActivities(User.Identity.Name, 0);
+           
+
+
+
+            var act = FBAData.MentorFlow.GetActivities(User.Identity.Name, 0).OrderByDescending(x=>x.CreatedOn);
             ProgramItem item = new ProgramItem
             {
                 Process = program.Process.Name,
@@ -79,7 +83,52 @@ namespace FabStartAcademy.Controllers
                 ProgramTitle = x.Program.Name,
                 Image = TeamModel.GetImageFromDocument(x.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
                 MethodName = x.Program.Process.Name
-            }).ToList(); ;
+            }).ToList();
+
+            int total = 0;
+            int complete = 0;
+            int totalRate = 0;
+
+            foreach (var t in teams)
+            {
+                List<FBAData.TaskSubmission> submissions = FBAData.MemberFlow.GetTaskSubmissions(program.ProcessID.Value, t.ID);
+
+
+                foreach (var s in program.Process.Session)
+                {
+                    MemberFlowSession currentSession = new MemberFlowSession { Name = s.Name, SessionID = s.ID };
+                    currentSession.Tasks = new List<MemberFlowTaskItem>();
+                    foreach (var task in s.Task.OrderBy(x => x.Order))
+                    {
+                        total++;
+
+                        FBAData.TaskSubmission current = submissions.Where(x => x.TaskID == t.ID).FirstOrDefault();
+                        if(!(current is null))
+                        {
+                            complete += current.TaskStatusID == (int)FBAData.TaskStatus.Status.Completed ? 1 : 0;
+                            totalRate += current.TaskStatusID == (int)FBAData.TaskStatus.Status.Completed ? current.Rating : 0;
+
+                        }
+                        current = current is null ? new FBAData.TaskSubmission() : current;
+
+                    }
+
+
+
+                }
+
+
+                t.Progress = (int)((complete / (float)total) * 100);
+
+                if (complete > 0)
+                {
+                    t.Rate = (totalRate / (complete));
+
+                }
+            }
+
+
+
             List<ActivityDisplay> activities = act.Select(x => new ActivityDisplay
             {
                 Date = x.CreatedOn,

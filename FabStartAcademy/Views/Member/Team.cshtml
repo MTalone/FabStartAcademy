@@ -52,8 +52,16 @@
             <div class="col-5"> Rate</div>
         </div>
         <div class="row">
-            <div class="col-5"> 0%</div>
-            <div class="col-5"> -</div>
+            <div class="col-5"> @(Model.Progress)%</div>
+            @if (Model.Progress == 0)
+            {
+                <div class="col-5"> -</div>
+            }
+            else
+            {
+                <div class="col-5"> @Model.Rate</div>
+            }
+
         </div>
     </div>
 
@@ -121,7 +129,7 @@
 {
     <div class="row" style="margin-top: 30px; background-color: #E2E2E2; padding-top: 10px; padding-bottom: 10px; ">
         <div class="col-12">
-            @Resources.FabStartAcademy.RelatedDocuments
+            @Resources.FabStartAcademy.SubmittedDocuments
         </div>
 
     </div>

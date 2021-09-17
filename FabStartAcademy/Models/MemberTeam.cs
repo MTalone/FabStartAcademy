@@ -14,6 +14,10 @@ namespace FabStartAcademy.Models
         public string MethodName { get; set; }
 
         public string LogoPath { get; set; }
+
+        public int Progress { get; set; }
+
+        public int Rate { get; set; }
        public List<MemberFlowSession> Sessions { get; set; }
         public List<Document> ProcessDocuments { get;  set; }
         public List<TaskSubmissionLink> ProcessLinks { get;  set; }
@@ -30,6 +34,8 @@ namespace FabStartAcademy.Models
 
         public int Rate { get; set; }
 
+        public int TaskStatusID { get; set; }
+
         public string RateDisplay 
         {
             get
@@ -45,25 +51,7 @@ namespace FabStartAcademy.Models
 
         public FBAData.Process Process { get; set; }
 
-        public string Status { get {
-
-                if (TaskSubmissionID == 0) 
-                {
-                    return Resources.FabStartAcademy.TaskStatus_NotStarted;
-                }
-
-                if (Rate >= 3) 
-                {
-                    return Resources.FabStartAcademy.TaskStatus_Finished;
-                }
-
-                if (IsSubmitted)
-                {
-                    return Resources.FabStartAcademy.TaskStatus_Submitted;
-                }
-
-                return Resources.FabStartAcademy.TaskStatus_Started;
-            } }
+        public string Status { get; set; }
     }
 
     public class MemberFlowSession

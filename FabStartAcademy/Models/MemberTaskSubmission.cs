@@ -14,7 +14,7 @@ namespace FabStartAcademy.Models
         public int ProcessID { get; set; }
         public int TeamID { get; set; }
 
-       
+       public int TaskStatusID { get; set; }
 
         public int ActivityTypeID { get; set; }
 
@@ -30,5 +30,6 @@ namespace FabStartAcademy.Models
         public bool IsSubmitted { get; set; }
 
         public bool IsMentor { get; set; }
+        public string Text { get; set; }
     }
 }

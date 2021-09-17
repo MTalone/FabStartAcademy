@@ -26,6 +26,8 @@ namespace FabStartAcademy.Models
         public string Code { get; set; }
 
         public string MethodName { get; set; }
+        public int Rate { get; set; }
+        public int Progress { get; set; }
 
         //HypothesisValidationUrl
         [Display(Name = "HypothesisValidationUrl", ResourceType = typeof(Resources.FabStartAcademy))]

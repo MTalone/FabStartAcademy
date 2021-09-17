@@ -14,5 +14,7 @@ namespace FabStartAcademy.Models
         public List<ActivityDisplay> Activities { get; set; }
         public ProgramItem Program { get; set; }
         public FBAData.MentorFlow.DashBoard DashBoard { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

@@ -3,6 +3,26 @@
 @{
 
     var account = FabStartAcademy.Models.Account.Account.GetAccountSession(HttpContextAccessor.HttpContext.Session, User.Identity.Name);
+    string controller = string.Empty;
+    if (!(account is null))
+    {
+        if (account.IsAdmin || account.IsSuperAdmin)
+        {
+            controller = FabStartAcademy.Models.Actions.Dashboard.Controller;
+
+        }
+        else if (account.IsMentor)
+        {
+            controller = FabStartAcademy.Models.Controllers.Mentor.Controller;
+
+        }
+        else
+        {
+            controller = FabStartAcademy.Models.Controllers.Member.Controller;
+        }
+
+    }
+
 }
 
 <!DOCTYPE html>
@@ -42,7 +62,7 @@
                         <h4>@Resources.FabStartAcademy.Greeting @account.FullName</h4>
                     }
                     <hr />
-                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Dashboard, FabStartAcademy.Models.Controllers.Member.Actions.Dashboard.Name, FabStartAcademy.Models.Controllers.Member.Actions.Dashboard.Controller)</h4>
+                    <h4>@Html.ActionLink(Resources.FabStartAcademy.Dashboard, FabStartAcademy.Models.Controllers.Member.Actions.Dashboard.Name, controller)</h4>
                     <hr />
                 </div>
             </div>
