@@ -222,7 +222,7 @@
   <data name="Greeting" xml:space="preserve">
     <value>Hello</value>
   </data>
-  <data name="HypothesisValidationUrl" xml:space="preserve">
+  <data name="HypothesisValidation" xml:space="preserve">
     <value>Hypothesis validation</value>
   </data>
   <data name="InvalidLogin" xml:space="preserve">

@@ -378,9 +378,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Hypothesis validation.
         /// </summary>
-        public static string HypothesisValidationUrl {
+        public static string HypothesisValidation {
             get {
-                return ResourceManager.GetString("HypothesisValidationUrl", resourceCulture);
+                return ResourceManager.GetString("HypothesisValidation", resourceCulture);
             }
         }
         

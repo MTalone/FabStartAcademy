@@ -38,5 +38,12 @@ namespace FBAData
             }
         }
 
+        public enum Tools
+        {
+            HypothesisValidation = 1,
+            BusinessCanvas=2,
+            PitchDeck = 3
+        }
+
     }
 }

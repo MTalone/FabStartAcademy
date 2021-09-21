@@ -91,4 +91,7 @@
   <ItemGroup>
     <RefactorLog Include="FabStartBD.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="dbo\Tables\Script.Static.sql" />
+  </ItemGroup>
 </Project>

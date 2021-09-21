@@ -101,6 +101,14 @@
                     </div>
                 </div>
 
+                @if(Model.Task.ToolID.HasValue&& Model.Task.ToolID == (int)FBAData.Tool.Tools.HypothesisValidation) { 
+                <div class="row" style="margin-bottom:15px;">
+                    <div class="col-md-12">
+                       
+                            <a href="@Model.Team.HypothesisValidationUrl" target=”_blank”>Go to @Resources.FabStartAcademy.HypothesisValidation</a>
+                    </div>
+                </div>
+                }
                 <div class="row">
                     <div class="col-2"><a asp-action="@Back.Name" asp-route-id="@Model.Team.ID" class="btn btn-primary col-12">@Resources.FabStartAcademy.Back</a></div>
                     <div class="col-8"></div>
