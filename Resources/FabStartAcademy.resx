@@ -225,6 +225,9 @@
   <data name="HypothesisValidation" xml:space="preserve">
     <value>Hypothesis validation</value>
   </data>
+  <data name="HypothesisValidationUrl" xml:space="preserve">
+    <value>Hypothesis Validation</value>
+  </data>
   <data name="InvalidLogin" xml:space="preserve">
     <value>Invalid login attempt.</value>
   </data>
@@ -268,7 +271,7 @@
     <value>for users only</value>
   </data>
   <data name="Member_ManualInvitation" xml:space="preserve">
-    <value>Manual inventation for all roles</value>
+    <value>Manual invintation for all roles</value>
   </data>
   <data name="Member_RegistrationURL" xml:space="preserve">
     <value>and this registration url</value>

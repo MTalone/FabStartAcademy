@@ -398,30 +398,38 @@ namespace FabStartAcademy.Controllers
                 FBAData.TeamMember.Save(new FBAData.TeamMember { MemberID = memberid, TeamID = teamID, RoleID = model.Member.RoleID });
             }
 
-            
 
-            var builder = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json");
-            var config = builder.Build();
-
-            var smtpClient = new SmtpClient(config["Smtp:Host"])
+            try
             {
-                Port = int.Parse(config["Smtp:Port"]),
-                Credentials = new NetworkCredential(config["Smtp:Username"], config["Smtp:Password"]),
-                EnableSsl = true,
-            };
-            //Enviar E-mails
-            var mailMessage = new MailMessage
+                var builder = new ConfigurationBuilder()
+       .AddJsonFile("appsettings.json");
+                var config = builder.Build();
+
+                var smtpClient = new SmtpClient(config["Smtp:Host"])
+                {
+                    Port = int.Parse(config["Smtp:Port"]),
+                    Credentials = new NetworkCredential(config["Smtp:Username"], config["Smtp:Password"]),
+                    EnableSsl = true,
+                };
+                //Enviar E-mails
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(config["Smtp:Username"]),
+                    Subject = string.Format("Invitation to join team {0}", team.Name),
+                    Body = string.Format("Hello<br/> you are invited to join the team {0}. Please use this link to register, and insert the code {1}", team.Name, config["Constants:CodeBegin"] + team.Code),
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(model.Member.Email);
+
+                smtpClient.Send(mailMessage);
+
+                
+            }
+            catch (Exception)
             {
-                From = new MailAddress(config["Smtp:Username"]),
-                Subject = string.Format("Invitation to join team {0}", team.Name),
-                Body = string.Format("Hello<br/> you are invited to join the team {0}. Please use this link to register, and insert the code {1}", team.Name, config["Constants:CodeBegin"] + team.Code),
-                IsBodyHtml = true,
-            };
-            mailMessage.To.Add(model.Member.Email);
+           
 
-            smtpClient.Send(mailMessage);
-
+            }
             return RedirectToActionPermanent(Actions.Members.Name, new { teamID = teamID });
 
         }

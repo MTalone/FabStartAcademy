@@ -202,14 +202,15 @@ namespace FabStartAcademy.Controllers
         {
             try
             {
+                FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Startups", IsMain = true };
+                partner.ID = FBAData.Partner.Save(partner);
+                partner = FBAData.Partner.Get(partner.ID);
+                FBAData.Team team = new FBAData.Team { Name = "FabStart", PartnerID = partner.ID, IsMain = true, Code = partner.Code };
+                team.ID = FBAData.Team.Save(team);
                 if (!FBAData.Partner.CheckMainCreated())
                 {
 
-                    FBAData.Partner partner = new FBAData.Partner { Name = "Fábrica de Startups", IsMain = true };
-                    partner.ID = FBAData.Partner.Save(partner);
-                    partner = FBAData.Partner.Get(partner.ID);
-                    FBAData.Team team = new FBAData.Team { Name = "FabStart", PartnerID = partner.ID, IsMain = true, Code = partner.Code };
-                    team.ID = FBAData.Team.Save(team);
+                    
                     var user = new IdentityUser { Email = "talk@fabstart.pt", UserName = "talk@fabstart.pt", EmailConfirmed = true };
                     var result = await _userManager.CreateAsync(user, "Fabrica.2020");
                     if (result.Succeeded)

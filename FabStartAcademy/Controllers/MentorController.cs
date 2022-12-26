@@ -66,7 +66,7 @@ namespace FabStartAcademy.Controllers
             var act = FBAData.MentorFlow.GetActivities(User.Identity.Name, 0).OrderByDescending(x=>x.CreatedOn);
             ProgramItem item = new ProgramItem
             {
-                Process = program.Process.Name,
+                Process = program.Process is null?"":program.Process.Name,
                 ID = program.ID,
                 Description = program.Description,
                 Title = program.Name,
