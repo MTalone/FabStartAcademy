@@ -42,7 +42,7 @@ else
             {
                 <div class="col-2 float-left"><form asp-action="@Actions.PartnerSuspend.Name" asp-route-id="@Model.Partner.ID" asp-route-suspend="false">  <input type="submit" value="@Resources.FabStartAcademy.Activate" class="col-12 btn btn-success" /></form></div>
             }
-
+            
             <div class="col-2 float-left"><form asp-action="@Actions.PartnerDelete.Name" asp-route-id="@Model.Partner.ID">  <input type="submit" value="@Resources.FabStartAcademy.Delete" class="col-12 btn btn-danger" /></form></div>
         }
     </div>
@@ -167,7 +167,7 @@ else
             <form asp-action="@Actions.Partner.Name">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @Html.HiddenFor(x => x.Partner.ID)
-                @Html.HiddenFor(x => x.Partner.IsMain)
+                
                 @Html.HiddenFor(x => x.Partner.IsSuspended)
                 @Html.HiddenFor(x => x.Partner.IsDeleted)
                 @if (Model.Partner.ID > 0)
@@ -183,7 +183,8 @@ else
                     <input asp-for="Partner.Name" class="form-control" />
                     <span asp-validation-for="Partner.Name" class="text-danger"></span>
                 </div>
-
+               
+                
                 <div class="form-group">
                     <input type="submit" value="@Resources.FabStartAcademy.Save" class="btn btn-primary" />
                     <div class="col-3 float-right">

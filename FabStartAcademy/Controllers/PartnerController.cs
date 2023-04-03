@@ -67,6 +67,8 @@ namespace FabStartAcademy.Controllers
             return RedirectToActionPermanent(Actions.Partner.Name, new { ID = ID });
         }
 
+        
+
         [HttpPost]
         public IActionResult Delete(int ID)
         {

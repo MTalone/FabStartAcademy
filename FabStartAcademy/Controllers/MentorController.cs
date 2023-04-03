@@ -74,7 +74,7 @@ namespace FabStartAcademy.Controllers
             };
 
             var x = FBAData.MentorFlow.GetDashBoard(ID);
-            List<TeamItem> teams = FBAData.MentorFlow.GetTeams(User.Identity.Name,ID).Select(x => new TeamItem
+            List<TeamItem> teams = FBAData.MentorFlow.GetTeams(User.Identity.Name, ID).Select(x => new TeamItem
             {
                 Title = x.Name,
                 ID = x.ID,
@@ -82,7 +82,7 @@ namespace FabStartAcademy.Controllers
                 Description = x.Description,
                 ProgramTitle = x.Program.Name,
                 Image = TeamModel.GetImageFromDocument(x.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
-                MethodName = x.Program.Process.Name
+                MethodName = !(x.Program.Process is null) ? x.Program.Process.Name : null
             }).ToList();
 
             int total = 0;

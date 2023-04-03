@@ -20,6 +20,7 @@ namespace FBAData
       //  [Display(Name = "IsDeleted", ResourceType = typeof(Resources.FabStartAcademy))]
         public bool IsDeleted { get; set; }
 
+
         public static int Save(Partner partner)
         {
             try

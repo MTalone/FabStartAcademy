@@ -42,6 +42,8 @@ namespace FabStartAcademy.Models
         public static Action PartnerSuspend { get { return new Action { ID = 22, Controller = "Partner", Name = "Suspend" }; } }
         public static Action PartnerDelete { get { return new Action { ID = 23, Controller = "Partner", Name = "Delete" }; } }
 
+        public static Action PartnerMain { get { return new Action { ID = 23, Controller = "Partner", Name = "Main" }; } }
+
         public static Action LogOut { get { return new Action { ID = -1, Controller = "Account", Name = "LogOut" }; } }
         public static Action PartnerMethods { get { return new Action { ID = 23, Controller = "Partner", Name = "PartnerMethods" }; } }
     }
