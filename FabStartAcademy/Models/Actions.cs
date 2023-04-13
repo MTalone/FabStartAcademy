@@ -12,19 +12,20 @@ namespace FabStartAcademy.Models
         public static Action Program { get { return new Action { ID = 2, Controller = "BackOffice", Name = "Program" }; } }
         public static Action Methods { get { return new Action { ID = 3, Controller = "BackOffice", Name = "Methods" }; } }
         public static Action Method { get { return new Action { ID = 4, Controller = "BackOffice", Name = "Method" }; } }
-        public static Action MethodDelete { get { return new Action { ID = 11, Controller = "BackOffice", Name = "MethodDelete" }; } }
-        public static Action Sessions { get { return new Action { ID = 5, Controller = "BackOffice", Name = "Sessions" }; } }
-        public static Action Session { get { return new Action { ID = 6, Controller = "BackOffice", Name = "Session" }; } }
+        public static Action MethodCopy { get { return new Action { ID = 5, Controller = "BackOffice", Name = "MethodCopy" }; } }
+        public static Action MethodDelete { get { return new Action { ID = 6, Controller = "BackOffice", Name = "MethodDelete" }; } }
+        public static Action Sessions { get { return new Action { ID = 7, Controller = "BackOffice", Name = "Sessions" }; } }
+        public static Action Session { get { return new Action { ID = 8, Controller = "BackOffice", Name = "Session" }; } }
 
-        public static Action Tasks { get { return new Action { ID = 7, Controller = "BackOffice", Name = "Tasks" }; } }
+        public static Action Tasks { get { return new Action { ID = 9, Controller = "BackOffice", Name = "Tasks" }; } }
 
-        public static Action Task { get { return new Action { ID = 8, Controller = "BackOffice", Name = "Task" }; } }
+        public static Action Task { get { return new Action { ID = 10, Controller = "BackOffice", Name = "Task" }; } }
 
-        public static Action TaskDelete { get { return new Action { ID = 9, Controller = "BackOffice", Name = "TaskDelete" }; } }
-        public static Action TaskOrder { get { return new Action { ID = 11, Controller = "BackOffice", Name = "TaskOrder" }; } }
+        public static Action TaskDelete { get { return new Action { ID = 11, Controller = "BackOffice", Name = "TaskDelete" }; } }
+        public static Action TaskOrder { get { return new Action { ID = 12, Controller = "BackOffice", Name = "TaskOrder" }; } }
 
-        public static Action Download { get { return new Action { ID = 12, Controller = "File", Name = "Download" }; } }
-        public static Action Teams { get { return new Action { ID = 13, Controller = "BackOffice", Name = "Teams" }; } }
+        public static Action Download { get { return new Action { ID = 13, Controller = "File", Name = "Download" }; } }
+        public static Action Teams { get { return new Action { ID = 14, Controller = "BackOffice", Name = "Teams" }; } }
 
         public static Action Team { get { return new Action { ID = 14, Controller = "BackOffice", Name = "Team" }; } }
 

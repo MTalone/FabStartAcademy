@@ -193,9 +193,14 @@ else
 @if (Model.IsReadOnly)
 {
     <div>
-
-        @Html.ActionLink(Resources.FabStartAcademy.Edit, Actions.Method.Name, new { ID = Model.ID, read = false }) |
-        <a asp-action="Index">Back to List</a>
+         <form enctype="multipart/form-data" asp-action="@Actions.MethodCopy.Name">
+                    
+        @Html.ActionLink(Resources.FabStartAcademy.BackToList, Actions.Methods.Name) |
+        @Html.ActionLink(Resources.FabStartAcademy.Edit, Actions.Method.Name, new { ID = Model.ID, read = false },new{@class="btn btn-primary"}) |
+        @Html.ActionLink(Resources.FabStartAcademy.Copy, Actions.MethodCopy.Name, new { ID = Model.ID, read = false },new{@class="btn btn-primary"}) |
+         
+                         <input type="submit" value="@Resources.FabStartAcademy.Copy" class="btn btn-primary" asp-route-ID="@Model.ID" asp-action="@Actions.MethodCopy.Name" formmethod="post">
+        </form>
 
     </div>
 

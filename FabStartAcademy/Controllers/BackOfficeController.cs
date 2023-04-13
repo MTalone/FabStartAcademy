@@ -564,6 +564,17 @@ namespace FabStartAcademy.Controllers
 
             return RedirectToActionPermanent(Actions.Methods.Name);
         }
+
+        [Authorize]
+       [HttpPost]
+        public IActionResult MethodCopy(int id)
+        {
+
+            int newMethod = FBAData.Process.Duplicate(id);
+
+            return RedirectToActionPermanent(Actions.Method.Name, new { ID = newMethod, read=false });
+        }
+
         [Authorize]
         public IActionResult Sessions(int ProgramID)
         {

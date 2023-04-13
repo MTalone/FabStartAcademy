@@ -91,9 +91,12 @@ namespace FabStartAcademy.Controllers
 
             foreach (var t in teams)
             {
-                List<FBAData.TaskSubmission> submissions = FBAData.MemberFlow.GetTaskSubmissions(program.ProcessID.Value, t.ID);
+                List<FBAData.TaskSubmission> submissions = new List<FBAData.TaskSubmission>();
 
+                if(program.ProcessID.HasValue)
+                    submissions = FBAData.MemberFlow.GetTaskSubmissions(program.ProcessID.Value, t.ID);
 
+                if(program.Process != null) { 
                 foreach (var s in program.Process.Session)
                 {
                     MemberFlowSession currentSession = new MemberFlowSession { Name = s.Name, SessionID = s.ID };
@@ -116,9 +119,10 @@ namespace FabStartAcademy.Controllers
 
 
                 }
+                }
 
-
-                t.Progress = (int)((complete / (float)total) * 100);
+                
+                t.Progress = total==0?0: (int)((complete / (float)total) * 100);
 
                 if (complete > 0)
                 {

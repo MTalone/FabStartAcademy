@@ -37,9 +37,9 @@ namespace FabStartAcademy.Controllers
                ID = x.ID,
                ProgramID = x.ProgramID ?? 0,
                Description = x.Description,
-               ProgramTitle = x.Program.Name,
+               ProgramTitle = x.Program is null ? string.Empty : x.Program.Name,
                Image = TeamModel.GetImageFromDocument(x.Logo, Environment.WebRootPath, "/imgs/placeholder-team.png"),
-               MethodName=x.Program.Process.Name
+               MethodName= x.Program is null?string.Empty: x.Program.Process is null? string.Empty: x.Program.Process.Name
            }).ToList(); ;
 
             return View(teams);

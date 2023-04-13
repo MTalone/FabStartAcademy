@@ -81,19 +81,19 @@ namespace FBAData
             }
         }
 
-        public static int Save(Process program)
+        public static int Save(Process process)
         {
             using (var a = new ProcessContext())
             {
-                if (program.ID == 0)
+                if (process.ID == 0)
                 {
-                    var newgroup = a.Process.Add(program);
+                    var newgroup = a.Process.Add(process);
                     a.SaveChanges();
                     return newgroup.Entity.ID;
                 }
                 else
                 {
-                   var changes = a.Update(program);
+                   var changes = a.Update(process);
                     a.SaveChanges();
                     return changes.Entity.ID;
 
@@ -140,6 +140,51 @@ namespace FBAData
                
             }
            
+        }
+
+        public static int Duplicate(int id)
+        {
+            int newID = 0;
+            try
+            {
+                using (var a = new ProcessContext())
+                {
+
+                    var method = a.Process.Where(x=>x.ID==id).FirstOrDefault();
+
+                    Process process = new Process { Description=method.Description,IsForAll=method.IsForAll,Name=method.Name,PartnerID=method.PartnerID};
+                    a.Process.Add(process);
+                      a.SaveChanges();
+                    newID = process.ID;
+                    List <Session> sessions = a.Session.Where(x=>x.ProcessID==id).ToList();
+                    int i = 0;
+                    foreach (var session in sessions)
+                    { i++;
+                        Session copy = new Session { ProcessID = newID, Description = session.Description, Name = session.Name, Order = i };
+                         a.Session.Add(copy);
+                        int newSession = a.SaveChanges();
+                        List<Task> tasks = a.Task.Where(x=>x.SessionID==session.ID).ToList();
+                        foreach (var task in tasks)
+                        {
+                            Task newTask = new Task {AvailableOn=task.AvailableOn,
+                                                    Description=task.Description,
+                                                    Instructions=task.Instructions, 
+                                                    ProcessID= newID,
+                                                    SessionID=copy.ID,Name=task.Name,Order=task.Order,IsEvaluated=task.IsEvaluated,TaskType=task.TaskType };
+                           a.Task.Add(newTask);
+                        }
+                        a.SaveChanges();
+                    }
+
+
+                }
+                return newID;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+
+            }
         }
     }
 
